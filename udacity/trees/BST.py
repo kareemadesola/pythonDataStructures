@@ -17,14 +17,14 @@ class BST:
             if current.right is None:
                 current.right = Node(new_val)
                 return
-            return self.insert_helper(current.right, new_val)
+            self.insert_helper(current.right, new_val)
         if current.left is None:
             current.left = Node(new_val)
             return
-        return self.insert_helper(current.left, new_val)
+        self.insert_helper(current.left, new_val)
 
     def search(self, find_val):
-        self.search_helper(self.root, find_val)
+        return self.search_helper(self.root, find_val)
 
     def search_helper(self, current: Node, find_val: int):
         if current:
@@ -32,8 +32,7 @@ class BST:
                 return True
             elif find_val > current.value:
                 return self.search_helper(current.right, find_val)
-            else:
-                return self.search_helper(current.left, find_val)
+            return self.search_helper(current.left, find_val)
 
         return False
 

@@ -62,15 +62,33 @@ class Graph:
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
-        max_num_nodes = max(max((i.node_from.value, i.node_to.value)
-                                for i in self.edges)) + 1
+        max_num_nodes = self.get_node_max_value() + 1
         adjacent_list: List[List[tuple]] = [None] * max_num_nodes
         for i in self.edges:
             if adjacent_list[i.node_from.value]:
-                adjacent_list[i.node_from.value].append((i.node_to.value, i.value,))
+                adjacent_list[i.node_from.value].\
+                    append((i.node_to.value, i.value,))
             else:
-                adjacent_list[i.node_from.value] = [(i.node_to.value, i.value,)]
+                adjacent_list[i.node_from.value] = \
+                    [(i.node_to.value, i.value,)]
         return adjacent_list
+
+    def get_adjacency_matrix(self):
+        """Return a matrix, or 2D List.
+        Row numbers represent from nodes,
+        column numbers represent to nodes.
+        Store the edge values in each spot,
+        and a 0 if no edge exists"""
+        max_num_nodes = self.get_node_max_value() + 1
+        adjacency_matrix = [[0] * max_num_nodes for _ in range(max_num_nodes)]
+        for i in self.edges:
+            adjacency_matrix[i.node_from.value][i.node_to.value] =\
+                i.value
+        return adjacency_matrix
+
+    def get_node_max_value(self):
+        return max(max((i.node_from.value, i.node_to.value)
+                       for i in self.edges))
 
 
 if __name__ == '__main__':
@@ -86,3 +104,4 @@ if __name__ == '__main__':
     print(graph.get_adjacency_list())
     # Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102],
     # [0, 0, 0, 0, 0], [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
+    print(graph.get_adjacency_matrix())

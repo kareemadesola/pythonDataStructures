@@ -87,8 +87,12 @@ class Graph:
         return adjacency_matrix
 
     def get_node_max_value(self):
-        return max(max((i.node_from.value, i.node_to.value)
-                       for i in self.edges))
+        max_index = -1
+        if self.nodes:
+            for i in self.nodes:
+                if i.value > max_index:
+                    max_index = i.value
+        return max_index
 
 
 if __name__ == '__main__':

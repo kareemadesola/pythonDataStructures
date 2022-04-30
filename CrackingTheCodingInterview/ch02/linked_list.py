@@ -76,10 +76,23 @@ class DoublyLinkedList(LinkedList):
 class Test(unittest.TestCase):
     ll = LinkedList([1, 2, 3, 4, 5])
 
+    def test_singly_add(self):
+        ll = copy(self.ll)
+        ll.add(7)
+        self.assertTrue(ll.values(), [5, 1, 2, 3, 4, 5, 7])
+        print(ll)
+
+    def test_doubly_add(self):
+        ll = DoublyLinkedList([1, 2, 3, 10])
+        ll.add(17)
+        self.assertTrue(ll.values(), [1, 2, 3, 10, 17])
+        print(ll)
+
     def test_add_to_beginning(self):
         ll = copy(self.ll)
         ll.add_to_beginning(5)
         self.assertTrue(ll.values(), [5, 1, 2, 3, 4, 5])
+        print(ll)
 
     def test_value(self):
         self.assertTrue(self.ll.values(), [1, 2, 3, 4])

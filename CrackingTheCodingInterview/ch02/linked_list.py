@@ -1,7 +1,7 @@
 import abc
 import random
 import unittest
-from copy import copy
+from copy import deepcopy
 from typing import Union, List, Optional
 
 
@@ -127,7 +127,7 @@ class SinglyLinkedList(LinkedListInterface):
 
 class DoublyLinkedList(SinglyLinkedList):
     def __str__(self):
-        return " <--->>> ".join(str(i) for i in self)
+        return " <-->> ".join(str(i) for i in self)
 
     def add(self, value: Union[int, str]):
         if not self.head:
@@ -137,13 +137,24 @@ class DoublyLinkedList(SinglyLinkedList):
             self.tail = self.tail.next
         return self.tail
 
+    def add_to_beginning(self, value: Union[int, str]):
+        if not self.head:
+            self.head = self.tail = DoublyLinkedListNode(value)
+        else:
+            new_node = DoublyLinkedListNode(value, self.head, None)
+            self.head.prev = new_node
+            self.head = new_node
+
 
 class CircularSinglyLinkedList(SinglyLinkedList, LinkedListInterface):
     def __iter__(self):
         current_node = self.head
-        while current_node.next != self.head:
+        while current_node:
             yield current_node
-            current_node = current_node.next
+            if current_node.next != self.head:
+                current_node = current_node.next
+            else:
+                break
 
     def add(self, value: Union[int, str]):
         if self.head is None:
@@ -156,51 +167,89 @@ class CircularSinglyLinkedList(SinglyLinkedList, LinkedListInterface):
         return self.tail
 
     def add_to_beginning(self, value: Union[int, str]):
-        pass
-        # if self.head is None:
-        #     self.head = self.tail = SinglyLinkedListNode(value)
+        if self.head is None:
+            self.head = self.tail = SinglyLinkedListNode(value)
+        else:
+            new_node = SinglyLinkedListNode(value, self.head)
+            self.head = new_node
+            self.tail.next = new_node
+        return self.head
 
 
-
-
-# class Circular
 class Test(unittest.TestCase):
-    ll = SinglyLinkedList([1, 2, 3, 4, 5])
+    init_values = [1, 2, 3, 4, 5]
+    sll = SinglyLinkedList(init_values)
+    c_sll = CircularSinglyLinkedList(init_values)
+    dll = DoublyLinkedList(init_values)
+    """Test Circular Linked List"""
 
-    def test_singly_add(self):
-        ll = copy(self.ll)
-        ll.add(7)
-        self.assertTrue(ll.values(), [5, 1, 2, 3, 4, 5, 7])
-        print(ll)
+    def test_c_sll_add(self):
+        c_sll = deepcopy(self.c_sll)
+        c_sll.add(12)
+        self.assertEqual(c_sll.values(), [1, 2, 3, 4, 5, 12])
+
+    def test_c_sll_add_to_beginning_when_empty(self):
+        c_sll = CircularSinglyLinkedList()
+        c_sll.add_to_beginning(5)
+        self.assertEqual(c_sll.values(), [5])
+
+    def test_c_sll_add_to_beginning_when_not_empty(self):
+        c_sll = deepcopy(self.c_sll)
+        c_sll.add_to_beginning(5)
+        self.assertEqual(c_sll.values(), [5, 1, 2, 3, 4, 5])
+
+    def test_c_sll_len(self):
+        c_sll = deepcopy(self.c_sll)
+        self.assertEqual(len(c_sll), 5)
+
+    """Test for Doubly Linked List"""
 
     def test_doubly_add(self):
-        ll = DoublyLinkedList([1, 2, 3, 10])
-        ll.add(17)
-        self.assertTrue(ll.values(), [1, 2, 3, 10, 17])
-        print(ll)
-        print(ll.head)
+        dll = deepcopy(self.dll)
+        dll.add(17)
+        self.assertEqual(dll.values(), [1, 2, 3, 4, 5, 17])
 
-    def test_add_to_beginning(self):
-        ll = copy(self.ll)
+    def test_doubly_prev(self):
+        dll = deepcopy(self.dll)
+        dll.add_to_beginning(17)
+        while dll.tail.prev:
+            print(dll.tail.prev)
+            dll.tail.prev = dll.tail.prev.prev
+        print(dll.tail.prev)
+
+    def test_doubly_add_to_beginning_when_empty(self):
+        dll = DoublyLinkedList()
+        dll.add_to_beginning(12)
+        self.assertEqual(dll.values(), [12])
+
+    def test_doubly_add_to_beginning_when_not_empty(self):
+        dll = deepcopy(self.dll)
+        dll.add_to_beginning(12)
+        self.assertEqual(dll.values(), [12, 1, 2, 3, 4, 5])
+
+    def test_doubly_generate(self):
+        self.assertEqual(len(DoublyLinkedList.generate(10, 2, 8)), 10)
+
+    """Test for Singly Linked List"""
+
+    def test_singly_add(self):
+        ll = deepcopy(self.sll)
+        ll.add(7)
+        self.assertEqual(ll.values(), [1, 2, 3, 4, 5, 7])
+
+    def test_singly_add_to_beginning(self):
+        ll = deepcopy(self.sll)
         ll.add_to_beginning(5)
-        self.assertTrue(ll.values(), [5, 1, 2, 3, 4, 5])
-        print(ll)
+        self.assertEqual(ll.values(), [5, 1, 2, 3, 4, 5])
 
-    def test_value(self):
-        self.assertTrue(self.ll.values(), [1, 2, 3, 4])
+    def test_sll_value(self):
+        self.assertEqual(self.sll.values(), [1, 2, 3, 4, 5])
 
-    def test_len(self):
-        self.assertTrue(len(self.ll), 5)
+    def test_sll_len(self):
+        self.assertEqual(len(self.sll), 5)
 
-    def test_str(self):
-        self.assertTrue(self.ll, "1 -> 2 -> 3 -> 4 -> 5")
+    def test_sll_str(self):
+        self.assertEqual(str(self.sll), "1 -> 2 -> 3 -> 4 -> 5")
 
     def test_generate(self):
-        self.assertTrue(len(SinglyLinkedList.generate(10, 2, 8)), 10)
-
-
-if __name__ == '__main__':
-    print(issubclass(SinglyLinkedList, LinkedListInterface))
-    print(issubclass(DoublyLinkedList, SinglyLinkedList))
-    a = SinglyLinkedList()
-    print(isinstance(a, LinkedListInterface))
+        self.assertEqual(len(SinglyLinkedList.generate(10, 2, 8)), 10)

@@ -1,3 +1,4 @@
+import abc
 import random
 import unittest
 from copy import copy
@@ -19,13 +20,14 @@ class DoublyLinkedListNode(SinglyLinkedListNode):
         self.prev: Optional[DoublyLinkedListNode] = prev_node
 
 
-class LinkedListMeta(type):
-    """Linked List Metaclass"""
-    def __instancecheck__(cls, instance):
-        return cls.__subclasscheck__(type(instance))
+class LinkedListInterface(metaclass=abc.ABCMeta):
+    """Person interface built from PersonMeta metaclass."""
 
-    def __subclasscheck__(cls, subclass):
-        return hasattr(subclass, '__iter__') and \
+    @classmethod
+    def __subclasshook__(cls, subclass):
+        return hasattr(subclass, '__init__') and \
+               callable(subclass.__init__) and \
+               hasattr(subclass, '__iter__') and \
                callable(subclass.__iter__) and \
                hasattr(subclass, '__str__') and \
                callable(subclass.__str__) and \
@@ -38,43 +40,48 @@ class LinkedListMeta(type):
                hasattr(subclass, 'add_to_beginning') and \
                callable(subclass.add_to_beginning) and \
                hasattr(subclass, 'add_multiple') and \
-               callable(subclass.add_multiple)
+               callable(subclass.add_multiple) or \
+               NotImplemented
+
+    @abc.abstractmethod
+    def __init__(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def __iter__(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def __str__(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def __len__(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def values(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add(self, value: Union[int, str]):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_to_beginning(self, value: Union[int, str]):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_multiple(self, values: List[Union[int, str]]):
+        raise NotImplementedError
 
 
-class LinkedList:
+class SinglyLinkedList(LinkedListInterface):
     def __init__(self, values=None):
         self.head: Optional[SinglyLinkedListNode] = None
         self.tail: Optional[SinglyLinkedListNode] = None
         if values:
             self.add_multiple(values)
-
-    def __iter__(self):
-        pass
-
-    def __str__(self):
-        pass
-
-    def __len__(self):
-        pass
-
-    def values(self):
-        pass
-
-    def add(self, value: Union[int, str]):
-        pass
-
-    def add_to_beginning(self, value: Union[int, str]):
-        pass
-
-    def add_multiple(self, values: List[Union[int, str]]):
-        pass
-
-    @classmethod
-    def generate(cls, k: int, min_value: int, max_value: int):
-        return cls(random.choices(range(min_value, max_value), k=k))
-
-
-class SinglyLinkedList(LinkedList):
 
     def __iter__(self):
         current_node = self.head
@@ -131,6 +138,32 @@ class DoublyLinkedList(SinglyLinkedList):
         return self.tail
 
 
+class CircularSinglyLinkedList(SinglyLinkedList, LinkedListInterface):
+    def __iter__(self):
+        current_node = self.head
+        while current_node.next != self.head:
+            yield current_node
+            current_node = current_node.next
+
+    def add(self, value: Union[int, str]):
+        if self.head is None:
+            self.head = self.tail = SinglyLinkedListNode(value)
+        else:
+            new_node = SinglyLinkedListNode(value)
+            new_node.next = self.tail.next
+            self.tail.next = new_node
+            self.tail = new_node
+        return self.tail
+
+    def add_to_beginning(self, value: Union[int, str]):
+        pass
+        # if self.head is None:
+        #     self.head = self.tail = SinglyLinkedListNode(value)
+
+
+
+
+# class Circular
 class Test(unittest.TestCase):
     ll = SinglyLinkedList([1, 2, 3, 4, 5])
 
@@ -164,3 +197,10 @@ class Test(unittest.TestCase):
 
     def test_generate(self):
         self.assertTrue(len(SinglyLinkedList.generate(10, 2, 8)), 10)
+
+
+if __name__ == '__main__':
+    print(issubclass(SinglyLinkedList, LinkedListInterface))
+    print(issubclass(DoublyLinkedList, SinglyLinkedList))
+    a = SinglyLinkedList()
+    print(isinstance(a, LinkedListInterface))

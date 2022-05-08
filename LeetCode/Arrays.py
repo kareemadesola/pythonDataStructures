@@ -1,14 +1,5 @@
-from typing import List, Union
-
-
-class DVD:
-    def __init__(self, name, release_year, director):
-        self.name = name
-        self.release_year = release_year
-        self.director = director
-
-    def __repr__(self):
-        return f"""{self.name}, directed by {self.director}, released in {self.release_year}"""
+import unittest
+from typing import List
 
 
 class Solution:
@@ -23,37 +14,40 @@ class Solution:
                 i += 2
         return arr
 
+    def validMountainArray(self, arr: List[int]) -> bool:
+        start_pointer = 0
+        end_pointer = -1
+        arr_len = len(arr)
+        if arr_len < 3:
+            return False
+        while arr[start_pointer] < arr[start_pointer + 1]:
+            start_pointer += 1
+            if start_pointer + 1 >= arr_len:
+                return False
+        while arr[end_pointer] < arr[end_pointer - 1]:
+            end_pointer -= 1
+            if -(end_pointer - 1) > arr_len:
+                return False
+        if start_pointer + (-end_pointer) == arr_len:
+            return True
+        return False
 
-if __name__ == '__main__':
-    a = Solution()
-    print(a.duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0]))
-    dvdCollection: List[Union[DVD, None]] = [None] * 15
+    def validMountainArrayBetter(self, arr: List[int]) -> bool:
+        arr_len = len(arr)
+        i = 0
+        while i + 1 < arr_len and arr[i] < arr[i + 1]:
+            i += 1
 
-    incrediblesDVD = DVD("The Incredibles", 2004, "Brad Bird")
-    findingDoryDVD = DVD("Finding Dory", 2016, "Andrew Stanton")
-    lionKingDVD = DVD("The Lion King", 2019, "Jon Favreau")
-    starWarsDVD = DVD("Star Wars", 1977, "George Lucas")
-    print(lionKingDVD)
+        # peak can be start or last
+        if i == 0 or i == arr_len - 1:
+            return False
 
-    dvdCollection[3] = incrediblesDVD
-    dvdCollection[9] = findingDoryDVD
-    dvdCollection[2] = lionKingDVD
-    dvdCollection[3] = starWarsDVD
-    print(dvdCollection)
+        while i + 1 < arr_len and arr[i] > arr[i + 1]:
+            i += 1
 
-    """Writing items into an Array with a Loop"""
-    # squareNumbers: List[Union[int, None]] = [i ** 2 for i in range(1, 11)]
-    # for i in squareNumbers:
-    #     print(i)
-    # print(squareNumbers)
+        return i == arr_len - 1
 
-    """Finding capacity of array"""
-    print(len(dvdCollection))
 
-    """Finding  the length of dvdCollection"""
-    length = 0
-    for dvd in dvdCollection:
-        if dvd is not None:
-            length += 1
-
-    print(length)
+class Test(unittest.TestCase):
+    def test_valid_mountain_array(self):
+        pass

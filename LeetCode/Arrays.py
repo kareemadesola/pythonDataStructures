@@ -47,6 +47,38 @@ class Solution:
 
         return i == arr_len - 1
 
+    def replaceElements(self, arr: List[int]) -> List[int]:
+        arr_len = len(arr)
+        for i in range(arr_len - 1):
+            arr[i] = max(arr[i + 1:])
+        arr[arr_len - 1] = -1
+        return arr
+
+    def replaceElementsBetter(self, arr: List[int]) -> List[int]:
+        max_value = -1
+        arr_len = len(arr)
+        for i in reversed(range(arr_len)):
+            arr[i], max_value = max_value, max(max_value, arr[i])
+        return arr
+
+    def removeDuplicates(self, nums: List[int]) -> int:
+        slow_runner = 0
+        for fast_runner in nums[1:]:
+            if nums[slow_runner] != fast_runner:
+                slow_runner += 1
+                nums[slow_runner] = fast_runner
+        return slow_runner + 1
+
+    def moveZeroes(self, nums: List[int]) -> None:
+        slow_runner = 0
+        for fast_runner in range(1, len(nums)):
+            if nums[slow_runner] == 0 and nums[fast_runner] != 0:
+                nums[slow_runner], nums[fast_runner] = \
+                    nums[fast_runner], nums[slow_runner]
+                slow_runner += 1
+            if nums[slow_runner] != 0:
+                slow_runner += 1
+
 
 class Test(unittest.TestCase):
     def test_valid_mountain_array(self):

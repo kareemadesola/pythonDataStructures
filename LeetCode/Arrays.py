@@ -79,7 +79,34 @@ class Solution:
             if nums[slow_runner] != 0:
                 slow_runner += 1
 
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+        slow_runner = 0
+        for fast_runner in range(len(nums)):
+            if nums[slow_runner] % 2 == 0:
+                slow_runner += 1
+            elif nums[slow_runner] % 2 != 0 and nums[fast_runner] % 2 == 0:
+                nums[slow_runner], nums[fast_runner] = \
+                    nums[fast_runner], nums[slow_runner]
+                slow_runner += 1
+        return nums
+
+    def sortArrayByParityBetter(self, nums: List[int]) -> List[int]:
+        i, j = 0, len(nums) - 1
+        while i < j:
+            if nums[i] % 2 == 1 and nums[j] % 2 == 0:
+                nums[i], nums[j] = nums[j], nums[i]
+            if nums[i] % 2 == 0:
+                i += 1
+            if nums[j] % 2 == 1:
+                j -= 1
+        return nums
+
 
 class Test(unittest.TestCase):
-    def test_valid_mountain_array(self):
-        pass
+    test = Solution()
+
+    def test_sort_array_by_parity_better(self):
+        nums = [0, 1]
+        print(nums)
+        self.test.sortArrayByParityBetter(nums)
+        print(nums)

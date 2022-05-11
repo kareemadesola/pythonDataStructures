@@ -140,12 +140,12 @@ def height_checker(heights: List[int]) -> int:
 
 
 def third_max(nums: List[int]) -> int:
-    set_nums = set(nums)
+    nums = set(nums)
+    if len(nums) < 3:
+        return max(nums)
     for _ in range(3):
-        if not set_nums:
-            return max(nums)
-        answer = max(set_nums)
-        set_nums.remove(answer)
+        answer = max(nums)
+        nums.remove(answer)
     return answer
 
 

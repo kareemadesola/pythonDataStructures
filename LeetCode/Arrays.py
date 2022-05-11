@@ -149,10 +149,26 @@ def third_max(nums: List[int]) -> int:
     return answer
 
 
+def find_disappeared_number(nums: List[int]) -> List[int]:
+    nums = set(nums)
+    answer = []
+    for i in range(1, len(nums) + 1):
+        if i not in nums:
+            answer.append(i)
+    return answer
+
+
+def find_disappeared_numbers_better(nums):
+    for num in nums:
+        index = abs(num) - 1
+        nums[index] = -abs(nums[index])
+    return [i + 1 for i, num in enumerate(nums) if num > 0]
+
+
 class Test(unittest.TestCase):
 
     def test_remove_element(self):
-        nums = [3, 2, 1]
-        print(nums)
-        print(third_max(nums))
-        print(nums)
+        nums = [4, 3, 2, 7, 8, 2, 3, 1]
+        # print(nums)
+        print(find_disappeared_numbers_better(nums))
+        # print(nums)

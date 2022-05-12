@@ -165,10 +165,30 @@ def find_disappeared_numbers_intuitive(nums):
     return [i + 1 for i in range(len(nums)) if nums[i] > 0]
 
 
+def sorted_squares(nums: List[int]) -> List[int]:
+    return [i * i for i in sorted(nums, key=abs)]
+
+
+def sorted_squares_pointer(nums: List[int]) -> List[int]:
+    res = []
+    front_runner = 0
+    back_runner = len(nums) - 1
+    while front_runner <= back_runner:
+        back_value = nums[back_runner] * nums[back_runner]
+        front_value = nums[front_runner] * nums[front_runner]
+        if back_value > front_value:
+            res.append(back_value)
+            back_runner -= 1
+        else:
+            res.append(front_value)
+            front_runner += 1
+    return res[::-1]
+
+
 class Test(unittest.TestCase):
 
     def test(self):
         nums = [4, 3, 2, 7, 8, 2, 3, 1]
         # print(nums)
-        # print(find_disappeared_numbers_better(nums))
+        print(sorted_squares_pointer(nums))
         # print(nums)

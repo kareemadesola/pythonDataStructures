@@ -158,17 +158,17 @@ def find_disappeared_number(nums: List[int]) -> List[int]:
     return answer
 
 
-def find_disappeared_numbers_better(nums):
-    for num in nums:
-        index = abs(num) - 1
+def find_disappeared_numbers_intuitive(nums):
+    for i in range(len(nums)):
+        index = abs(nums[i]) - 1
         nums[index] = -abs(nums[index])
-    return [i + 1 for i, num in enumerate(nums) if num > 0]
+    return [i + 1 for i in range(len(nums)) if nums[i] > 0]
 
 
 class Test(unittest.TestCase):
 
-    def test_remove_element(self):
+    def test(self):
         nums = [4, 3, 2, 7, 8, 2, 3, 1]
         # print(nums)
-        print(find_disappeared_numbers_better(nums))
+        # print(find_disappeared_numbers_better(nums))
         # print(nums)

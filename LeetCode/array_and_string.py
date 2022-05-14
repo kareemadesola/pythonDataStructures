@@ -104,7 +104,25 @@ def find_diagonal_order_simulation(mat: List[List[int]]) -> List[int]:
     return res
 
 
+def find_diagonal_order_sum(mat: List[List[int]]) -> List[int]:
+    d = {}
+    res = []
+    for row in range(len(mat)):
+        for col in range(len(mat[0])):
+            if row + col not in d:
+                d[row + col] = [mat[row][col]]
+            else:
+                d[row + col].append(mat[row][col])
+    for key, value in d.items():
+        if key % 2 == 0:
+            res.extend(d[key][::-1])
+        else:
+            res.extend(d[key])
+    return res
+
+
 class Test(unittest.TestCase):
     def test_pivot_index(self):
         nums = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
         self.assertEqual(find_diagonal_order_simulation(nums), [1, 2, 4, 7, 5, 3, 6, 8, 9])
+        self.assertEqual(find_diagonal_order_sum(nums), [1, 2, 4, 7, 5, 3, 6, 8, 9])

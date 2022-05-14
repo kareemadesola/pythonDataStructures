@@ -39,6 +39,41 @@ def dominant_index_hint(nums: List[int]) -> int:
     return max_index
 
 
+def plus_one(digits: List[int]) -> List[int]:
+    return list(map(int, str(int(''.join(map(str, digits))) + 1)))
+
+
+def plus_one_base(digits: List[int]) -> List[int]:
+    nums = 0
+    for i in range(len(digits)):
+        nums += digits[i] * 10 ** (len(digits) - 1 - i)
+    return list(map(int, str(nums + 1)))
+
+
+def find_diagonal_order(mat: List[List[int]]) -> List[int]:
+    row_len, col_len = len(mat), len(mat[0])
+    res, intermediate = [], []
+    for i in range(row_len + col_len - 1):
+        # always clear intermediate
+        intermediate.clear()
+
+        # find out the head of the diagonal
+        row_index = 0 if i < col_len else i - col_len + 1
+        col_index = i if i < col_len else col_len - 1
+
+        # iterate down the slope
+        while row_index < row_len and col_index > -1:
+            intermediate.append(mat[row_index][col_index])
+            row_index += 1
+            col_index -= 1
+
+        if i % 2 == 0:
+            res.extend(intermediate[::-1])
+        else:
+            res.extend(intermediate)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_pivot_index(self):
         nums = [-1, -1, -1, -1, -1, 0]

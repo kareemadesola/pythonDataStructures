@@ -74,7 +74,37 @@ def find_diagonal_order(mat: List[List[int]]) -> List[int]:
     return res
 
 
+def find_diagonal_order_simulation(mat: List[List[int]]) -> List[int]:
+    row_len, col_len = len(mat), len(mat[0])
+    row_index, col_index = 0, 0
+    res = []
+
+    # true means going up
+    # false means going down
+    direction = True
+
+    while row_index < row_len and col_index < col_len:
+        res.append(mat[row_index][col_index])
+
+        new_row_index = row_index + (-1 if direction else 1)
+        new_col_index = col_index + (1 if direction else -1)
+
+        if new_row_index < 0 or new_row_index == row_len or new_col_index < 0 or new_col_index == col_len:
+            # if initial direction was up
+            if direction:
+                row_index += (col_index == col_len - 1)
+                col_index += (col_index < col_len - 1)
+            else:
+                col_index += (row_index == row_len - 1)
+                row_index += (row_index < row_len - 1)
+            direction = not direction
+        else:
+            row_index = new_row_index
+            col_index = new_col_index
+    return res
+
+
 class Test(unittest.TestCase):
     def test_pivot_index(self):
-        nums = [-1, -1, -1, -1, -1, 0]
-        self.assertEqual(pivot_index(nums), 2)
+        nums = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        self.assertEqual(find_diagonal_order_simulation(nums), [1, 2, 4, 7, 5, 3, 6, 8, 9])

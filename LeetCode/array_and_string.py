@@ -121,8 +121,43 @@ def find_diagonal_order_sum(mat: List[List[int]]) -> List[int]:
     return res
 
 
+def spiral_order(matrix: List[List[int]]) -> List[int]:
+    if not matrix:
+        return []
+    return list(matrix.pop(0)) + spiral_order([*zip(*matrix)][::-1])
+
+
+def spiral_order_simulation(matrix: List[List[int]]) -> List[int]:
+    top = 0
+    bottom = len(matrix) - 1
+    left = 0
+    right = len(matrix[0]) - 1
+
+    ans = []
+    while top <= bottom and left <= right:
+        for col in range(left, right + 1):
+            ans.append(matrix[top][col])
+        top += 1
+
+        for row in range(top, bottom + 1):
+            ans.append(matrix[row][right])
+        right -= 1
+
+        for col in reversed(range(left, right + 1)):
+            ans.append(matrix[bottom][col])
+        bottom -= 1
+
+        for row in reversed(range(top, bottom + 1)):
+            ans.append(matrix[row][left])
+        left += 1
+
+    return ans[:len(matrix) * len(matrix[0])]
+
+
 class Test(unittest.TestCase):
-    def test_pivot_index(self):
+    def test_spiral_order(self):
         nums = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        self.assertEqual(find_diagonal_order_simulation(nums), [1, 2, 4, 7, 5, 3, 6, 8, 9])
-        self.assertEqual(find_diagonal_order_sum(nums), [1, 2, 4, 7, 5, 3, 6, 8, 9])
+        matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+        self.assertEqual(spiral_order_simulation(nums), [1, 2, 3, 6, 9, 8, 7, 4, 5])
+        self.assertEqual(spiral_order(nums), [1, 2, 3, 6, 9, 8, 7, 4, 5])
+        self.assertEqual(spiral_order_simulation(matrix), [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7])

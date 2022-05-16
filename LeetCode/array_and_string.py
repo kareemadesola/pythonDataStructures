@@ -1,4 +1,5 @@
 import unittest
+from operator import add
 from typing import List
 
 
@@ -154,10 +155,14 @@ def spiral_order_simulation(matrix: List[List[int]]) -> List[int]:
     return ans[:len(matrix) * len(matrix[0])]
 
 
+def generate(num_rows: int) -> List[List[int]]:
+    res = [[1]]
+    for _ in range(num_rows):
+        res.append(list(map(add, res[-1] + [0], [0] + res[-1])))
+    return res[:num_rows]
+
+
 class Test(unittest.TestCase):
-    def test_spiral_order(self):
-        nums = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-        matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
-        self.assertEqual(spiral_order_simulation(nums), [1, 2, 3, 6, 9, 8, 7, 4, 5])
-        self.assertEqual(spiral_order(nums), [1, 2, 3, 6, 9, 8, 7, 4, 5])
-        self.assertEqual(spiral_order_simulation(matrix), [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7])
+    def test_generate(self):
+        num_rows = 5
+        self.assertEqual(generate(num_rows), [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]])

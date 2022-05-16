@@ -162,7 +162,46 @@ def generate(num_rows: int) -> List[List[int]]:
     return res[:num_rows]
 
 
+def add_binary(a: str, b: str) -> str:
+    return bin(int(a, 2) + int(b, 2))[2:]
+
+
+def add_binary_carry(a: str, b: str) -> str:
+    carry = 0
+    a = list(a)
+    b = list(b)
+
+    res = []
+
+    while a or b or carry:
+        if a:
+            carry + int(a.pop())
+        if b:
+            carry += int(b.pop())
+
+        res.append(str(carry % 2))
+        carry = carry // 2
+    return "".join(res)[::-1]
+
+
+def add_binary_carry_no_extra_space(a: str, b: str) -> str:
+    carry = 0
+    a_end = len(a) - 1
+    b_end = len(b) - 1
+    res = []
+
+    while carry or a_end >= 0 or b_end >= 0:
+        if a_end >= 0:
+            carry += int(a[a_end])
+            a_end -= 1
+        if b_end >= 0:
+            carry += int(b[b_end])
+            b_end -= 1
+        res.append(str(carry % 2))
+        carry //= 2
+    return "".join(res)[::-1]
+
+
 class Test(unittest.TestCase):
-    def test_generate(self):
-        num_rows = 5
-        self.assertEqual(generate(num_rows), [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]])
+    def test_add_binary_carry(self):
+        self.assertEqual(add_binary_carry_no_extra_space('1', '11'), '100')

@@ -202,6 +202,37 @@ def add_binary_carry_no_extra_space(a: str, b: str) -> str:
     return "".join(res)[::-1]
 
 
+def str_str(haystack: str, needle: str) -> int:
+    return haystack.find(needle)
+
+
+def str_str_without_find(haystack: str, needle: str) -> int:
+    index = 0
+    needle_len = len(needle)
+    haystack_len = len(haystack)
+    if needle_len == 0:
+        return 0
+    for _ in haystack:
+        if index + needle_len > haystack_len:
+            return -1
+        if haystack[index:index + needle_len] == needle:
+            return index
+        else:
+            index += 1
+    return -1
+
+
+def str_str_without_find_better(haystack: str, needle: str) -> int:
+    needle_len = len(needle)
+    if needle_len == 0:
+        return 0
+    for index in range(len(haystack) - needle_len + 1):
+        if haystack[index] != needle[0]:
+            continue
+        if haystack[index:index + needle_len] == needle:
+            return index
+    return -1
+
+
 class Test(unittest.TestCase):
-    def test_add_binary_carry(self):
-        self.assertEqual(add_binary_carry_no_extra_space('1', '11'), '100')
+    pass

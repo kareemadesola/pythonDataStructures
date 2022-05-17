@@ -2,6 +2,8 @@ import unittest
 from operator import add
 from typing import List
 
+"""Introduction to Array"""
+
 
 def pivot_index(nums: List[int]) -> int:
     total = sum(nums)
@@ -49,6 +51,9 @@ def plus_one_base(digits: List[int]) -> List[int]:
     for i in range(len(digits)):
         nums += digits[i] * 10 ** (len(digits) - 1 - i)
     return list(map(int, str(nums + 1)))
+
+
+"""Introduction to 2D Array"""
 
 
 def find_diagonal_order(mat: List[List[int]]) -> List[int]:
@@ -162,6 +167,9 @@ def generate(num_rows: int) -> List[List[int]]:
     return res[:num_rows]
 
 
+"""Introduction to String"""
+
+
 def add_binary(a: str, b: str) -> str:
     return bin(int(a, 2) + int(b, 2))[2:]
 
@@ -234,5 +242,41 @@ def str_str_without_find_better(haystack: str, needle: str) -> int:
     return -1
 
 
+def longest_common_prefix(strings: List[str]) -> str:
+    min_len_string = min(strings, key=len)
+    prefix = []
+    if len(strings) == 1:
+        return strings[0]
+    if any(element == "" for element in strings):
+        return ''
+    for i in range(len(min_len_string)):
+        if not all(element[i] == min_len_string[i] for element in strings):
+            return ''.join(prefix)
+        prefix.append(min_len_string[i])
+
+
+def longest_common_prefix_lex(strings: List[str]) -> str:
+    min_lex, max_lex = min(strings), max(strings)
+    for index, value in enumerate(min_lex):
+        if max_lex[index] != value:
+            return min_lex[:index]
+    return min_lex
+
+
+"""Two Pointer Technique"""
+
+
+def reverse_string(s: List[str]) -> None:
+    front_runner = 0
+    back_runner = len(s) - 1
+    while front_runner < back_runner:
+        s[front_runner], s[back_runner] = s[back_runner], s[front_runner]
+        front_runner += 1
+        back_runner -= 1
+
+
 class Test(unittest.TestCase):
-    pass
+
+    def test_longest_common_prefix(self):
+        string = ["ab", "a"]
+        self.assertEqual(longest_common_prefix(string), 'a')

@@ -311,6 +311,26 @@ def two_sum_dict(numbers: List[int], target: int) -> List[int]:
         dict_[value] = index
 
 
+def remove_element(nums: List[int], val: int) -> int:
+    slow = 0
+    for fast in nums:
+        if fast != val:
+            nums[slow] = fast
+            slow += 1
+    return slow
+
+
+def remove_element_rare(nums: List[int], val: int) -> int:
+    left, right = 0, len(nums) - 1
+    while left <= right:
+        if nums[left] == val:
+            nums[left], nums[right] = nums[right], nums[left]
+            right -= 1
+        else:
+            left += 1
+    return left
+
+
 class Test(unittest.TestCase):
 
     def test_two_sum(self):

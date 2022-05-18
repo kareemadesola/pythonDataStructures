@@ -275,8 +275,44 @@ def reverse_string(s: List[str]) -> None:
         back_runner -= 1
 
 
+def array_pair_sum(nums: List[int]) -> int:
+    nums.sort()
+    i = 0
+    j = 1
+    max_sum = 0
+    while j < len(nums):
+        max_sum += (nums[i], nums[j])
+        i += 2
+        j += 2
+    return max_sum
+
+
+def array_pair_sum_pythonic(nums: List[int]) -> int:
+    return sum(sorted(nums)[::2])
+
+
+def two_sum(numbers: List[int], target: int) -> List[int]:
+    left = 0
+    right = len(numbers) - 1
+    while left < right:
+        if numbers[left] + numbers[right] < target:
+            left += 1
+        elif numbers[left] + numbers[right] == target:
+            return [left + 1, right + 1]
+        else:
+            right -= 1
+
+
+def two_sum_dict(numbers: List[int], target: int) -> List[int]:
+    dict_ = {}
+    for index, value in enumerate(numbers):
+        if target - value in dict_:
+            return [dict_[target - value] + 1, index + 1]
+        dict_[value] = index
+
+
 class Test(unittest.TestCase):
 
-    def test_longest_common_prefix(self):
-        string = ["ab", "a"]
-        self.assertEqual(longest_common_prefix(string), 'a')
+    def test_two_sum(self):
+        numbers = [1, 3, 4, 4]
+        self.assertEqual(two_sum(numbers, 8), [3, 4])

@@ -331,6 +331,21 @@ def remove_element_rare(nums: List[int], val: int) -> int:
     return left
 
 
+def find_max_consecutive_ones(nums: List[int]) -> int:
+    max_ = 0
+    sum_ = 0
+    for fast in nums:
+        if fast == 1:
+            sum_ += 1
+            # pythonic
+            # max_ = max(sum_, max_)
+            if sum_ > max_:
+                max_ = sum_
+        else:
+            sum_ = 0
+    return max_
+
+
 class Test(unittest.TestCase):
 
     def test_two_sum(self):

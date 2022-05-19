@@ -346,8 +346,19 @@ def find_max_consecutive_ones(nums: List[int]) -> int:
     return max_
 
 
+def min_sub_array_len(target: int, nums: List[int]) -> int:
+    res, total, i = len(nums) + 1, 0, 0
+    for j in range(len(nums)):
+        total += nums[j]
+        while total >= target:
+            res = min(res, j-i+1)
+            total -= nums[i]
+            i += 1
+    return 0 if res > len(nums) else res
+
+
 class Test(unittest.TestCase):
 
-    def test_two_sum(self):
-        numbers = [1, 3, 4, 4]
-        self.assertEqual(two_sum(numbers, 8), [3, 4])
+    def test_min_sub_array_len(self):
+        numbers = [12, 28, 83, 4, 25, 26, 25, 2, 25, 25, 25, 12]
+        self.assertEqual(min_sub_array_len(213, numbers), 8)

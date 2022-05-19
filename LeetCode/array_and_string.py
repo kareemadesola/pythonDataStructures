@@ -351,14 +351,27 @@ def min_sub_array_len(target: int, nums: List[int]) -> int:
     for j in range(len(nums)):
         total += nums[j]
         while total >= target:
-            res = min(res, j-i+1)
+            res = min(res, j - i + 1)
             total -= nums[i]
             i += 1
     return 0 if res > len(nums) else res
 
 
+def rotate(nums: List[int], k: int) -> None:
+    nums_len = len(nums)
+    k %= nums_len
+    for _ in range(k):
+        nums.insert(0, nums.pop())
+
+
+def rotate_slicing(nums: List[int], k: int) -> None:
+    k = k % len(nums)
+    nums[:] = nums[-k:] + nums[:-k]
+
+
 class Test(unittest.TestCase):
 
-    def test_min_sub_array_len(self):
-        numbers = [12, 28, 83, 4, 25, 26, 25, 2, 25, 25, 25, 12]
-        self.assertEqual(min_sub_array_len(213, numbers), 8)
+    def test_rotate(self):
+        nums, k = [1, 2, 3, 4, 5, 6, 7], 3
+        rotate(nums, k)
+        self.assertEqual([5, 6, 7, 1, 2, 3, 4], nums)

@@ -387,7 +387,11 @@ def reverse_words(s: str) -> str:
     return ' '.join(s.split()[::-1])
 
 
+def reverse_words_iii(s: str) -> str:
+    return ' '.join([i[::-1] for i in s.split()])
+
+
 class Test(unittest.TestCase):
 
-    def test_reverse_words(self):
-        self.assertEqual("example good a", reverse_words("a good   example"))
+    def test_reverse_words_iii(self):
+        self.assertEqual("s'teL ekat edoCteeL tsetnoc", reverse_words_iii("Let's take LeetCode contest"))

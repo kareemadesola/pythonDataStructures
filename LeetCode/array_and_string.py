@@ -369,9 +369,21 @@ def rotate_slicing(nums: List[int], k: int) -> None:
     nums[:] = nums[-k:] + nums[:-k]
 
 
+def get_row(row_index: int) -> List[int]:
+    res = [1]
+    for _ in range(row_index):
+        res = list(map(add, [0] + res, res + [0]))
+    return res
+
+
+def get_row_lst_comp(row_index: int) -> List[int]:
+    res = [1]
+    for _ in range(row_index):
+        res = [x + y for x, y in zip([0] + res, res + [0])]
+    return res
+
+
 class Test(unittest.TestCase):
 
-    def test_rotate(self):
-        nums, k = [1, 2, 3, 4, 5, 6, 7], 3
-        rotate(nums, k)
-        self.assertEqual([5, 6, 7, 1, 2, 3, 4], nums)
+    def test_get_row(self):
+        self.assertEqual([1, 3, 3, 1], get_row(3))

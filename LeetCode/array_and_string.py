@@ -391,7 +391,16 @@ def reverse_words_iii(s: str) -> str:
     return ' '.join([i[::-1] for i in s.split()])
 
 
+def remove_duplicates(nums: List[int]) -> int:
+    i = 1
+    for value in nums[1:]:
+        if nums[i-1] != value:
+            nums[i] = value
+            i += 1
+    return i
+
+
 class Test(unittest.TestCase):
 
-    def test_reverse_words_iii(self):
-        self.assertEqual("s'teL ekat edoCteeL tsetnoc", reverse_words_iii("Let's take LeetCode contest"))
+    def test_remove_duplicates(self):
+        self.assertEqual(5, remove_duplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))

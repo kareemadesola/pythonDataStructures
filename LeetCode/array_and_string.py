@@ -383,7 +383,11 @@ def get_row_lst_comp(row_index: int) -> List[int]:
     return res
 
 
+def reverse_words(s: str) -> str:
+    return ' '.join(s.split()[::-1])
+
+
 class Test(unittest.TestCase):
 
-    def test_get_row(self):
-        self.assertEqual([1, 3, 3, 1], get_row(3))
+    def test_reverse_words(self):
+        self.assertEqual("example good a", reverse_words("a good   example"))

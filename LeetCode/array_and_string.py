@@ -392,9 +392,9 @@ def reverse_words_iii(s: str) -> str:
 
 
 def remove_duplicates(nums: List[int]) -> int:
-    i = 1
+    i = 0
     for value in nums[1:]:
-        if nums[i - 1] != value:
+        if nums[i] != value:
             nums[i] = value
             i += 1
     return i
@@ -412,5 +412,4 @@ class Test(unittest.TestCase):
 
     def test_move_zero(self):
         nums = [0, 1, 0, 3, 12]
-        move_zeros(nums)
-        self.assertEqual([1, 3, 12, 0, 0], nums)
+        self.assertEqual(4, remove_duplicates(nums))

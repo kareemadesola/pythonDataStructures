@@ -15,3 +15,18 @@ def contains_duplicate(nums: List[int]) -> bool:
 # space O(k)
 def contains_duplicate_pythonic(nums: List[int]) -> bool:
     return not len(nums) != len(set(nums))
+
+
+# time O(N) N is length of nums
+# space O(k) k is the extra space - set
+def single_number_set(nums: List[int]) -> int:
+    return 2 * sum(set(nums)) - sum(nums)
+
+
+# time O(N)
+# space O(1)
+def single_number_xor(nums: List[int]) -> int:
+    res = 0
+    for i in nums:
+        res ^= i
+    return res

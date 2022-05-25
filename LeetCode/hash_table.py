@@ -30,3 +30,9 @@ def single_number_xor(nums: List[int]) -> int:
     for i in nums:
         res ^= i
     return res
+
+
+# time O(max(nums1, nums2))
+# space O(nums1)
+def intersection(nums1: List[int], nums2: List[int]) -> List[int]:
+    return list(set(nums1).intersection(nums2))

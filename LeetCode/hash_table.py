@@ -1,4 +1,7 @@
+import unittest
 from typing import List
+
+"""Practical Application Hash Set"""
 
 
 # time O(k) where k is set list
@@ -106,3 +109,33 @@ def is_happy_hardcoded_modified(n: int) -> bool:
         n = get_next(n)
 
     return n == 1
+
+
+"""Practical application Hash map"""
+
+
+# time O(nums)
+# space O(nums)
+def two_sum_two_pass(nums: List[int], target: int) -> List[int]:
+    hash_map = {value: index for index, value in enumerate(nums)}
+    for index, value in enumerate(nums):
+        complement = target - value
+        if complement in hash_map and hash_map[complement] != index:
+            return [index, hash_map[complement]]
+
+
+# time O(nums)
+# space O(nums)
+def two_sum_one_pass(nums: List[int], target: int) -> List[int]:
+    hash_map = {}
+    for index, value in enumerate(nums):
+        complement = target - value
+        if complement in hash_map:
+            return [index, hash_map[complement]]
+        hash_map[complement] = index
+
+
+class Test(unittest.TestCase):
+    def test_two_sum_add(self):
+        nums = [2, 7, 11, 15]
+        self.assertEqual(two_sum_two_pass(nums, 9), [0, 1] or [1, 0])

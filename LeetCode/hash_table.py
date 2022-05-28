@@ -1,3 +1,4 @@
+from collections import Counter
 import unittest
 from typing import List
 
@@ -194,6 +195,29 @@ def find_restaurant(list1: List[str], list2: List[str]) -> List[str]:
         elif i + index == min_:
             res.append(value)
     return res
+
+
+# time O(s)
+# space O(26) == O(1)
+def first_uniq_char(s: str) -> int:
+    hash_map = {}
+    for i in s:
+        if i not in hash_map:
+            hash_map[i] = 1
+        else:
+            hash_map[i] += 1
+    for index, value in enumerate(s):
+        if hash_map[value] == 1:
+            return index
+    return -1
+
+
+def first_uniq_char_counter(s: str) -> int:
+    hash_map = Counter(s)
+    for index, value in enumerate(s):
+        if hash_map[value] == 1:
+            return index
+    return -1
 
 
 class Test(unittest.TestCase):

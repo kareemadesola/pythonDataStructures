@@ -166,10 +166,42 @@ def is_isomorphic_transform_string(s: str, t: str) -> bool:
                 hash_map[value] = index
             new_str.append(str(hash_map[value]))
         return " ".join(new_str)
+
     return transform_string(s) == transform_string(t)
 
 
+# time O(max(len(list1),len(list2)))
+# space O(min(len(list1),len(list2)))
+def find_restaurant_set(list1: List[str], list2: List[str]) -> List[str]:
+    common = set(list1).intersection(list2)
+    hash_map = {value: index for index, value in enumerate(list1) if value in common}
+    for index, value in enumerate(list2):
+        if value in hash_map:
+            hash_map[value] += index
+    return [value for value, index in hash_map.items() if index == min(hash_map.values())]
+
+
+# time O(max(list1,list2))
+# space O(list1)
+def find_restaurant(list1: List[str], list2: List[str]) -> List[str]:
+    hash_map = {value: index for index, value in enumerate(list1)}
+    min_, res = len(list1) + len(list2), []
+    for index, value in enumerate(list2):
+        i = hash_map.get(value, min_)
+        if i + index < min_:
+            min_ = i + index
+            res = [value]
+        elif i + index == min_:
+            res.append(value)
+    return res
+
+
 class Test(unittest.TestCase):
+    def test_find_restaurant(self):
+        list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]
+        list2 = ["Piatti", "The Grill at Torrey Pines", "Hungry Hunter Steakhouse", "Shogun"]
+        self.assertEqual(find_restaurant_set(list1, list2), ["Shogun"])
+
     def test_is_isomorphic(self):
         self.assertFalse(is_isomorphic_two_dicts('badc', 'baba'))
         self.assertTrue(is_isomorphic_two_dicts('egg', 'add'))

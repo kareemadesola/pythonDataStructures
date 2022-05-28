@@ -220,6 +220,34 @@ def first_uniq_char_counter(s: str) -> int:
     return -1
 
 
+# time O(max(nums1, nums2))
+# space = O(nums1)
+def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
+    hash_map = Counter(nums1)
+    res = []
+    for i in nums2:
+        if i in hash_map and hash_map[i] > 0:
+            res.append(i)
+            hash_map[i] -= 1
+    return res
+
+
+def intersect_arrays_sorted(nums1: List[int], nums2: List[int]) -> List[int]:
+    nums1_index, nums2_index = 0, 0
+    res = []
+    while nums1_index < len(nums1) and nums2_index < len(nums2):
+        if nums1[nums1_index] < nums2[nums2_index]:
+            nums1_index += 1
+        elif nums1[nums1_index] == nums2[nums2_index]:
+            res.append(nums1_index)
+            nums1_index += 1
+            nums2_index += 1
+        else:
+            nums2_index += 1
+
+    return res
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

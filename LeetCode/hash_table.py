@@ -1,6 +1,7 @@
+import collections
 from collections import Counter
 import unittest
-from typing import List
+from typing import List, Optional
 
 """Practical Application Hash Set"""
 
@@ -255,6 +256,40 @@ def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
             return True
         dict_[value] = index
     return False
+
+
+# time O(strs* KlogK) where K is the maximum length of the string in strs
+# space O(strs * K)
+def group_anagrams(strs: List[str]) -> List[List[str]]:
+    hash_map = {}
+    res: List[List[str]] = []
+    for i in strs:
+        sort_i = ''.join(sorted(i))
+        if sort_i not in hash_map:
+            hash_map[sort_i] = [i]
+        else:
+            hash_map[sort_i].append(i)
+    for i in hash_map:
+        res.append(hash_map[i])
+    return res
+
+
+def group_anagrams_default_dict(strs: List[str]) -> List[List[str]]:
+    hash_map = collections.defaultdict(list)
+    for i in strs:
+        hash_map[tuple(sorted(i))].append(i)
+    return hash_map.values()
+
+
+# time O(strs * K)
+def group_anagrams_count(strs: List) -> List[List[str]]:
+    hash_map = collections.defaultdict(list)
+    for i in strs:
+        count = [0] * 26
+        for c in i:
+            count[ord(c) - ord('a')] += 1
+        hash_map[tuple(count)].append(i)
+    return hash_map.values()
 
 
 class Test(unittest.TestCase):

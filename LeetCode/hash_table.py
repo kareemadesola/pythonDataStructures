@@ -248,6 +248,15 @@ def intersect_arrays_sorted(nums1: List[int], nums2: List[int]) -> List[int]:
     return res
 
 
+def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
+    dict_ = {}
+    for index, value in enumerate(nums):
+        if value in dict_ and index - dict_[value] <= k:
+            return True
+        dict_[value] = index
+    return False
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

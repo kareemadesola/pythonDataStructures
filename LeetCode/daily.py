@@ -60,6 +60,23 @@ def running_sum_better(nums: List[int]) -> List[int]:
     return nums
 
 
+# 2022-06-2, Thu, 6:55
+# time O(N * M) where N is length of matrix and
+# M is the minimum length of column
+# space O(max(N[i]))
+def transpose(matrix: List[List[int]]) -> List[List[int]]:
+    return [list(i) for i in zip(*matrix)]
+
+
+def transpose_without_zip(matrix: List[List[int]]) -> List[List[int]]:
+    row_len, col_len = len(matrix), len(matrix[0])
+    res = [[0 for _ in range(row_len)] for _ in range(col_len)]
+    for r in range(row_len):
+        for c in range(col_len):
+            res[c][r] = matrix[r][c]
+    return res
+
+
 class Test(unittest.TestCase):
     def test_running_sum_better(self):
         self.assertEqual([1, 3, 6, 10], running_sum_better([1, 2, 3, 4]))

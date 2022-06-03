@@ -77,6 +77,35 @@ def transpose_without_zip(matrix: List[List[int]]) -> List[List[int]]:
     return res
 
 
+# 2022-06-3, Fri, 15:58
+class NumMatrix:
+    # time O(rows * cols)
+    # space O(rows * cols)
+    def __init__(self, matrix: List[List[int]]):
+        rows, cols = len(matrix), len(matrix[0])
+        self.sum_matrix = [[0] * (cols + 1) for _ in range(rows + 1)]
+
+        for r in range(rows):
+            prefix = 0
+            for c in range(cols):
+                prefix += matrix[r][c]
+                self.sum_matrix[r + 1][c + 1] = prefix + self.sum_matrix[r][c + 1]
+
+    # # time limit exceeded
+    # def sum_region(self, row1: int, col1: int, row2: int, col2: int) -> int:
+    #     sum_ = 0
+    #     for i in range(row1, row2 + 1):
+    #         sum_ += sum(self.matrix[i][col1:col2 + 1])
+    #     return sum_
+
+    # time O(1)
+    # space O(1)
+    # sum_matrix has rows and cols increased by 1
+    def sum_region(self, row1: int, col1: int, row2: int, col2: int) -> int:
+        return self.sum_matrix[row2 + 1][col2 + 1] - self.sum_matrix[row1][col2 + 1] \
+               - self.sum_matrix[row1 + 1][col1] + self.sum_matrix[row1][col1]
+
+
 class Test(unittest.TestCase):
     def test_running_sum_better(self):
         self.assertEqual([1, 3, 6, 10], running_sum_better([1, 2, 3, 4]))

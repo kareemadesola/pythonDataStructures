@@ -292,6 +292,29 @@ def group_anagrams_count(strs: List) -> List[List[str]]:
     return hash_map.values()
 
 
+# 2022-06-3, Fri, 9:29
+# credit Neetcode
+# time O(1)
+# space O(1)
+def is_valid_sudoku(board: List[List[str]]) -> bool:
+    rows = collections.defaultdict(set)
+    cols = collections.defaultdict(set)
+    squares = collections.defaultdict(set)
+
+    for r in range(9):
+        for c in range(9):
+            element = board[r][c]
+            if element == '.':
+                continue
+            r_, c_ = r // 3, c // 3
+            if element in rows[r] or element in cols[c] or element in squares[(r_, c_)]:
+                return False
+            rows[r].add(element)
+            cols[c].add(element)
+            squares[(r_, c_)].add(element)
+    return True
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

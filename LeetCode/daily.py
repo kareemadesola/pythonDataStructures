@@ -106,6 +106,41 @@ class NumMatrix:
                - self.sum_matrix[row1 + 1][col1] + self.sum_matrix[row1][col1]
 
 
+# 2022-06-4, Sat, 12:34
+# complexity under review
+# time O(n*n)
+# space O(n*n)
+def solve_n_queens(n: int) -> List[List[str]]:
+    cols = set()
+    pos_diags = set()
+    neg_diags = set()
+
+    res = []
+    board = [['.'] * n for _ in range(n)]
+
+    def backtrack(r: int):
+        if r == n:
+            copy = [''.join(row) for row in board]
+            res.append(copy)
+            return
+        for c in range(n):
+            if c in cols or r+c in pos_diags or r-c in neg_diags:
+                continue
+            cols.add(c)
+            pos_diags.add(r+c)
+            neg_diags.add(r-c)
+            board[r][c] = 'Q'
+
+            backtrack(r+1)
+
+            cols.remove(c)
+            pos_diags.remove(r+c)
+            neg_diags.remove(r-c)
+            board[r][c] = '.'
+    backtrack(0)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_running_sum_better(self):
         self.assertEqual([1, 3, 6, 10], running_sum_better([1, 2, 3, 4]))

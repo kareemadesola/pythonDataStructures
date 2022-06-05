@@ -124,24 +124,56 @@ def solve_n_queens(n: int) -> List[List[str]]:
             res.append(copy)
             return
         for c in range(n):
-            if c in cols or r+c in pos_diags or r-c in neg_diags:
+            if c in cols or r + c in pos_diags or r - c in neg_diags:
+                continue
+            cols.add(c)
+            pos_diags.add(r + c)
+            neg_diags.add(r - c)
+            board[r][c] = 'Q'
+
+            backtrack(r + 1)
+
+            cols.remove(c)
+            pos_diags.remove(r + c)
+            neg_diags.remove(r - c)
+            board[r][c] = '.'
+
+    backtrack(0)
+    return res
+
+
+def total_n_queens(n: int) -> int:
+    cols = set()
+    pos_diags = set()
+    neg_diags = set()
+    res = 0
+
+    def backtrack(r: int):
+        if r == n:
+            nonlocal res
+            res += 1
+            return
+        for c in range(n):
+            if c in cols or r + c in pos_diags or r - c in neg_diags:
                 continue
             cols.add(c)
             pos_diags.add(r+c)
             neg_diags.add(r-c)
-            board[r][c] = 'Q'
 
-            backtrack(r+1)
+            backtrack(r + 1)
 
             cols.remove(c)
             pos_diags.remove(r+c)
-            neg_diags.remove(r-c)
-            board[r][c] = '.'
+            neg_diags.remove(r+c)
+
     backtrack(0)
     return res
 
 
 class Test(unittest.TestCase):
+    def test_total_n_queens(self):
+        self.assertEqual(2, total_n_queens(4))
+
     def test_running_sum_better(self):
         self.assertEqual([1, 3, 6, 10], running_sum_better([1, 2, 3, 4]))
 

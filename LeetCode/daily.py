@@ -2,7 +2,7 @@ import math
 
 # time and space 0(1)
 import unittest
-from typing import List
+from typing import List, Optional
 
 
 def divide(dividend: int, divisor: int) -> int:
@@ -157,17 +157,34 @@ def total_n_queens(n: int) -> int:
             if c in cols or r + c in pos_diags or r - c in neg_diags:
                 continue
             cols.add(c)
-            pos_diags.add(r+c)
-            neg_diags.add(r-c)
+            pos_diags.add(r + c)
+            neg_diags.add(r - c)
 
             backtrack(r + 1)
 
             cols.remove(c)
-            pos_diags.remove(r+c)
-            neg_diags.remove(r+c)
+            pos_diags.remove(r + c)
+            neg_diags.remove(r + c)
 
     backtrack(0)
     return res
+
+
+# 2022-06-6, Mon, 16:6
+class ListNode:
+    def __init__(self, x: int):
+        self.val = x
+        self.next = None
+
+
+# time O(n+1)
+# space O(1)
+def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNode]:
+    l1, l2 = head_a, head_b
+    while l1 != l2:
+        l1 = l1.next if l1 else head_b
+        l2 = l2.next if l2 else head_a
+    return l1
 
 
 class Test(unittest.TestCase):

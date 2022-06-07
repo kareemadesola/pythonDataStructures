@@ -187,7 +187,22 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNo
     return l1
 
 
+# 2022-06-7, Tue, 7:57
+def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+    while n > 0 and m > 0:
+        if nums2[n - 1] >= nums1[m - 1]:
+            nums1[(m + n - 1)] = nums2[n - 1]
+            n -= 1
+        else:
+            nums1[(m + n - 1)] = nums1[m - 1]
+            m -= 1
+    while n > 0:
+        nums1[(m + n - 1)] = nums2[n - 1]
+        n -= 1
+
+
 class Test(unittest.TestCase):
+
     def test_total_n_queens(self):
         self.assertEqual(2, total_n_queens(4))
 

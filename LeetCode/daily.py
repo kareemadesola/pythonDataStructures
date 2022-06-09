@@ -201,6 +201,19 @@ def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
         n -= 1
 
 
+# 2022-06-9, Thu, 5:19
+def remove_palindrome_sub(s: str) -> int:
+    if not s:
+        return 0
+    front, back = 0, len(s) - 1
+    while not front > back:
+        if s[front] != s[back]:
+            return 2
+        front += 1
+        back -= 1
+    return 1
+
+
 class Test(unittest.TestCase):
 
     def test_total_n_queens(self):

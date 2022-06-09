@@ -214,6 +214,19 @@ def remove_palindrome_sub(s: str) -> int:
     return 1
 
 
+# 2022-06-9, Thu, 6:30
+def two_sum(numbers: List[int], target: int) -> List[int]:
+    front, back = 0, len(numbers) - 1
+    while front < back:
+        two_sum_ = numbers[front] + numbers[back]
+        if two_sum_ < target:
+            front += 1
+        elif two_sum_ == target:
+            return [front + 1, back + 1]
+        else:
+            back -= 1
+
+
 class Test(unittest.TestCase):
 
     def test_total_n_queens(self):

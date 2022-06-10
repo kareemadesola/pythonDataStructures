@@ -227,7 +227,32 @@ def two_sum(numbers: List[int], target: int) -> List[int]:
             back -= 1
 
 
+# 2022-06-10, Fri, 6:53
+# time O(len_** 3)
+# space O(1)
+def length_of_longest_substring(s: str) -> int:
+    len_ = len(s)
+    if len_ <= 1:
+        return len_
+    l, r, res, temp = 0, 1, 0, 0
+    while r < len_:
+        if s[r] not in s[l:r]:
+            r += 1
+            temp += 1
+            if temp > res:
+                res = temp
+
+        else:
+            temp = 0
+            l += 1
+            r = l + 1
+    return res + 1
+
+
 class Test(unittest.TestCase):
+    def test_length_of_longest_substring(self):
+        self.assertEqual(3, length_of_longest_substring('abcabcbb'))
+        self.assertEqual(3, length_of_longest_substring('pwwkew'))
 
     def test_total_n_queens(self):
         self.assertEqual(2, total_n_queens(4))

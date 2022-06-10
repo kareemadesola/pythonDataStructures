@@ -30,3 +30,18 @@ def has_cycle_better(head: Optional[ListNode]) -> bool:
         if slow == fast:
             return True
     return False
+
+
+# time O(n) where n since the inner while loop run
+# only where one condition is met
+# space O(1)
+def detect_cycle(head: Optional[ListNode]) -> Optional[ListNode]:
+    slow = fast = head
+    while fast and fast.next:
+        slow, fast = slow.next, fast.next.next
+        if fast == slow:
+            # find where head and slow intersect
+            while slow.next:
+                if head == slow:
+                    return slow
+                slow, head = slow.next, head.next

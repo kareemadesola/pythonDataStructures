@@ -249,7 +249,42 @@ def length_of_longest_substring(s: str) -> int:
     return res + 1
 
 
+def length_of_longest_substring_set(s: str) -> int:
+    char_set = set()
+    l, res = 0, 0
+    for r in range(len(s)):
+        while s[r] in char_set:
+            char_set.remove(s[l])
+            l += 1
+        char_set.add(s[r])
+        res = max(res, r - l + 1)
+    return res
+
+
+# time O(s)
+# space O(min(hash_map, s)
+def length_of_longest_substring_hash_map(s: str) -> int:
+    hash_map = {}
+    l, res = 0, 0
+    for r, val in enumerate(s):
+        if val in hash_map and l <= hash_map[val]:
+            l = hash_map[val] + 1
+        hash_map[val] = r
+        res = max(res, r - l + 1)
+    return res
+
+
 class Test(unittest.TestCase):
+    def test_length_of_longest_substring_hash_map(self):
+        # self.assertEqual(3, length_of_longest_substring_hash_map('abcabcbb'))
+        # self.assertEqual(3, length_of_longest_substring_hash_map('pwwkew'))
+        self.assertEqual(2, length_of_longest_substring_hash_map("abba"))
+
+    def test_length_of_longest_substring_set(self):
+        self.assertEqual(3, length_of_longest_substring_set('abcabcbb'))
+        self.assertEqual(3, length_of_longest_substring_set('pwwkew'))
+        self.assertEqual(2, length_of_longest_substring_set("abba"))
+
     def test_length_of_longest_substring(self):
         self.assertEqual(3, length_of_longest_substring('abcabcbb'))
         self.assertEqual(3, length_of_longest_substring('pwwkew'))

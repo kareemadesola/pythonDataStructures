@@ -45,3 +45,13 @@ def detect_cycle(head: Optional[ListNode]) -> Optional[ListNode]:
                 if head == slow:
                     return slow
                 slow, head = slow.next, head.next
+
+
+# time O(m+n) where m is len of l1 and n l2
+# space O(1)
+def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNode]:
+    l1, l2 = head_a, head_b
+    while l1 != l2:
+        l1 = l1.next if l1 else l2
+        l2 = l2.next if l2 else l1
+    return l1

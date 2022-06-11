@@ -2,9 +2,9 @@ from typing import Optional
 
 
 class ListNode:
-    def __init__(self, x):
+    def __init__(self, x, next_node=None):
         self.val = x
-        self.next: Optional[ListNode] = None
+        self.next: Optional[ListNode] = next_node
 
 
 # time O(n) where n is length of head
@@ -55,3 +55,30 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNo
         l1 = l1.next if l1 else l2
         l2 = l2.next if l2 else l1
     return l1
+
+
+def remove_nth_from_end(head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    l = r = head
+    for _ in range(n):
+        r = r.next
+    # if r is None it means it is element
+    # to delete is the first element
+    if not r:
+        head = head.next
+        return head
+    while r.next:
+        l, r = l.next, r.next
+    l.next = l.next.next
+    return head
+
+
+def remove_nth_from_end_dummy(head: Optional[ListNode], n: int) -> Optional[ListNode]:
+    # create dummy as to the point to prev
+    dummy = ListNode(0, head)
+    l, r = dummy, head
+    for _ in range(n):
+        r = r.next
+    while r:
+        l, r = l.next, r.next
+    l.next = l.next.next
+    return dummy.next

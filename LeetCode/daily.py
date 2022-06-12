@@ -293,6 +293,23 @@ def min_operations(nums, x):
     return n - maximum if maximum else -1
 
 
+# 2022-06-12, Sun, 12:29
+# time O(nums)
+# space O(min(seen,nums))
+def maximum_unique_subarray(nums: List[int]) -> int:
+    seen = {}
+    l = temp = res = 0
+    for r, val in enumerate(nums):
+        if val in seen:
+            while l <= seen[val]:
+                temp -= nums[l]
+                l += 1
+        seen[val] = r
+        temp += val
+        res = max(res, temp)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_min_operations(self):
         self.assertEqual(6, min_operations(

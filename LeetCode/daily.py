@@ -310,6 +310,23 @@ def maximum_unique_subarray(nums: List[int]) -> int:
     return res
 
 
+def maximum_unique_subarray_dp(nums: List[int]) -> int:
+    seen = {}
+    n = len(nums)
+    sum_array = [0] * (n + 1)
+    l = res = sum_ = 0
+    for r, val in enumerate(nums):
+        sum_ += val
+        sum_array[r + 1] = sum_
+
+    for r, val in enumerate(nums):
+        if val in seen and l <= seen[val]:
+            l = seen[val] + 1
+        seen[val] = r
+        res = max(res, sum_array[r + 1] - sum_array[l])
+    return res
+
+
 class Test(unittest.TestCase):
     def test_min_operations(self):
         self.assertEqual(6, min_operations(

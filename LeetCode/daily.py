@@ -274,7 +274,34 @@ def length_of_longest_substring_hash_map(s: str) -> int:
     return res
 
 
+def min_operations(nums, x):
+    k = sum(nums) - x
+    n = len(nums)
+    i = prefix_sum = maximum = 0
+
+    if k < 0:
+        return -1
+    if k == 0:
+        return n
+    for j in range(n):
+        prefix_sum += nums[j]
+        while prefix_sum > k:
+            prefix_sum -= nums[i]
+            i += 1
+        if prefix_sum == k:
+            maximum = max(maximum, j - i + 1)
+    return n - maximum if maximum else -1
+
+
 class Test(unittest.TestCase):
+    def test_min_operations(self):
+        self.assertEqual(6, min_operations(
+            [6016, 5483, 541, 4325, 8149, 3515, 7865, 2209, 9623, 9763, 4052, 6540, 2123, 2074, 765,
+             7520, 4941, 5290, 5868, 6150, 6006, 6077, 2856, 7826, 9119], 31841))
+        self.assertEqual(5, min_operations([3, 2, 20, 1, 1, 3], 10))
+        self.assertEqual(2, min_operations([1, 1, 4, 2, 3], 5))
+        self.assertEqual(3, min_operations([1, 1, 1], 3))
+
     def test_length_of_longest_substring_hash_map(self):
         # self.assertEqual(3, length_of_longest_substring_hash_map('abcabcbb'))
         # self.assertEqual(3, length_of_longest_substring_hash_map('pwwkew'))

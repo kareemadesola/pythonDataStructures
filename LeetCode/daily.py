@@ -327,7 +327,21 @@ def maximum_unique_subarray_dp(nums: List[int]) -> int:
     return res
 
 
+# 2022-06-13, Mon, 22:11
+# time O(n*n)
+# space O(n)
+def minimum_total(triangle: List[List[int]]) -> int:
+    dp = [0] * (len(triangle) + 1)
+    for row in triangle[::-1]:
+        for idx, val in enumerate(row):
+            dp[idx] = val + min(dp[idx], dp[idx + 1])
+    return dp[0]
+
+
 class Test(unittest.TestCase):
+    def test_minimum_total(self):
+        self.assertEqual(minimum_total([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]), 11)
+
     def test_min_operations(self):
         self.assertEqual(6, min_operations(
             [6016, 5483, 541, 4325, 8149, 3515, 7865, 2209, 9623, 9763, 4052, 6540, 2123, 2074, 765,

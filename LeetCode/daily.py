@@ -331,10 +331,10 @@ def maximum_unique_subarray_dp(nums: List[int]) -> int:
 # time O(n*n)
 # space O(n)
 def minimum_total(triangle: List[List[int]]) -> int:
-    dp = [0] * (len(triangle) + 1)
-    for row in triangle[::-1]:
-        for idx, val in enumerate(row):
-            dp[idx] = val + min(dp[idx], dp[idx + 1])
+    dp = triangle[-1]
+    for row in triangle[-2::-1]:
+        for idx in range(len(row)):
+            dp[idx] = row[idx] + min(dp[idx], dp[idx + 1])
     return dp[0]
 
 

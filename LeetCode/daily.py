@@ -340,24 +340,22 @@ def minimum_total(triangle: List[List[int]]) -> int:
 
 # 2022-06-14, Tue, 17:37
 # time O(word1*word2)
-# space O(word1*word2)
+# space O(word1)
 def min_distance(word1: str, word2: str) -> int:
     N, M = len(word1), len(word2)
-    dp = [[0] * (N + 1) for _ in range(M + 1)]
+    dp = [0] * (N + 1)
 
     for i in range(M + 1):
-        dp[i][0] = i
-
-    for j in range(N + 1):
-        dp[0][j] = j
-
-    for i in range(1, M + 1):
-        for j in range(1, N + 1):
-            if word1[j - 1] == word2[i - i]:
-                dp[i][j] = dp[i - 1][j - 1]
+        temp = [0] * (N + 1)
+        for j in range(N + 1):
+            if i == 0 or j == 0:
+                temp[j] = i + j
+            if word1[j - 1] == word2[i - 1]:
+                temp[j] = dp[j - 1]
             else:
-                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j])
-    return dp[-1][-1]
+                temp[j] = 1 + min(temp[j - 1], dp[j])
+        dp = temp
+    return dp[-1]
 
 
 class Test(unittest.TestCase):

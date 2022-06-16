@@ -397,9 +397,27 @@ def longest_palindrome_brute_force(s: str) -> str:
     for i in range(N):
         for j in range(i + 1, N + 1):
             # if s[i:j] == ''.join(reversed(s[i:j])):
+            # string= s[i:j] string == string[::-1]
             if s[i:j] == s[j - 1 - N:i - 1 - N:-1] and j - i > mx:
                 mx, res = j - 1, s[i:j]
     return res
+
+
+def longest_palindrome(s: str) -> str:
+    res_l = res_r = 0
+
+    def palindrome(l: int, r: int):
+        nonlocal res_l, res_r
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l > res_r - res_l:
+                res_l, res_r = l, r
+            l -= 1
+            r += 1
+
+    for i in range(len(s)):
+        palindrome(i, i)
+        palindrome(i, i + 1)
+    return s[res_l:res_r + 1]
 
 
 class Test(unittest.TestCase):

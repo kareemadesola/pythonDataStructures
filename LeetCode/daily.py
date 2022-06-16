@@ -2,7 +2,7 @@ import math
 
 # time and space 0(1)
 import unittest
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 
 def divide(dividend: int, divisor: int) -> int:
@@ -375,6 +375,20 @@ def longest_str_chain(words: List[str]) -> int:
     for w in words:
         rec(w)
     return max(memo.values())
+
+
+def longest_str_chain_no_recursion(words: List[str]) -> int:
+    words.sort(key=len)
+    res = 0
+    memo: Dict[str, int] = {}
+    for word in words:
+        memo[word] = 1
+        for i in range(len(word)):
+            nxt = word[:i] + word[i + 1:]
+            if nxt in memo:
+                memo[word] = max(memo[word], memo[nxt] + 1)
+        res = max(res, memo[word])
+    return res
 
 
 class Test(unittest.TestCase):

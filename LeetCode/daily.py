@@ -391,7 +391,21 @@ def longest_str_chain_no_recursion(words: List[str]) -> int:
     return res
 
 
+def longest_palindrome_brute_force(s: str) -> str:
+    N = len(s)
+    mx, res = 0, ''
+    for i in range(N):
+        for j in range(i + 1, N + 1):
+            # if s[i:j] == ''.join(reversed(s[i:j])):
+            if s[i:j] == s[j - 1 - N:i - 1 - N:-1] and j - i > mx:
+                mx, res = j - 1, s[i:j]
+    return res
+
+
 class Test(unittest.TestCase):
+    def test_longest_palindrome_brute_force(self):
+        self.assertEqual('aba', longest_palindrome_brute_force('babad'))
+
     def test_minimum_total(self):
         self.assertEqual(minimum_total([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]), 11)
 

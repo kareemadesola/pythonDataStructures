@@ -420,6 +420,39 @@ def longest_palindrome(s: str) -> str:
     return s[res_l:res_r + 1]
 
 
+# 2022-06-17, Fri, 7:58
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left: TreeNode = left
+        self.right: TreeNode = right
+
+
+# time O(n)
+# space O(1)
+def min_camera_cover(root: Optional[TreeNode]) -> int:
+    res = 0
+
+    #  2 --> Node with camera
+    #  1 --> Node covered by camera
+    # 0 --> Node not covered by camera
+    def dfs(node: TreeNode) -> int:
+        nonlocal res
+        if not node: return 1
+        left = dfs(node.left)
+        right = dfs(node.right)
+
+        # if left == 0 and right == 0
+        if not (left and right):
+            res += 1
+            return 2
+        if left == 2 or right == 2:
+            return 1
+        return 0
+
+    return res if dfs(root) else res + 1
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

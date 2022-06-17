@@ -2,7 +2,7 @@ import math
 
 # time and space 0(1)
 import unittest
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Set
 
 
 def divide(dividend: int, divisor: int) -> int:
@@ -429,8 +429,35 @@ class TreeNode:
 
 
 # time O(n)
-# space O(1)
+# space O(n)
 def min_camera_cover(root: Optional[TreeNode]) -> int:
+    res = 0
+    # Node with or covered by camera
+    covered: Set[Optional[TreeNode]] = set()
+    # skip the leaf nodes and start from one level above
+    covered.add(None)
+
+    def dfs(node: TreeNode, parent: TreeNode = None):
+        nonlocal res
+        if not node:
+            return
+        dfs(node.left, node)
+        dfs(node.right, node)
+
+        if node.left not in covered or node.right not in covered:
+            res += 1
+            covered.add(node)
+            covered.add(parent)
+            covered.add(node.left)
+            covered.add(node.right)
+
+    dfs(root)
+    return res if root in covered else res + 1
+
+
+# time O(n)
+# space O(1)
+def min_camera_cover_states(root: Optional[TreeNode]) -> int:
     res = 0
 
     #  2 --> Node with camera

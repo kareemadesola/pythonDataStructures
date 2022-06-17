@@ -455,6 +455,29 @@ def min_camera_cover(root: Optional[TreeNode]) -> int:
     return res if root in covered else res + 1
 
 
+def min_camera_cover_boolean(root: TreeNode) -> int:
+    res = 0
+
+    def dfs(node: TreeNode) -> tuple[bool, bool]:
+        nonlocal res
+        # camera, monitor
+        if not node:
+            return False, True
+        c1, m1 = dfs(node.left)
+        c2, m2 = dfs(node.right)
+
+        camera, monitor = False, False
+        if c1 or c2:
+            monitor = True
+        if not (m1 and m2):
+            camera, monitor = True, True
+            res += 1
+        return camera, monitor
+
+    _, m = dfs(root)
+    return res if m else res + 1
+
+
 # time O(n)
 # space O(1)
 def min_camera_cover_states(root: Optional[TreeNode]) -> int:

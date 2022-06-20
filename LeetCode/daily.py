@@ -503,6 +503,35 @@ def min_camera_cover_states(root: Optional[TreeNode]) -> int:
     return res if dfs(root) else res + 1
 
 
+# 2022-06-18, Sat, 14:8
+#  TLE
+# class WordFilter:
+#     def __init__(self, words: List[str]):
+#         self.words = words
+#
+#     def f(self, prefix: str, suffix: str) -> int:
+#         res = -1
+#         for idx, val in enumerate(self.words):
+#             if val[:len(prefix)] == prefix and val[-len(suffix):] == suffix:
+#                 res = idx
+#         return res
+
+# 2022-06-20, Mon, 7:36
+class WordFilter:
+    # time O(words*k) where k is length of word
+    # space O(words)
+    def __init__(self, words: List[str]):
+        self.words: Dict[str, int] = {f'{word}#{word}': idx for idx, word in enumerate(words)}
+
+    # time O(spx*word*words)
+    # space O()
+    def f(self, prefix: str, suffix: str) -> int:
+        spx = f'{suffix}#{prefix}'
+        for word, index in reversed(self.words):
+            if spx in word: return index
+        return -1
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

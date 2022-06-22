@@ -1,5 +1,4 @@
 import math
-
 # time and space 0(1)
 import unittest
 from typing import List, Optional, Dict, Set
@@ -530,6 +529,15 @@ class WordFilter:
         for word, index in reversed(self.words):
             if spx in word: return index
         return -1
+
+
+def minimum_length_encoding(words: List[str]) -> int:
+    hash_set = set(words)
+    for word in words:
+        for k in range(1, len(word)):
+            if word[k:] in hash_set:
+                hash_set.discard(word[k:])
+    return sum(len(word) + 1 for word in hash_set)
 
 
 class Test(unittest.TestCase):

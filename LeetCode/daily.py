@@ -557,6 +557,32 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
     return len(heights) - 1
 
 
+# 2022-06-22, Wed, 6:2
+# time O(nums*log(nums))
+# space O(n)
+def find_kth_largest(nums: List[int], k: int) -> int:
+    return sorted(nums)[-k]
+
+
+# time O(nums)
+# space O(n)
+def find_kth_largest_quick_select(nums: List[int], k: int) -> int:
+    k = len(nums) - k
+
+    def quick_select(l: int, r: int):
+        l_p = l
+        for i in range(l, r):
+            if nums[i] <= nums[r]:
+                nums[i], nums[l_p] = nums[l_p], nums[i]
+                l_p += 1
+        nums[l_p], nums[r] = nums[r], nums[l_p]
+        if l_p > k: return quick_select(l, l_p - 1)
+        if l_p < k: return quick_select(l_p + 1, r)
+        return nums[l_p]
+
+    return quick_select(0, len(nums) - 1)
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

@@ -1,3 +1,4 @@
+import heapq
 import math
 # time and space 0(1)
 import unittest
@@ -538,6 +539,22 @@ def minimum_length_encoding(words: List[str]) -> int:
             if word[k:] in hash_set:
                 hash_set.discard(word[k:])
     return sum(len(word) + 1 for word in hash_set)
+
+
+# 2022-06-21, Tue, 21:10
+def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
+    heap = []
+    for i in range(len(heights) - 1):
+        d = heights[i + 1] - heights[i]
+        # better to continue if less
+        # as it won't move down the code unnecessarily
+        if d > 0:
+            heapq.heappush(heap, d)
+        if len(heap) > ladders:
+            bricks -= heapq.heappop(heap)
+        if bricks < 0:
+            return i
+    return len(heights) - 1
 
 
 class Test(unittest.TestCase):

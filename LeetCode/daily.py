@@ -583,6 +583,21 @@ def find_kth_largest_quick_select(nums: List[int], k: int) -> int:
     return quick_select(0, len(nums) - 1)
 
 
+# 2022-06-23, Thu, 14:44:31
+# time O(courses*log(courses))
+# space O(courses)
+def schedule_course(courses: List[List[int]]) -> int:
+    courses.sort(key=lambda x: (x[1]))
+    heap = []
+    max_time = 0
+    for time, end_time in courses:
+        heapq.heappush(heap, -time)
+        max_time += time
+        if max_time > end_time:
+            max_time += heapq.heappop(heap)
+    return len(heap)
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

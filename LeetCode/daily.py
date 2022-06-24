@@ -598,6 +598,21 @@ def schedule_course(courses: List[List[int]]) -> int:
     return len(heap)
 
 
+def is_possible(target: List[int]) -> bool:
+    total = sum(target)
+    target = [-a for a in target]
+    heapq.heapify(target)
+    while True:
+        a = -heapq.heappop(target)
+        total -= a
+        if a == 1 or total == 1: return True
+        if a < total or total == 0 or a % total == 0:
+            return False
+        a %= total
+        total += a
+        heapq.heappush(target, -a)
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

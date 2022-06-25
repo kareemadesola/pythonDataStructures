@@ -613,6 +613,26 @@ def is_possible(target: List[int]) -> bool:
         heapq.heappush(target, -a)
 
 
+# time O(products * log(products))
+# space O(1)
+def suggested_products(products: List[str], search_word: str) -> List[List[str]]:
+    res = []
+    l, r = 0, len(products) - 1
+    products.sort()
+    for i in range(len(search_word)):
+        c = search_word[i]
+        while l <= r and (len(products[l]) <= i or products[l][i] != c):
+            l += 1
+        while l <= r and (len(products[r]) <= i or products[r][i] != c):
+            r -= 1
+
+        res.append([])
+        rem = r - l + 1
+        for j in range(min(3, rem)):
+            res[-1].append(products[l + j])
+    return res
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

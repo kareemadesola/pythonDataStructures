@@ -633,6 +633,27 @@ def suggested_products(products: List[str], search_word: str) -> List[List[str]]
     return res
 
 
+# 2022-06-25, Sat, 12:44:23
+# time O(nums)
+# space O(1)
+def check_possibility(nums: List[int]) -> bool:
+    changed = False
+    for i in range(len(nums) - 1):
+        if nums[i] <= nums[i + 1]:
+            continue
+        if changed:
+            return False
+        # decrease left
+        # i == 0 to not make it out of bound
+        if i == 0 or nums[i + 1] >= nums[i - 1]:
+            nums[i] = nums[i + 1]
+        # Increase right
+        else:
+            nums[i + 1] = nums[i]
+        changed = True
+    return True
+
+
 class Test(unittest.TestCase):
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))

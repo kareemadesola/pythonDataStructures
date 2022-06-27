@@ -662,6 +662,19 @@ def max_score_brute_force(card_points: List[int], k: int) -> int:
     return res
 
 
+def max_score(card_points: List[int], k: int) -> int:
+    l, r = 0, len(card_points) - k
+    total = sum(card_points[r:])
+    res = total
+
+    while r < len(card_points):
+        total += card_points[l] - card_points[r]
+        res = max(res, total)
+        l += 1
+        r += 1
+    return res
+
+
 class Test(unittest.TestCase):
     def test_max_score_brute_force(self):
         self.assertEqual(536, max_score_brute_force([96, 90, 41, 82, 39, 74, 64, 50, 30], 8))

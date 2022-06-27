@@ -654,7 +654,18 @@ def check_possibility(nums: List[int]) -> bool:
     return True
 
 
+def max_score_brute_force(card_points: List[int], k: int) -> int:
+    res, ln = 0, len(card_points)
+    for i in range(k + 1):
+        temp = sum(card_points[:i]) + sum(card_points[ln - k + i:])
+        res = max(res, temp)
+    return res
+
+
 class Test(unittest.TestCase):
+    def test_max_score_brute_force(self):
+        self.assertEqual(536, max_score_brute_force([96, 90, 41, 82, 39, 74, 64, 50, 30], 8))
+
     def test_longest_palindrome_brute_force(self):
         self.assertEqual('aba', longest_palindrome_brute_force('babad'))
 

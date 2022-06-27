@@ -675,6 +675,10 @@ def max_score(card_points: List[int], k: int) -> int:
     return res
 
 
+def min_partitions(n: str) -> int:
+    return int(max(n))
+
+
 class Test(unittest.TestCase):
     def test_max_score_brute_force(self):
         self.assertEqual(536, max_score_brute_force([96, 90, 41, 82, 39, 74, 64, 50, 30], 8))

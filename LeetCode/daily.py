@@ -1,3 +1,4 @@
+import collections
 import heapq
 import math
 # time and space 0(1)
@@ -677,6 +678,19 @@ def max_score(card_points: List[int], k: int) -> int:
 
 def min_partitions(n: str) -> int:
     return int(max(n))
+
+
+# time O(N + K**2) where K is the length distinct characters
+# space O(K)
+def min_deletions(s: str) -> int:
+    s, res = collections.Counter(s), 0
+    set_ = set()
+    for i in s:
+        while s[i] and s[i] in set_:
+            s[i] -= 1
+            res += 1
+        set_.add(s[i])
+    return res
 
 
 class Test(unittest.TestCase):

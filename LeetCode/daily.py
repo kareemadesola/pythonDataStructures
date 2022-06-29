@@ -693,6 +693,17 @@ def min_deletions(s: str) -> int:
     return res
 
 
+# 2022-06-29, Wed, 20:06:08
+# time O(nlogn + n**2)  ~ n**2
+# space O(n) merge sort
+def reconstruct_queue(people: List[List[int]]) -> List[List[int]]:
+    people.sort(key=lambda x: (-x[0], x[1]))
+    res = []
+    for p in people:
+        res.insert(p[1], p)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_max_score_brute_force(self):
         self.assertEqual(536, max_score_brute_force([96, 90, 41, 82, 39, 74, 64, 50, 30], 8))

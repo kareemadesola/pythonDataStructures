@@ -1,7 +1,7 @@
 import collections
-from collections import Counter
 import unittest
-from typing import List, Optional
+from collections import Counter
+from typing import List
 
 """Practical Application Hash Set"""
 

@@ -620,6 +620,7 @@ def suggested_products(products: List[str], search_word: str) -> List[List[str]]
     res = []
     l, r = 0, len(products) - 1
     products.sort()
+    # products + search_word
     for i in range(len(search_word)):
         c = search_word[i]
         while l <= r and (len(products[l]) <= i or products[l][i] != c):

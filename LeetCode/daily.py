@@ -704,6 +704,17 @@ def reconstruct_queue(people: List[List[int]]) -> List[List[int]]:
     return res
 
 
+# 2022-06-30, Thu, 19:19:26
+# time O(nlogn) where n is length of nums
+# space O(n) due to merge sort
+# https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/discuss/2215732/C%2B%2B-oror-3-Approaches-oror-Full-Explanation
+# for better implementations
+def min_moves_2(nums: List[int]) -> int:
+    nums.sort()
+    median = nums[len(nums) // 2]
+    return sum(abs(median - num) for num in nums)
+
+
 class Test(unittest.TestCase):
     def test_max_score_brute_force(self):
         self.assertEqual(536, max_score_brute_force([96, 90, 41, 82, 39, 74, 64, 50, 30], 8))

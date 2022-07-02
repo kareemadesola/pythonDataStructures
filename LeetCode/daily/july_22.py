@@ -15,3 +15,22 @@ def maximum_units(box_types: List[List[int]], truck_size: int) -> int:
         truck_size -= mn
         i += 1
     return res
+
+
+# 2022-07-2, Sat, 22:02:12
+# time O(max(MlogM,NlogN))
+# space O(max(M,N))
+# https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/discuss/661673
+# /JavaPython-3-Find-the-max-width-and-height.
+def max_area(h: int, w: int, horizontal_cuts: List[int], vertical_cuts: List[int]) -> int:
+    horizontal_cuts.sort(), vertical_cuts.sort()
+    horizontal_cuts = [0] + horizontal_cuts + [h]
+    vertical_cuts = [0] + vertical_cuts + [w]
+    max_h = max_w = 0
+    for i in range(1, len(horizontal_cuts)):
+        max_h = max(max_h, abs(horizontal_cuts[i] - horizontal_cuts[i - 1]))
+
+    for i in range(1, len(vertical_cuts)):
+        max_w = max(max_w, vertical_cuts[i] - vertical_cuts[i - 1])
+
+    return (max_h * max_w) % (10 ** 9 + 7)

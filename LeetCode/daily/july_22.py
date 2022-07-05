@@ -34,3 +34,15 @@ def max_area(h: int, w: int, horizontal_cuts: List[int], vertical_cuts: List[int
         max_w = max(max_w, vertical_cuts[i] - vertical_cuts[i - 1])
 
     return (max_h * max_w) % (10 ** 9 + 7)
+
+
+# time O(N) N = len(nums)
+# space O(N)
+def wiggle_max_length(nums: List[int]) -> int:
+    dp = [nums[i - 1] - nums[i] for i in range(1, len(nums)) if nums[i - 1] - nums[i] != 0]
+    if not dp: return 1
+    cur = 2
+    for i in range(1, len(dp)):
+        if dp[i - 1] ^ dp[i] < 0:
+            cur += 1
+    return cur

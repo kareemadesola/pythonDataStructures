@@ -46,3 +46,18 @@ def wiggle_max_length(nums: List[int]) -> int:
         if dp[i - 1] ^ dp[i] < 0:
             cur += 1
     return cur
+
+
+# 2022-07-5, Tue, 03:36:52
+# time O(N) N = len(nums)
+# space O(1)
+def wiggle_max_length_up_down(nums: List[int]) -> int:
+    if not nums:
+        return 0
+    up = down = 1
+    for i in range(1, len(nums)):
+        if nums[i] > nums[i - 1]:
+            up = down + 1
+        elif nums[i] < nums[i - 1]:
+            down = up + 1
+    return max(up, down)

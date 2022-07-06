@@ -78,3 +78,18 @@ def candy(ratings: List[int]) -> int:
             res[i] = max(res[i + 1] + 1, res[i])
 
     return sum(res)
+
+
+# 2022-07-5, Tue, 22:19:33
+# time O(nums)
+# space O(nums)
+def longest_consecutive(nums: List[int]) -> int:
+    nums = set(nums)
+    longest = 0
+    for i in nums:
+        if i - 1 not in nums:
+            temp = 0
+            while i + 1 in nums:
+                temp += 1
+            longest = max(longest, temp)
+    return longest

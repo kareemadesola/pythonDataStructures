@@ -96,6 +96,25 @@ def longest_consecutive(nums: List[int]) -> int:
     return longest
 
 
+# 2022-07-6, Wed, 13:43:38
+# time O(nlogn) where n = len(nums)
+# space O(n)
+def longest_consecutive_sort(nums: List[int]) -> int:
+    if not nums:
+        return 0
+    nums.sort()
+    longest, temp = 0, 1
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i - 1]:
+            continue
+        if nums[i] != nums[i - 1] + 1:
+            longest = max(longest, temp)
+            temp = 1
+        else:
+            temp += 1
+    return max(longest, temp)
+
+
 # 2022-07-6, Wed, 06:47:49
 # time O(n)
 # space O(1) since max_size = 128

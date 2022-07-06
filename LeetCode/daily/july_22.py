@@ -61,3 +61,20 @@ def wiggle_max_length_up_down(nums: List[int]) -> int:
         elif nums[i] < nums[i - 1]:
             down = up + 1
     return max(up, down)
+
+
+def candy(ratings: List[int]) -> int:
+    n = len(ratings)
+    res = [1] * n
+
+    # increment if current > prev
+    for i in range(1, n):
+        if ratings[i] > ratings[i - 1]:
+            res[i] = max(res[i - 1] + 1, res[i])
+
+    # increment if  current > next
+    for i in range(n - 2, -1, -1):
+        if ratings[i] > ratings[i + 1]:
+            res[i] = max(res[i + 1] + 1, res[i])
+
+    return sum(res)

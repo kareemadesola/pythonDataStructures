@@ -89,7 +89,7 @@ def longest_consecutive(nums: List[int]) -> int:
     longest = 0
     for i in nums:
         if i - 1 not in nums:
-            temp = 0
+            temp = 1
             while i + 1 in nums:
                 temp += 1
             longest = max(longest, temp)

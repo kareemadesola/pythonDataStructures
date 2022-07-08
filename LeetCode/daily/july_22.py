@@ -138,18 +138,19 @@ def fib_iter(n: int) -> int:
 # time O(s1*s2)
 # space O(s1*s2)
 def is_interleave(s1: str, s2: str, s3: str) -> bool:
-    if len(s1) + len(s2) != len(s3):
+    s1_len, s2_len = len(s1), len(s2)
+    if s1_len + s2_len != len(s3):
         return False
     dp = set()
 
     def dfs(i, j):
-        if i == len(s1) and j == len(s2):
+        if i == s1_len and j == s2_len:
             return True
         if (i, j) in dp:
             return False
-        if i < len(s1) and s1[i] == s3[i + j] and dfs(i + 1, j):
+        if i < s1_len and s1[i] == s3[i + j] and dfs(i + 1, j):
             return True
-        if j < len(s2) and s2[j] == s3[i + j] and dfs(i, j + 1):
+        if j < s2_len and s2[j] == s3[i + j] and dfs(i, j + 1):
             return True
         dp.add((i, j))
         return False

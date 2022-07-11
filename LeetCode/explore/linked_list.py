@@ -115,3 +115,18 @@ def reverse_list_recurse_helper(head: Optional[ListNode]) -> Optional[ListNode]:
         return reverse(nxt, curr)
 
     return reverse(head, None)
+
+
+# 2022-07-11, Mon, 19:26:21
+# time O(n)
+# space O(n)
+def reverse_list_recursion(head: Optional[ListNode]) -> Optional[ListNode]:
+    if not head:
+        return None
+
+    new_head = head
+    if head.next:
+        new_head = reverse_list_recursion(head.next)
+        head.next.next = head
+    head.next = None
+    return new_head

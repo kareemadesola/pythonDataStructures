@@ -84,6 +84,9 @@ def remove_nth_from_end_dummy(head: Optional[ListNode], n: int) -> Optional[List
     return dummy.next
 
 
+# 2022-07-11, Mon, 16:47:32
+# time O(n)
+# space O(1)
 def reverse_list(head: Optional[ListNode]) -> Optional[ListNode]:
     """ Use three pointers prev, current and a nxt pointer
     to keep track of curr next """
@@ -95,3 +98,20 @@ def reverse_list(head: Optional[ListNode]) -> Optional[ListNode]:
         prev = curr
         curr = nxt
     return prev
+
+
+# 2022-07-11, Mon, 19:20:13
+# time O(n)
+# space O(n)
+def reverse_list_recurse_helper(head: Optional[ListNode]) -> Optional[ListNode]:
+    """Use a recursive helper function that take
+     curr and prev as parameters"""
+
+    def reverse(curr, prev):
+        if not curr:
+            return prev
+        nxt = curr.next
+        curr.next = prev
+        return reverse(nxt, curr)
+
+    return reverse(head, None)

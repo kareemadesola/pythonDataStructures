@@ -82,3 +82,16 @@ def remove_nth_from_end_dummy(head: Optional[ListNode], n: int) -> Optional[List
         l, r = l.next, r.next
     l.next = l.next.next
     return dummy.next
+
+
+def reverse_list(head: Optional[ListNode]) -> Optional[ListNode]:
+    """ Use three pointers prev, current and a nxt pointer
+    to keep track of curr next """
+    prev = None
+    curr = head
+    while curr:
+        nxt = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nxt
+    return prev

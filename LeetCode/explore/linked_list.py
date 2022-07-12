@@ -1,4 +1,5 @@
-from typing import Optional
+import collections
+from typing import Optional, List
 
 
 class ListNode:
@@ -130,3 +131,67 @@ def reverse_list_recursion(head: Optional[ListNode]) -> Optional[ListNode]:
         head.next.next = head
     head.next = None
     return new_head
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
+
+
+def right_side_view(root: Optional[TreeNode]) -> List[int]:
+    if not root:
+        return []
+    right = right_side_view(root.right)
+    left = right_side_view(root.left)
+    return [root.val] + right + left[len(right):]
+
+
+def right_side_view_bfs(root: Optional[TreeNode]) -> List[int]:
+    res = []
+    q = collections.deque([root])
+    while q:
+        right_side = None
+        q_len = len(q)
+
+        for _ in range(q_len):
+            node = q.popleft()
+            if node:
+                right_side = node
+                q.append(node.left)
+                q.append(node.right)
+        if right_side:
+            res.append(right_side.val)
+    return res
+
+
+# https://leetcode.com/problems/binary-tree-right-side-view/discuss/56064/5-9-Lines-Python-48%2B-ms
+def right_side_view_bfs_alt(root: Optional[TreeNode]) -> List[int]:
+    """Remove None's from level using list comprehension"""
+    res = []
+    level = [root] if root else None
+    while level:
+        res.append(level[-1].val)
+        level = [child for node in level for child in (node.left, node.right) if child]
+    return res
+
+
+def right_side_view_dfs(root: Optional[TreeNode]) -> List[int]:
+    """Using dfs get all right first
+    After right  has been exceeded check left"""
+    res = []
+    len_res = 0
+
+    def collect(node: TreeNode, depth):
+        nonlocal len_res
+        if not node:
+            return
+        if depth == len_res:
+            res.append(node)
+            len_res += 1
+        collect(node.right, depth + 1)
+        collect(node.left, depth + 1)
+
+    collect(root, 0)
+    return res

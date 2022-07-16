@@ -1,5 +1,6 @@
+import collections
 from functools import lru_cache
-from typing import List
+from typing import List, Optional
 
 
 # 2022-07-1, Fri, 22:23:09
@@ -175,3 +176,87 @@ def is_interleave_dp(s1: str, s2: str, s3: str) -> bool:
             if j < len(s2) and s2[j] == s3[i + j] and dp[i][j + 1]:
                 dp[i][j] = True
     return dp[0][0]
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
+
+
+def right_side_view(root: Optional[TreeNode]) -> List[int]:
+    if not root:
+        return []
+    right = right_side_view(root.right)
+    left = right_side_view(root.left)
+    return [root.val] + right + left[len(right):]
+
+
+def right_side_view_bfs(root: Optional[TreeNode]) -> List[int]:
+    res = []
+    q = collections.deque([root])
+    while q:
+        right_side = None
+        q_len = len(q)
+
+        for _ in range(q_len):
+            node = q.popleft()
+            if node:
+                right_side = node
+                q.append(node.left)
+                q.append(node.right)
+        if right_side:
+            res.append(right_side.val)
+    return res
+
+
+# https://leetcode.com/problems/binary-tree-right-side-view/discuss/56064/5-9-Lines-Python-48%2B-ms
+def right_side_view_bfs_alt(root: Optional[TreeNode]) -> List[int]:
+    """Remove None's from level using list comprehension"""
+    res = []
+    level = [root] if root else None
+    while level:
+        res.append(level[-1].val)
+        level = [child for node in level for child in (node.left, node.right) if child]
+    return res
+
+
+def right_side_view_dfs(root: Optional[TreeNode]) -> List[int]:
+    """Using dfs get all right first
+    After right  has been exceeded check left"""
+    res = []
+    len_res = 0
+
+    def collect(node: TreeNode, depth):
+        nonlocal len_res
+        if not node:
+            return
+        if depth == len_res:
+            res.append(node)
+            len_res += 1
+        collect(node.right, depth + 1)
+        collect(node.left, depth + 1)
+
+    collect(root, 0)
+    return res
+
+
+def make_square(matchsticks: List[int]) -> bool:
+    # todo
+    return sum(matchsticks) % 4 == 0
+
+
+def level_order(root: Optional[TreeNode]) -> List[List[int]]:
+    # todo
+    pass
+
+
+def build_tree(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    if not preorder or not inorder:
+        return None
+    root = TreeNode(preorder[0])
+    mid = inorder.index(preorder[0])
+    root.left = build_tree(preorder[1:mid + 1], inorder[:mid])
+    root.right = build_tree(preorder[mid + 1:], inorder[mid + 1:])
+    return root

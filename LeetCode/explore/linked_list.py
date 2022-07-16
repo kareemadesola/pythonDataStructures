@@ -153,3 +153,28 @@ def remove_elements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
             prev = curr
         curr = nxt
     return dummy.next
+
+
+"""Similar"""
+
+
+# 2022-07-16, Sat, 18:06:57
+# time O(n)
+# space O(1)
+def odd_even_list(head: Optional[ListNode]) -> Optional[ListNode]:
+    """
+    Have pointers odd, even_head and even
+    Iterate till odd and even get to tail
+    Link new of odd to even_head
+    return head
+    """
+    if not head:
+        return None
+    odd, even_head, even = head, head.next, head.next
+    while even and even.next:
+        odd.next = odd.next.next
+        odd = odd.next
+        even.next = even.next.next
+        even = even.next
+    odd.next = even_head
+    return head

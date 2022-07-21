@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 
 class ListNode:
@@ -178,3 +178,59 @@ def odd_even_list(head: Optional[ListNode]) -> Optional[ListNode]:
         even = even.next
     odd.next = even_head
     return head
+
+
+def split_list_to_parts_att(head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
+    res: List[Optional[ListNode]] = []
+    head_len, ptr = 0, head
+    while ptr:
+        head_len += 1
+        ptr = ptr.next
+    ptr = head
+    div, mod = divmod(head_len, k)
+    while ptr:
+        if mod > 0:
+            temp = div + 1
+            mod -= 1
+        else:
+            temp = div
+        nxt = ptr
+        for _ in range(temp):
+            nxt = ptr.next
+            ptr = nxt
+        ptr.next = None
+        res.append(head)
+        head = nxt
+
+    while head_len < k:
+        res.append(None)
+        head_len += 1
+    return res
+
+
+def split_list_to_part(head: Optional[ListNode], k: int) -> List[Optional[ListNode]]:
+    """
+    Get the length of head
+
+    Get the integer division and remainder
+
+    While iterating through k:
+        Initialize head and head_pointer
+
+    While iterating through width (integer division) + remainder:
+        head_pointer.next = head_pointer = ListNode(cur.val)
+
+        curr = curr.next
+
+    Append head
+
+    return ans
+    """
+    pass
+
+
+def is_palindrome(head: Optional[ListNode]) -> bool:
+    """
+    Get the middle node
+    """
+    pass

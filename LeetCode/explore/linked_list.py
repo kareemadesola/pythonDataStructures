@@ -229,8 +229,33 @@ def split_list_to_part(head: Optional[ListNode], k: int) -> List[Optional[ListNo
     pass
 
 
+# 2022-07-21, Thu, 04:04:17
+# time O(n)
+# space O(1)
 def is_palindrome(head: Optional[ListNode]) -> bool:
     """
     Get the middle node
+
+    reverse from the middle
+
+    compare head with reversed middle
     """
-    pass
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    def reverse(list_node: ListNode) -> ListNode:
+        prev, curr = None, list_node
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev, curr = curr, nxt
+        return prev
+
+    slow = reverse(slow)
+    while slow:
+        if head.val != slow.val:
+            return False
+        head, slow = head.next, slow.next
+    return True

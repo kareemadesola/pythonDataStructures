@@ -259,3 +259,37 @@ def is_palindrome(head: Optional[ListNode]) -> bool:
             return False
         head, slow = head.next, slow.next
     return True
+
+
+# 2022-07-23, Sat, 21:09:18
+# time O(list1+list2)
+# space O(1)
+def merge_two_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    """
+    Create a dummy to represent prev node
+    create a pointer `tail` for dummy
+    while l1 or l2 is not None:
+        if l1 < l2:
+            append l1 to tail pointer
+            go to next node
+        else:
+            append l2
+            go to next node
+        move tail pointer to next node
+    if l1 is not None:
+        tail.next = l1
+    else if l2:
+        tail.next = l2
+    return dummy.next
+    """
+    tail = dummy = ListNode()
+    while list1 and list2:
+        if list1.val < list2.val:
+            tail.next = list1
+            list1 = list1.next
+        else:
+            tail.next = list2
+            list2 = list2.next
+        tail = tail.next
+    tail.next = list1 if list1 else list2
+    return dummy.next

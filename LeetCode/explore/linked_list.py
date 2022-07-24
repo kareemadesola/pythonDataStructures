@@ -293,3 +293,43 @@ def merge_two_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Opt
         tail = tail.next
     tail.next = list1 if list1 else list2
     return dummy.next
+
+
+def add_two_numbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    """
+    Curry a dummy node and its pointer
+    while l1 and l2 is not None:
+        get div, mod of both nodes and div
+        create next of tail
+        move all nodes to next node
+    while l1 is not None:
+        get div, mod of l1 and div
+        create next of tail
+        move l1 and tail to next node
+    do the same for l2
+    if div is not zero:
+        assign div to tail.next
+    get dummy.next
+
+    Alternatively
+        While l1 or l2 or div is not None:
+        check always if l1 or l2 else val=0
+        and node is None else next
+    """
+    dummy = tail = ListNode()
+    div = 0
+    while l1 and l2:
+        div, mod = divmod(l1.val + l2.val + div, 10)
+        tail.next = ListNode(mod)
+        l1, l2, tail = l1.next, l2.next, tail.next
+    while l1:
+        div, mod = divmod(l1.val + div, 10)
+        tail.next = ListNode(mod)
+        l1, tail = l1.next, tail.next
+    while l2:
+        div, mod = divmod(l2.val + div, 10)
+        tail.next = ListNode(mod)
+        l2, tail = l2.next, tail.next
+    if div:
+        tail.next = ListNode(div)
+    return dummy.next

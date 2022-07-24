@@ -18,13 +18,15 @@ def bestHand(self, ranks: List[int], suits: List[str]) -> str:
 
 
 def zeroFilledSubarray(self, nums: List[int]) -> int:
-    cnt = l = r = 0
-    while r < len(nums):
-        temp = 0
+    cnt = r = 0
+    l = -1
+    nums_len = len(nums)
+    while r < nums_len:
         while nums[r] == 0:
-            temp += r - l
-            cnt += temp
+            cnt += r - l
             r += 1
+            if r == nums_len:
+                break
         l = r
         r += 1
     return cnt

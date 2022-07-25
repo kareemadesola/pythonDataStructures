@@ -333,3 +333,35 @@ def add_two_numbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[
     if div:
         tail.next = ListNode(div)
     return dummy.next
+
+
+# 2022-07-25, Mon, 14:52:43
+# time O(number of nodes of head)
+# space O(1)
+class Node:
+    def __init__(self, val=0, prev=None, next_node=None, child=None):
+        self.val: int = val
+        self.prev: Node = prev
+        self.next: Node = next_node
+        self.child: Node = child
+
+
+def flatten(head: Optional[Node]) -> Optional[Node]:
+    curr = head
+    while curr:
+        if not curr.child:
+            curr = curr.next
+            continue
+        temp = curr.child
+        # Get last child node
+        while temp.next:
+            temp = temp.next
+        # point next of last child node to curr next
+        temp.next = curr.next
+        # point curr.next.prev to temp if curr.next exists
+        if curr.next:
+            curr.next.prev = temp
+        curr.next = curr.child
+        curr.child.prev = curr
+        curr.child = None
+    return head

@@ -1,3 +1,4 @@
+import copy
 from typing import Optional, List
 
 
@@ -396,3 +397,11 @@ def flatten_stack(head: Optional[Node]) -> Optional[Node]:
             curr.next.prev = curr
         curr = curr.next
     return head
+
+
+# 2022-07-27, Wed, 19:40:18
+def copy_random_list_deepcopy(head: Optional[Node]) -> Optional[Node]:
+    """
+    Solution with deepcopy
+    """
+    return copy.deepcopy(head)

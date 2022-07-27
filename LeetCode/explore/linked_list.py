@@ -365,3 +365,34 @@ def flatten(head: Optional[Node]) -> Optional[Node]:
         curr.child.prev = curr
         curr.child = None
     return head
+
+
+# time O(number of nodes)
+# space O(number of branches)
+def flatten_stack(head: Optional[Node]) -> Optional[Node]:
+    """
+    Using a stack
+    while curr is not None:
+        if curr node has child:
+            push its next node if it exists
+            point curr next to its child
+            point prev of curr next to itself
+            del curr child
+        else if curr next is None and stack is not empty:
+            point curr next to element popped
+            point prev of curr next to itself
+        move curr to next node
+    """
+    curr, stack = head, []
+    while curr:
+        if curr.child:
+            if curr.next:
+                stack.append(curr.next)
+            curr.next = curr.child
+            curr.next.prev = curr
+            curr.child = None
+        elif not curr.next and stack:
+            curr.next = stack.pop()
+            curr.next.prev = curr
+        curr = curr.next
+    return head

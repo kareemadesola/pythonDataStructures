@@ -1,3 +1,4 @@
+import collections
 import copy
 from typing import Optional, List
 
@@ -437,3 +438,28 @@ def copy_random_list(head: Optional[RandomNode]) -> Optional[RandomNode]:
         new.random = hash_map[curr.random]
         curr = curr.next
     return hash_map[head]
+
+
+def rotate_right_deque(head: Optional[ListNode], k: int) -> Optional[ListNode]:
+    """
+    Use a deque to store nodes
+    since k can be large make k = k%len(deque)
+    append left what has been popped
+    """
+    if not head or not head.next:
+        return head
+    deque_ = collections.deque()
+    curr = head
+    while curr:
+        temp = curr.next
+        curr.next = None
+        deque_.append(curr)
+        curr = temp
+    k %= len(deque_)
+    for _ in range(k):
+        deque_.appendleft(deque_.pop())
+    head = curr = deque_[0]
+    while deque_:
+        curr.next = deque_.popleft()
+        curr = curr.next
+    return head

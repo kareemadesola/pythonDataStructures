@@ -440,6 +440,8 @@ def copy_random_list(head: Optional[RandomNode]) -> Optional[RandomNode]:
     return hash_map[head]
 
 
+# time O(n)
+# space O(n)
 def rotate_right_deque(head: Optional[ListNode], k: int) -> Optional[ListNode]:
     """
     Use a deque to store nodes
@@ -463,4 +465,38 @@ def rotate_right_deque(head: Optional[ListNode], k: int) -> Optional[ListNode]:
     while deque_:
         curr.next = deque_.popleft()
         curr = curr.next
+    return head
+
+
+# 2022-07-28, Thu, 11:25:07
+# time O(n)
+# space O(1)
+def rotate_right(head: Optional[ListNode], k: int) -> Optional[ListNode]:
+    """
+    create a cycle by looping through to the last node and setting its next pointer to head
+    loop through head to the get prev of new head using n-k-1 where n is len of head
+    set head to next of prev
+    set next of prev to None
+    return head
+
+    """
+    if not head or not head.next:
+        return head
+    curr = head
+    # form a cycle and get list's size
+    len_ = 0
+    # get last node
+    while curr and curr.next:
+        curr = curr.next
+        len_ += 1
+    curr.next = head
+    # Since the last node isn't taken into account
+    len_ += 1
+    k %= len_
+    temp = head
+    # get prev of new head node
+    for _ in range(len_ - k - 1):
+        temp = temp.next
+
+    head, temp.next = temp.next, None
     return head

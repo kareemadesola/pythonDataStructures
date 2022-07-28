@@ -399,9 +399,41 @@ def flatten_stack(head: Optional[Node]) -> Optional[Node]:
     return head
 
 
+class RandomNode:
+    def __init__(self, x: int = 0, next_node: Node = None, random: Node = None
+                 ):
+        self.val = x
+        self.next = next_node
+        self.random = random
+
+
 # 2022-07-27, Wed, 19:40:18
 def copy_random_list_deepcopy(head: Optional[Node]) -> Optional[Node]:
     """
     Solution with deepcopy
     """
     return copy.deepcopy(head)
+
+
+def copy_random_list(head: Optional[RandomNode]) -> Optional[RandomNode]:
+    """
+    Two passes
+
+    create the dict that maps old to new node
+    In the first pass, populate dict
+    In the second pass, get mapped node
+    and populate next and random pointers
+    """
+    hash_map = {None: None}
+    curr = head
+    while curr:
+        hash_map[curr] = RandomNode(curr.val)
+        curr = curr.next
+
+    curr = head
+    while curr:
+        new = hash_map[curr]
+        new.next = hash_map[curr.next]
+        new.random = hash_map[curr.random]
+        curr = curr.next
+    return hash_map[head]

@@ -444,7 +444,7 @@ def rotate_right_deque(head: Optional[ListNode], k: int) -> Optional[ListNode]:
     """
     Use a deque to store nodes
     since k can be large make k = k%len(deque)
-    append left what has been popped
+    append left what has been popped k number of times
     """
     if not head or not head.next:
         return head
@@ -452,6 +452,7 @@ def rotate_right_deque(head: Optional[ListNode], k: int) -> Optional[ListNode]:
     curr = head
     while curr:
         temp = curr.next
+        # to make it more space  efficient
         curr.next = None
         deque_.append(curr)
         curr = temp

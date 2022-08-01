@@ -1,6 +1,8 @@
 import collections
 from typing import List
 
+from LeetCode.daily.july_22 import TreeNode
+
 
 def num_islands(grid: List[List[str]]) -> int:
     pass
@@ -32,3 +34,22 @@ class MovingAverage:
         else:
             self.curr_sum -= self.data.popleft()
         return self.curr_sum / self.curr_size
+
+
+def bfs(root: TreeNode, target: TreeNode) -> int:
+    """BFS with no cycles guaranteed """
+    if not root or not target: return -1
+    queue: collections.deque[TreeNode] = collections.deque([root])
+    steps = 0
+
+    while queue:
+        size = len(queue)
+        for _ in range(size):
+            curr = queue[0]
+            if curr == target:
+                return steps
+            if curr.left: queue.append(curr.left)
+            if curr.right: queue.append(curr.right)
+            queue.popleft()
+        steps += 1
+    return -1

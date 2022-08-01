@@ -45,12 +45,11 @@ def bfs(root: TreeNode, target: TreeNode) -> int:
     while queue:
         size = len(queue)
         for _ in range(size):
-            curr = queue[0]
+            curr = queue.popleft()
             if curr == target:
                 return steps
             if curr.left: queue.append(curr.left)
             if curr.right: queue.append(curr.right)
-            queue.popleft()
         steps += 1
     return -1
 
@@ -66,7 +65,7 @@ def bfs_visited(root: TreeNode, target: TreeNode) -> int:
     while queue:
         size = len(queue)
         for _ in range(size):
-            curr = queue[0]
+            curr = queue.popleft()
             if curr == target and curr not in visited:
                 return steps
             if curr.left:
@@ -75,6 +74,5 @@ def bfs_visited(root: TreeNode, target: TreeNode) -> int:
             if curr.right:
                 queue.append(curr.right)
                 visited.add(curr.right)
-            queue.popleft()
         steps += 1
     return -1

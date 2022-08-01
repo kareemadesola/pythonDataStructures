@@ -53,3 +53,28 @@ def bfs(root: TreeNode, target: TreeNode) -> int:
             queue.popleft()
         steps += 1
     return -1
+
+
+def bfs_visited(root: TreeNode, target: TreeNode) -> int:
+    """BFS template when cycles can occur e.g. graphs
+    or when you need nodes added to the queue
+    multiple times"""
+    if not root or not target: return -1
+    queue: collections.deque[TreeNode] = collections.deque([root])
+    steps, visited = 0, set()
+
+    while queue:
+        size = len(queue)
+        for _ in range(size):
+            curr = queue[0]
+            if curr == target and curr not in visited:
+                return steps
+            if curr.left:
+                queue.append(curr.left)
+                visited.add(curr.left)
+            if curr.right:
+                queue.append(curr.right)
+                visited.add(curr.right)
+            queue.popleft()
+        steps += 1
+    return -1

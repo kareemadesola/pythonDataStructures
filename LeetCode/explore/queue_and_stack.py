@@ -76,3 +76,32 @@ def bfs_visited(root: TreeNode, target: TreeNode) -> int:
                 visited.add(curr.right)
         steps += 1
     return -1
+
+
+def walls_and_gates(rooms: List[List[int]]) -> None:
+    rows, cols, visited, queue = len(rooms), len(rooms[0]), set(), collections.deque()
+
+    def add_room(r, c):
+        if r < 0 or c < 0 or r == rows or c == cols or (r, c) in visited or rooms[r][c] == -1:
+            return
+        queue.append((r, c))
+        visited.add((r, c))
+
+    for i in range(rows):
+        for j in range(cols):
+            if rooms[i][j] == 0:
+                queue.append((i, j))
+                visited.add((i, j))
+
+    dist = 0
+    while queue:
+        for i in range(len(queue)):
+            i, j = queue.popleft()
+            rooms[i][j] = dist
+
+            add_room(i + 1, j)
+            add_room(i - 1, j)
+            add_room(i, j + 1)
+            add_room(i, j - 1)
+
+        dist += 1

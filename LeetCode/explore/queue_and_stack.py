@@ -114,13 +114,14 @@ def num_islands(grid: List[List[str]]) -> int:
                 queue.append((i, j))
                 visited.add((i, j))
                 while queue:
-                    # why r, c = queue.popleft() won't work remain a mystery
+                    # why r, c = queue.popleft() won't work
+                    # solved because r, c changes everything
                     row, col = queue.popleft()
                     directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
                     for dr, dc in directions:
                         r, c = row + dr, col + dc
-                        if not 0 <= r < rows and 0 <= c < cols or (r, c) in visited or grid[r][c] == "0":
+                        if not 0 <= r < rows or not 0 <= c < cols or (r, c) in visited or grid[r][c] == "0":
                             continue
                         queue.append((r, c))
                         visited.add((r, c))

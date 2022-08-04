@@ -4,10 +4,6 @@ from typing import List
 from LeetCode.daily.july_22 import TreeNode
 
 
-def num_islands(grid: List[List[str]]) -> int:
-    pass
-
-
 class MovingAverage:
     def __init__(self, size: int):
         self.mx_size = size
@@ -95,7 +91,7 @@ def walls_and_gates(rooms: List[List[int]]) -> None:
 
     dist = 0
     while queue:
-        for i in range(len(queue)):
+        for _ in range(len(queue)):
             i, j = queue.popleft()
             rooms[i][j] = dist
 
@@ -105,3 +101,32 @@ def walls_and_gates(rooms: List[List[int]]) -> None:
             add_room(i, j - 1)
 
         dist += 1
+
+
+def num_islands(grid: List[List[str]]) -> int:
+    if not grid: return 0
+    rows, cols, visited, islands = len(grid), len(grid[0]), set(), 0
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == "1" and (i, j) not in visited:
+                queue = collections.deque()
+                queue.append((i, j))
+                visited.add((i, j))
+                while queue:
+                    # why r, c = queue.popleft() won't work remain a mystery
+                    row, col = queue.popleft()
+                    directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+                    for dr, dc in directions:
+                        r, c = row + dr, col + dc
+                        if not 0 <= r < rows and 0 <= c < cols or (r, c) in visited or grid[r][c] == "0":
+                            continue
+                        queue.append((r, c))
+                        visited.add((r, c))
+                islands += 1
+    return islands
+
+
+def test_num_islands():
+    assert 1 == num_islands([["1", "1", "1"], ["0", "1", "0"], ["1", "1", "1"]])

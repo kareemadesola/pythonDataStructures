@@ -131,3 +131,32 @@ def num_islands(grid: List[List[str]]) -> int:
 
 def test_num_islands():
     assert 1 == num_islands([["1", "1", "1"], ["0", "1", "0"], ["1", "1", "1"]])
+
+
+# 2022-08-6, Sat, 07:13:11
+# time O(10000)
+# space O(10000)
+
+def open_lock(deadends: List[str], target: str) -> int:
+    visited = set(deadends)
+    if '0000' in visited: return -1
+    q, res = collections.deque(['0000']), 0
+
+    while q:
+        size = len(q)
+        for _ in range(size):
+            curr = q.popleft()
+            if curr == target: return res
+            ans = []
+            for i in range(4):
+                digit_1 = curr[:i] + str((int(curr[i]) + 1) % 10) + curr[i + 1:]
+                digit_2 = curr[:i] + str((int(curr[i]) - 1) % 10) + curr[i + 1:]
+                if digit_1 not in visited:
+                    ans.append(digit_1)
+                    visited.add(digit_1)
+                if digit_2 not in visited:
+                    ans.append(digit_2)
+                    visited.add(digit_2)
+            q.extend(ans)
+        res += 1
+    return -1

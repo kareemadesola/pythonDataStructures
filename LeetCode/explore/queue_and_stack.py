@@ -166,6 +166,7 @@ def open_lock(deadends: List[str], target: str) -> int:
 # time O(n**2) - branch ^ depth -
 # sqrt(n) ^ 4
 # space O(1)
+# https://leetcode.com/problems/perfect-squares/discuss/71475/Short-Python-solution-using-BFS
 def num_squares(n: int) -> int:
     if n <= 2:
         return n

@@ -7,8 +7,7 @@ class MinStack:
         self.data: List[tuple] = []
 
     def push(self, val: int) -> None:
-        self.data.append((val, val)) if not self.data or val < self.getMin() else self.data.append((val,
-                                                                                                    self.getMin()))
+        self.data.append((val, min(val, self.getMin() if self.data else val)))
 
     def pop(self) -> None:
         self.data.pop()

@@ -189,3 +189,20 @@ def num_squares(n: int) -> int:
                 temp.add(i - j)
         to_check = temp
         res += 1
+
+
+# 2022-08-11, Thu, 04:56:30
+# time O(n)
+# space O(1)
+def is_valid(s: str) -> bool:
+    stack = []
+    hash_map = {')': '(', '}': '{', ']': '['}
+    for paren in s:
+        if paren in hash_map:
+            if stack and stack[-1] == hash_map[paren]:
+                stack.pop()
+            else:
+                return False
+        else:
+            stack.append(paren)
+    return not stack

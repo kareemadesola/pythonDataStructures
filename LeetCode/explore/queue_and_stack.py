@@ -197,11 +197,11 @@ def num_squares(n: int) -> int:
 def is_valid(s: str) -> bool:
     stack = []
     hash_map = {')': '(', '}': '{', ']': '['}
+
+    if len(s) % 2 == 1: return False
     for paren in s:
         if paren in hash_map:
-            if stack and stack[-1] == hash_map[paren]:
-                stack.pop()
-            else:
+            if not stack or stack.pop() != hash_map[paren]:
                 return False
         else:
             stack.append(paren)

@@ -1,0 +1,4 @@
+pattern of overlapping sub-problems dynamic programming
+memoization one of strategies to solve dp problems
+memo
+try to think of your recursive function in terms of a tree

@@ -23,7 +23,8 @@ def test_grid_traveller_memo():
 
 
 def grid_traveller_opt(m: int, n: int, memo={}) -> int:
-    if (m, n) in memo or (n, m) in memo: return memo[(m, n)] if (m, n) in memo else memo[(n, m)]
+    if (m, n) in memo: return memo[(m, n)]
+    if (n, m) in memo: return memo[(n, m)]
     if m == 1 and n == 1: return 1
     if m == 0 or n == 0: return 0
     if (m, n) not in memo or (n, m) not in memo:
@@ -32,4 +33,4 @@ def grid_traveller_opt(m: int, n: int, memo={}) -> int:
 
 
 def test_grid_traveller_opt():
-    print(grid_traveller_opt(3, 3))
+    print(grid_traveller_opt(5, 6))

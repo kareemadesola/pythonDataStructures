@@ -208,12 +208,24 @@ def is_valid(s: str) -> bool:
     return not stack
 
 
-def daily_temperatures(temperatures: List[int]) -> List[int]:
+def daily_temperatures_stack_tuple(temperatures: List[int]) -> List[int]:
     res = [0] * len(temperatures)
-    stack: List[tuple[int, int]] = [(0, temperatures[0])]
-    for idx, val in enumerate(temperatures[1:]):
+    stack: List[tuple[int, int]] = []
+    for idx, val in enumerate(temperatures):
         while stack and val > stack[-1][1]:
             temp = stack.pop()
             res[temp[0]] = idx - temp[0]
         stack.append((idx, val))
+    return res
+
+
+def daily_temperatures(temperatures: List[int]) -> List[int]:
+    len_temp = len(temperatures)
+    res = [0] * len_temp
+    stack: List[int] = []
+    for idx in range(len_temp):
+        while stack and temperatures[idx] > temperatures[stack[-1]]:
+            temp = stack.pop()
+            res[temp] = idx - temp
+        stack.append(idx)
     return res

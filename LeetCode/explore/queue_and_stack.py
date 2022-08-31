@@ -229,3 +229,18 @@ def daily_temperatures(temperatures: List[int]) -> List[int]:
             res[temp] = idx - temp
         stack.append(idx)
     return res
+
+
+def eval_rpn(tokens: List[str]) -> int:
+    stack: List[int] = []
+    for token in tokens:
+        if token in "+-*/":
+            b, a = stack.pop(), stack.pop()
+            stack.append(eval(f'int({a}{token}{b})'))
+        else:
+            stack.append(int(token))
+    return stack[0]
+
+
+def test_eval_rpn():
+    assert eval_rpn(["4", "13", "5", "/", "+"]) == 6

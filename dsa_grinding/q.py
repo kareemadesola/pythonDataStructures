@@ -28,6 +28,8 @@ def island_perimeter_dfs(grid: List[List[int]]) -> int:
             return 0
         if not 0 <= x < len_r or not 0 <= y < len_c or grid[x][y] == 0:
             return 1
+        # alternative you can modify the array to a number
+        # representing seen
         visited.add((x, y))
         return dfs(x + 1, y) + dfs(x - 1, y) + dfs(x, y + 1) + dfs(x, y - 1)
 

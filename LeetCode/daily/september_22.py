@@ -1,3 +1,6 @@
+import collections
+from typing import List
+
 from LeetCode.daily.july_22 import TreeNode
 
 
@@ -13,3 +16,16 @@ def good_nodes(root: TreeNode) -> int:
         return res
 
     return dfs(root, root.val)
+
+
+def average_of_levels(root: TreeNode) -> List[float]:
+    queue, res = collections.deque([root]), []
+
+    while queue:
+        len_q = len(queue)
+        res.append(sum(i.val for i in queue) / len_q)
+        for _ in range(len_q):
+            dequeue = queue.popleft()
+            if dequeue.left: queue.append(dequeue.left)
+            if dequeue.right: queue.append(dequeue.right)
+    return res

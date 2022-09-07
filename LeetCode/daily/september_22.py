@@ -32,8 +32,18 @@ def average_of_levels(root: TreeNode) -> List[float]:
 
 
 def prune_tree(root: TreeNode) -> Optional[TreeNode]:
+    # 2022-09-7, Wed, 08:50:53
+
+    # time O(n) n is number of node
+    # space O(n) if the tree is skewed
+    # like a linked list with root at head
     if not root: return
     root.left = prune_tree(root.left)
     root.right = prune_tree(root.right)
     if not root.left and not root.right and not root.val: return
     return root
+
+
+if __name__ == '__main__':
+    prune_tree(TreeNode(1, right=TreeNode(left=TreeNode(),
+                                          right=TreeNode(1))))

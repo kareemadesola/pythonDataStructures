@@ -47,3 +47,10 @@ def prune_tree(root: TreeNode) -> Optional[TreeNode]:
 if __name__ == '__main__':
     prune_tree(TreeNode(1, right=TreeNode(left=TreeNode(),
                                           right=TreeNode(1))))
+
+
+def tree2str(root: TreeNode) -> str:
+    if not root: return ''
+    left = f'({tree2str(root.left)})' if root.left or root.right else ''
+    right = f'({tree2str(root.right)})' if root.right else ''
+    return f'{root.val}{left}{right}'

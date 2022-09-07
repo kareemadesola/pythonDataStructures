@@ -1,5 +1,5 @@
 import collections
-from typing import List
+from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
 
@@ -29,3 +29,11 @@ def average_of_levels(root: TreeNode) -> List[float]:
             if dequeue.left: queue.append(dequeue.left)
             if dequeue.right: queue.append(dequeue.right)
     return res
+
+
+def prune_tree(root: TreeNode) -> Optional[TreeNode]:
+    if not root: return
+    root.left = prune_tree(root.left)
+    root.right = prune_tree(root.right)
+    if not root.left and not root.right and not root.val: return
+    return root

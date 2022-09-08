@@ -54,3 +54,16 @@ def tree2str(root: TreeNode) -> str:
     left = f'({tree2str(root.left)})' if root.left or root.right else ''
     right = f'({tree2str(root.right)})' if root.right else ''
     return f'{root.val}{left}{right}'
+
+
+def inorder_traversal(root: Optional[TreeNode]) -> List[int]:
+    res = []
+
+    def dfs(curr: Optional[TreeNode]):
+        if not curr: return
+        dfs(curr.left)
+        res.append(curr.val)
+        dfs(curr.right)
+
+    dfs(root)
+    return res

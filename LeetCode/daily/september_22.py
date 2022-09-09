@@ -4,6 +4,13 @@ from typing import List, Optional
 from LeetCode.daily.july_22 import TreeNode
 
 
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+
+
 def good_nodes(root: TreeNode) -> int:
     # 2022-09-1, Thu, 21:20:44
     # time O(n) is the total number of nodes
@@ -78,4 +85,17 @@ def inorder_traversal_iterative(root: Optional[TreeNode]) -> List[int]:
         temp = stack.pop()
         res.append(temp.val)
         root = temp.right
+    return res
+
+
+def level_order(root: 'Node') -> List[List[int]]:
+    if not root: return []
+    res: List[List[int]] = []
+    q = collections.deque([root])
+
+    while q:
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            q.extend(curr.children if curr.children else [])
     return res

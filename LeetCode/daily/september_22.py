@@ -95,7 +95,10 @@ def level_order(root: 'Node') -> List[List[int]]:
 
     while q:
         q_len = len(q)
+        level = []
         for _ in range(q_len):
             curr = q.popleft()
-            q.extend(curr.children if curr.children else [])
+            level.append(curr.val)
+            q.extend(curr.children)
+        res.append(level)
     return res

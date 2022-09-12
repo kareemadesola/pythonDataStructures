@@ -106,18 +106,17 @@ def level_order(root: 'Node') -> List[List[int]]:
 
 def bag_of_tokens_score(tokens: List[int], power: int) -> int:
     tokens.sort()
-    res, curr, l, r = 0, 0, 0, len(tokens) - 1
+    curr, l, r = 0, 0, len(tokens) - 1
 
     while l <= r:
         if power >= tokens[l]:
             power -= tokens[l]
             l += 1
             curr += 1
-        elif curr:
+        elif curr and l != r:
             power += tokens[r]
             r -= 1
             curr -= 1
         else:
             break
-        res = max(res, curr)
-    return res
+    return curr

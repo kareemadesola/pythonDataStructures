@@ -120,3 +120,25 @@ def bag_of_tokens_score(tokens: List[int], power: int) -> int:
         else:
             break
     return curr
+
+
+def valid_utf8(data: List[int]) -> bool:
+    def byte_chr(s: str):
+        res = 0
+        for i in s:
+            if i == '0':
+                break
+            res += 1
+        return res
+
+    data = [f"{i:08b}"[-8:] for i in data]
+    i, j = 0, len(data)
+    while i < j:
+        tmp = byte_chr(data[i])
+        if i + tmp > j or tmp == 1 or tmp > 4: return False
+        for k in range(1, tmp):
+            x = i + k
+            if data[x][0] != '1' or data[x][1] != '0':
+                return False
+        i = i + tmp if tmp else i + 1
+    return True

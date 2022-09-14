@@ -142,3 +142,23 @@ def valid_utf8(data: List[int]) -> bool:
                 return False
         i = i + tmp if tmp else i + 1
     return True
+
+
+def valid_utf8_bit_mask(data: List[int]) -> bool:
+    def byte_chr(s: int):
+        mask, res = 1 << 7, 0
+        while mask & s:
+            mask >>= 1
+            res += 1
+        return res
+
+    i, j = 0, len(data)
+    while i < j:
+        tmp = byte_chr(data[i])
+        if i + tmp > j or tmp == 1 or tmp > 4: return False
+        for k in range(1, tmp):
+            x = i + k
+            if not (data[x] & 1 << 7 and not data[x] & 1 << 6):
+                return False
+        i = i + tmp if tmp else i + 1
+    return True

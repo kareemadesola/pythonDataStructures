@@ -162,3 +162,23 @@ def valid_utf8_bit_mask(data: List[int]) -> bool:
                 return False
         i = i + tmp if tmp else i + 1
     return True
+
+
+def pseudo_palindromic_path(root: Optional[TreeNode]) -> int:
+    """A path is pseudo-palindromic if it contains at most
+    one digit has an odd frequency (path is a power of two)"""
+
+    def dfs(node: TreeNode, path: int):
+        nonlocal count
+        if not node:
+            return
+        path ^= 1 << node.val
+        if not node.left and not node.right and not path & path - 1:
+            count += 1
+
+        dfs(node.left, path)
+        dfs(node.right, path)
+
+    count = 0
+    dfs(root, 0)
+    return count

@@ -182,3 +182,15 @@ def pseudo_palindromic_path(root: Optional[TreeNode]) -> int:
     count = 0
     dfs(root, 0)
     return count
+
+
+def pseudo_palindromic_path_stack(root: Optional[TreeNode]) -> int:
+    stack, count = [(root, 0)], 0
+    while stack:
+        curr, path = stack.pop()
+        path ^= 1 << curr.val
+        if not curr.left and not curr.right and not path & path - 1:
+            count += 1
+        if curr.right: stack.append((curr.right, path))
+        if curr.left: stack.append((curr.left, path))
+    return count

@@ -194,3 +194,17 @@ def pseudo_palindromic_path_stack(root: Optional[TreeNode]) -> int:
         if curr.right: stack.append((curr.right, path))
         if curr.left: stack.append((curr.left, path))
     return count
+
+
+def find_duplicate(paths: List[str]) -> List[List[str]]:
+    # 2022-09-20, Tue, 05:26:18
+    # time O(n*m) n is the length of paths and m is
+    # the avg length of split string
+    # space O(n*m)
+    groups = collections.defaultdict(list)
+    for path in paths:
+        directory, *files = path.split()
+        for file in files:
+            name, content = file.split('(')
+            groups[content].append(f'{directory}/{name}')
+        return [val for val in groups.values() if len(val) > 1]

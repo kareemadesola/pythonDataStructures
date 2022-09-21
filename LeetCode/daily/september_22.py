@@ -219,3 +219,18 @@ def find_length(nums1: List[int], nums2: List[int]) -> int:
                 dp[i][j] = dp[i - 1][j - 1] + 1
                 res = max(res, dp[i][j])
     return res
+
+
+def sum_even_after_queries(nums: List[int], queries: List[List[int]]) -> List[int]:
+    res, sum_ = [], sum(i for i in nums if not i % 2)
+    for val, idx in queries:
+        if nums[idx] % 2 ^ val % 2:
+            if not nums[idx] % 2:
+                sum_ -= nums[idx]
+        else:
+            if val % 2:
+                sum_ += nums[idx]
+            sum_ = sum_ + val
+        res.append(sum_)
+        nums[idx] += val
+    return res

@@ -234,3 +234,13 @@ def sum_even_after_queries(nums: List[int], queries: List[List[int]]) -> List[in
         res.append(sum_)
         nums[idx] += val
     return res
+
+
+def sum_even_after_queries_clean(nums: List[int], queries: List[List[int]]) -> List[int]:
+    res, sum_ = [], sum(i for i in nums if not i % 2)
+    for val, idx in queries:
+        if not nums[idx] % 2: sum_ -= nums[idx]
+        nums[idx] += val
+        if not nums[idx] % 2: sum_ += nums[idx]
+        res.append(sum_)
+    return res

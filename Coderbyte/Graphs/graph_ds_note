@@ -1,0 +1,24 @@
+what is a graph
+A data structure made up of nodes or vertices and edges or the
+connections between nodes
+Typically, a visualization of a graph will be of nodes represented
+by circles and edges as lines between the circles
+
+
+Trees: A special kind of graph
+
+Trees are just a special kind of graph with one root
+and only one unique path between any two nodes
+
+A graph can go beyond that and have any number of root elements
+and multiple paths between nodes
+
+          A                                     A
+       /     \                               /     \
+     B        C                            B         C
+   /    \       \                        /
+ D        E       F                     D   —   E  —    F
+        /    \                            \            /
+      G        H                            H   —    G
+
+      Tree                                    Graphs

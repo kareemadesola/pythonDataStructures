@@ -244,3 +244,7 @@ def sum_even_after_queries_clean(nums: List[int], queries: List[List[int]]) -> L
         if not nums[idx] % 2: sum_ += nums[idx]
         res.append(sum_)
     return res
+
+
+def reverse_words(s: str) -> str:
+    return ' '.join([i[::-1] for i in s.split()])

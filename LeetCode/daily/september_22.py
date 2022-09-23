@@ -248,3 +248,10 @@ def sum_even_after_queries_clean(nums: List[int], queries: List[List[int]]) -> L
 
 def reverse_words(s: str) -> str:
     return ' '.join([i[::-1] for i in s.split()])
+
+
+def concatenated_binary(n: int) -> int:
+    res = []
+    for i in range(1, n + 1):
+        res.append(f'{i:b}')
+    return int(''.join(res), 2) % (10 ** 9 + 7)

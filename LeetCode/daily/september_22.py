@@ -255,3 +255,12 @@ def concatenated_binary(n: int) -> int:
     for i in range(1, n + 1):
         res.append(f'{i:b}')
     return int(''.join(res), 2) % (10 ** 9 + 7)
+
+
+def concatenated_binary_bit(n: int) -> int:
+    res, mod = 0, 10 ** 9 + 7
+    len_ = 0
+    for i in range(1, n + 1):
+        if not i & i - 1: len_ += 1
+        res = ((res << len_) % mod + i) % mod
+    return res

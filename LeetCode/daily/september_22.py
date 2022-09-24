@@ -264,3 +264,23 @@ def concatenated_binary_bit(n: int) -> int:
         if not i & i - 1: len_ += 1
         res = ((res << len_) % mod + i) % mod
     return res
+
+
+# def path_sum(root:Optional)
+def path_sum(root: Optional[TreeNode], target_sum: int) -> List[List[int]]:
+    def dfs(curr: Optional[TreeNode], curr_sum: int, path: List[int]):
+        if not curr:
+            return
+        curr_sum -= curr.val
+        path.append(curr.val)
+        if not curr.left and not curr.right:
+            if curr_sum == 0:
+                res.append(path.copy())
+        else:
+            dfs(curr.left, curr_sum, path)
+            dfs(curr.right, curr_sum, path)
+        path.pop()
+
+    res = []
+    dfs(root, target_sum, [])
+    return res

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Set
 
 vertices = ['A', 'B', 'C', 'D', 'E']
 vertices_index = {'A': 0, 'B': 1, 'C': 2, 'D': 3, 'E': 4}
@@ -86,3 +86,54 @@ def test_is_connected_adjacency_list():
     assert is_connected_adjacency_list('A', 'B')
     # assert is_connected_adjacency_matrix('B', 'E')
     assert is_connected_adjacency_list('E', 'D')
+
+
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.edges_set: Set[Node] = set()
+
+    def connect(self, node):
+        if node not in self.edges_set:
+            self.edges_set.add(node)
+            node.edges_set.add(self)
+
+    def find_adjacent_nodes(self) -> List[str]:
+        return [i.val for i in self.edges_set]
+
+    def is_connected(self, node):
+        return node in self.edges_set
+
+
+class Graph:
+    def __init__(self, nodes):
+        self.nodes: Set[Node] = nodes
+
+    def add_to_graph(self, new_node):
+        if new_node not in self.nodes:
+            self.nodes.add(new_node)
+
+
+node_A = Node('A')
+node_B = Node('B')
+node_C = Node('C')
+node_D = Node('D')
+node_E = Node('E')
+node_F = Node('F')
+
+graph = Graph({node_A, node_B, node_C, node_D, node_E, node_F})
+
+# print(str(node_A), node_B)
+node_A.connect(node_B)
+node_A.connect(node_D)
+node_B.connect(node_C)
+node_C.connect(node_E)
+node_D.connect(node_E)
+
+
+def test_get_adjacency_list_graph_class():
+    assert ['B', 'D'] == sorted(node_A.find_adjacent_nodes())
+
+
+def test_is_connected_adjacency_list_graph_class():
+    assert not node_A.is_connected(node_C)

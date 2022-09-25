@@ -37,3 +37,21 @@ def island_perimeter_dfs(grid: List[List[int]]) -> int:
         for j in range(len_c):
             if grid[i][j]:
                 return dfs(i, j)
+
+
+class MyStack:
+
+    def __init__(self):
+        self.data = []
+
+    def push(self, x: int) -> None:
+        self.data.append(x)
+
+    def pop(self) -> int:
+        return self.data.pop()
+
+    def top(self) -> int:
+        return self.data[-1]
+
+    def empty(self) -> bool:
+        return not bool(self.data)

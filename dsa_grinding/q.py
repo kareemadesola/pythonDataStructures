@@ -1,3 +1,4 @@
+import collections
 from typing import List
 
 
@@ -55,3 +56,21 @@ class MyStack:
 
     def empty(self) -> bool:
         return not bool(self.data)
+
+
+class MyQueue:
+
+    def __init__(self):
+        self.data = collections.deque()
+
+    def push(self, x: int) -> None:
+        self.data.append(x)
+
+    def pop(self) -> int:
+        return self.data.popleft()
+
+    def peek(self) -> int:
+        return self.data[0]
+
+    def empty(self) -> bool:
+        return not self.data

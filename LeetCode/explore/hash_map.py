@@ -30,7 +30,7 @@ class HashMap:
                 if i[0] == key:
                     self.data[idx].remove(i)
 
-    # time O(k) k = N/size where N is number of elements
+    # time O(k) k = N/len_ where N is number of elements
     def __contains__(self, key: int):
         idx = self.hash_function(key)
         return key in (item[0] for item in self.data[idx])

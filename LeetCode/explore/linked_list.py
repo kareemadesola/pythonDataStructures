@@ -483,7 +483,7 @@ def rotate_right(head: Optional[ListNode], k: int) -> Optional[ListNode]:
     if not head or not head.next:
         return head
     curr = head
-    # form a cycle and get list's size
+    # form a cycle and get list's len_
     len_ = 0
     # get last node
     while curr and curr.next:

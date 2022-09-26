@@ -284,3 +284,39 @@ def path_sum(root: Optional[TreeNode], target_sum: int) -> List[List[int]]:
     res = []
     dfs(root, target_sum, [])
     return res
+
+
+class MyCircularQueue:
+
+    def __init__(self, k: int):
+        self.data = [None] * k
+        self.top = self.rear = -1
+        self.size = k
+
+    def enQueue(self, value: int) -> bool:
+        if self.isFull(): return False
+        if self.isEmpty():
+            self.top = 0
+        self.rear = (self.rear + 1) % self.size
+        self.data[self.rear] = value
+        return True
+
+    def deQueue(self) -> bool:
+        if self.isEmpty(): return False
+        if self.top == self.rear:
+            self.top = self.rear = -1
+        else:
+            self.top = (self.top + 1) % self.size
+        return True
+
+    def Front(self) -> int:
+        return -1 if self.isEmpty() else self.data[self.top]
+
+    def Rear(self) -> int:
+        return -1 if self.isEmpty() else self.data[self.rear]
+
+    def isEmpty(self) -> bool:
+        return self.top == -1
+
+    def isFull(self) -> bool:
+        return (self.rear + 1) % self.size == self.top

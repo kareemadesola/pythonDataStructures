@@ -7,7 +7,7 @@ class HashSetArray:
     def __init__(self):
         self.data = []
 
-    #   time O(n) space O(1) where n is the size of the array
+    #   time O(n) space O(1) where n is the len_ of the array
     def add(self, key: int) -> None:
         if not self.contains(key):
             self.data.append(key)
@@ -78,7 +78,7 @@ class HashSet:
         if self.contains(key):
             self.data[idx].remove(key)
 
-    # O(k) where k = N/size N is the number of elements
+    # O(k) where k = N/len_ N is the number of elements
     def contains(self, key: int) -> bool:
         idx = self.hash_function(key)
         return key in self.data[idx]

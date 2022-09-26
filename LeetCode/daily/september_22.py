@@ -1,4 +1,5 @@
 import collections
+import string
 from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
@@ -320,3 +321,32 @@ class MyCircularQueue:
 
     def isFull(self) -> bool:
         return (self.rear + 1) % self.size == self.top
+
+
+def fib(n):
+    if n != 4:
+        fib(n + 1)
+    # else:
+    #     return n
+    return n
+
+
+def equations_possible(equations: List[str]) -> bool:
+    # def find_memo(x):
+    #     if x != uf[x]: uf[x] = find(uf[x])
+    #     return uf[x]
+    def find(x):
+        if x != uf[x]:
+            return find(uf[x])
+        else:
+            return x
+
+    uf = {i: i for i in string.ascii_lowercase}
+    for a, e, _, b in equations:
+        if e == '=':
+            uf[find(a)] = find(b)
+    return not any(e == '!' and find(a) == find(b) for a, e, _, b in equations)
+
+
+if __name__ == '__main__':
+    print(fib(2))

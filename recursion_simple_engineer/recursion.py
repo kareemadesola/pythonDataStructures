@@ -48,3 +48,12 @@ def test_decimal_to_binary():
 
 def test_decimal_to_binary_alt():
     assert '1100' == decimal_to_binary_alt(12, '')
+
+
+def sum_natural_numbers(val: int):
+    if val == 1: return 1
+    return val + sum_natural_numbers(val - 1)
+
+
+def test_sum_natural_numbers():
+    assert 15 == sum_natural_numbers(5)

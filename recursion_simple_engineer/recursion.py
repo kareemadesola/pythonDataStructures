@@ -16,3 +16,15 @@ def reverse_string(val: str):
 
 def test_reverse_string():
     assert 'olleh' == reverse_string('hello')
+
+
+def is_palindrome(val: str):
+    if len(val) == 1 or len(val) == 0:
+        return True
+    if val[0] == val[-1]:
+        return is_palindrome(val[1:-1])
+    return False
+
+
+def test_is_palindrome():
+    assert is_palindrome('aba')

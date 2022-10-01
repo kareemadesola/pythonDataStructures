@@ -6,6 +6,7 @@ What is the smallest amount of work I can do in each iteration?
 Shrinks the problem space
 Smallest unit of work to contribute
 """
+from typing import List
 
 
 def reverse_string(val: str):
@@ -57,3 +58,27 @@ def sum_natural_numbers(val: int):
 
 def test_sum_natural_numbers():
     assert 15 == sum_natural_numbers(5)
+
+
+"""
+Divide and Conquer
+1. Divide problem into several smaller sub-problems
+    Normally, the sub-problems are similar to the original
+    
+2. Conquer the sub-problems by solving them recursively
+Base case: solve small enough problems by brute force
+
+3. Combine the solution to get a solution to the sub-problems
+And finally a solution to the original problem
+
+4. Divide and Conquer algorithms are normally recursive
+"""
+
+
+def binary_search(array: List[int], left: int, right: int, x: int):
+    if left > right:
+        return -1
+    mid = left + (right - left) // 2
+    if x == array[mid]: return mid
+    if x < array[mid]: return binary_search(array, left, mid - 1, x)
+    return binary_search(array, mid + 1, right, x)

@@ -12,3 +12,7 @@ def reverse_string(val: str):
     if val == '':
         return ''
     return reverse_string(val[1:]) + val[0]
+
+
+def test_reverse_string():
+    assert 'olleh' == reverse_string('hello')

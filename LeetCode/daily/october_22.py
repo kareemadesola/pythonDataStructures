@@ -1,3 +1,6 @@
+from functools import lru_cache
+
+
 def num_decodings_memo(s: str) -> int:
     dp = {len(s): 1}
 
@@ -30,3 +33,13 @@ def num_decodings_dp(s: str) -> int:
 
 def test_num_decoding():
     assert num_decodings_memo('1263') == 3
+
+
+def num_rolls_to_target(n: int, k: int, target: int) -> int:
+    @lru_cache(None)
+    def dfs(curr_val: int, remains: int):
+        if curr_val == 0:
+            return 1 if not remains else 0
+        return sum(dfs(curr_val - 1, remains - i) for i in range(1, k + 1)) % (10 ** 9 + 7)
+
+    return dfs(n, target)

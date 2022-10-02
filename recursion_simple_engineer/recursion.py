@@ -75,10 +75,21 @@ And finally a solution to the original problem
 """
 
 
-def binary_search(array: List[int], left: int, right: int, x: int):
-    if left > right:
-        return -1
-    mid = left + (right - left) // 2
-    if x == array[mid]: return mid
-    if x < array[mid]: return binary_search(array, left, mid - 1, x)
-    return binary_search(array, mid + 1, right, x)
+def binary_search(array: List[int], x: int, start=0, end=None):
+    if end is None: end = len(array) - 1
+
+    def helper(left: int, right: int):
+
+        if left > right:
+            return -1
+        mid = left + (right - left) // 2
+        if x == array[mid]: return mid
+        if x < array[mid]: return helper(left, mid - 1)
+        return helper(mid + 1, right)
+
+    return helper(start, end)
+
+
+def test_binary_search():
+    assert -1 == binary_search([1, 4, 5, 6], 1, 1)
+    assert -1 == binary_search([1, 4, 5, 6], 10)

@@ -43,3 +43,15 @@ def num_rolls_to_target(n: int, k: int, target: int) -> int:
         return sum(dfs(curr_val - 1, remains - i) for i in range(1, k + 1)) % (10 ** 9 + 7)
 
     return dfs(n, target)
+
+
+def num_rolls_to_target_memo(n: int, k: int, target: int) -> int:
+    def dfs(curr_val: int, remains: int):
+        if curr_val == 0:
+            return 1 if not remains else 0
+        if (curr_val, remains) in memo: return memo[(curr_val, remains)]
+        memo[(curr_val, remains)] = sum(dfs(curr_val - 1, remains - i) for i in range(1, k + 1)) % (10 ** 9 + 7)
+        return memo[(curr_val, remains)]
+
+    memo = {}
+    return dfs(n, target)

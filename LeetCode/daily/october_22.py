@@ -1,4 +1,5 @@
 from functools import lru_cache
+from typing import List
 
 
 def num_decodings_memo(s: str) -> int:
@@ -55,3 +56,13 @@ def num_rolls_to_target_memo(n: int, k: int, target: int) -> int:
 
     memo = {}
     return dfs(n, target)
+
+
+def min_cost(colors: str, needed_time: List[int]) -> int:
+    res = max_cost = 0
+    for i in range(len(colors)):
+        if i > 0 and colors[i] != colors[i - 1]:
+            max_cost = 0
+        res += min(max_cost, needed_time[i])
+        max_cost = max(max_cost, needed_time[i])
+    return res

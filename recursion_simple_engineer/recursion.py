@@ -93,3 +93,52 @@ def binary_search(array: List[int], x: int, start=0, end=None):
 def test_binary_search():
     assert -1 == binary_search([1, 4, 5, 6], 1, 1)
     assert -1 == binary_search([1, 4, 5, 6], 10)
+
+
+def merge_sort(data: List[int]):
+    def helper(left: int, right: int):
+        def merge(start_, mid_, end_):
+            # build temp array to avoid modifying the original
+            # contents
+            temp = [0] * (end_ - start_ + 1)
+            i, j, k = start_, mid_ + 1, 0
+
+            # while both sub-array have values, then try and
+            # merge them in sorted order
+            while i <= mid_ and j <= end_:
+                if data[i] <= data[j]:
+                    temp[k] = data[i]
+                    k += 1
+                    i += 1
+                else:
+                    temp[k] = data[j]
+                    k += 1
+                    j += 1
+            # Add the rest of the values from the left
+            # sub-array into the result
+            while i <= mid_:
+                temp[k] = data[i]
+                k += 1
+                i += 1
+            # Add the rest of the values from the left
+            # sub-array into the result
+            while j <= end_:
+                temp[k] = data[j]
+                k += 1
+                j += 1
+            for i in range(start_, end_ + 1):
+                data[i] = temp[i - start_]
+
+        if not left < right: return
+        mid = left + (right - left) // 2
+        helper(left, mid)
+        helper(mid + 1, right)
+        merge(left, mid, right)
+
+    start, end = 0, len(data) - 1
+    helper(start, end)
+    return data
+
+
+def test_merge_sort():
+    assert merge_sort([2, 1, -1, 0]) == [-1, 0, 1, 2]

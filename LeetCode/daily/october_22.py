@@ -1,5 +1,7 @@
 from functools import lru_cache
-from typing import List
+from typing import List, Optional
+
+from LeetCode.daily.july_22 import TreeNode
 
 
 def num_decodings_memo(s: str) -> int:
@@ -66,3 +68,15 @@ def min_cost(colors: str, needed_time: List[int]) -> int:
         res += min(max_cost, needed_time[i])
         max_cost = max(max_cost, needed_time[i])
     return res
+
+
+def has_path_sum(root: Optional[TreeNode], target_sum: int) -> bool:
+    def dfs(curr_node: TreeNode, curr_sum: int):
+        if not curr_node:
+            return False
+        if not curr_node.left and not curr_node.right and curr_node.val == curr_sum:
+            return True
+        curr_sum -= curr_node.val
+        return dfs(curr_node.left, curr_sum) or dfs(curr_node.right, curr_sum)
+
+    return dfs(root, target_sum)

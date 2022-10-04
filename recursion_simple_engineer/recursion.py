@@ -8,6 +8,8 @@ Smallest unit of work to contribute
 """
 from typing import List
 
+from LeetCode.explore.linked_list import ListNode
+
 
 def reverse_string(val: str):
     if val == '':
@@ -142,3 +144,30 @@ def merge_sort(data: List[int]):
 
 def test_merge_sort():
     assert merge_sort([2, 1, -1, 0]) == [-1, 0, 1, 2]
+
+
+def reverse_linked_list(head: ListNode):
+    def helper(curr: ListNode, prev):
+        if not curr:
+            return prev
+        temp = curr.next
+        curr.next = prev
+
+        return helper(temp, curr)
+
+    return helper(head, None)
+
+
+def test_reverse_linked_list():
+    a = ListNode(1, ListNode(2, ListNode(3, ListNode(4))))
+    b = reverse_linked_list(a)
+    c = 0
+    # while b:
+    #     print(b.val)
+    #     b = b.next
+    #     c += 1
+    while a:
+        print(a.val)
+        a = a.next
+        c += 1
+    print(c)

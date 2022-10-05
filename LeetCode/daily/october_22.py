@@ -1,3 +1,4 @@
+import collections
 from functools import lru_cache
 from typing import List, Optional
 
@@ -80,3 +81,17 @@ def has_path_sum(root: Optional[TreeNode], target_sum: int) -> bool:
         return dfs(curr_node.left, curr_sum) or dfs(curr_node.right, curr_sum)
 
     return dfs(root, target_sum)
+
+
+def has_path_sum_bfs(root: Optional[TreeNode], target_sum: int) -> bool:
+    q = collections.deque([(root, target_sum)])
+
+    while q:
+        curr, target_sum = q.popleft()
+        if not curr: continue
+        if not curr.left and not curr.right and curr.val == target_sum:
+            return True
+        new_target_sum = target_sum - curr.val
+        q.append((curr.left, new_target_sum))
+        q.append((curr.right, new_target_sum))
+    return False

@@ -95,3 +95,21 @@ def has_path_sum_bfs(root: Optional[TreeNode], target_sum: int) -> bool:
         q.append((curr.left, new_target_sum))
         q.append((curr.right, new_target_sum))
     return False
+
+
+def add_one_row(root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
+    if depth == 1:
+        root = TreeNode(val, root)
+        return root
+    q, curr_depth, depth = collections.deque([root]), 1, depth - 1
+    while q:
+        for i in range(len(q)):
+            curr = q.popleft()
+            if not curr: continue
+            if curr_depth == depth:
+                curr.left = TreeNode(val, curr.left)
+                curr.right = TreeNode(val, right=curr.right)
+            q.append(curr.left)
+            q.append(curr.right)
+        curr_depth += 1
+    return root

@@ -43,7 +43,7 @@ def detect_cycle(head: Optional[ListNode]) -> Optional[ListNode]:
         slow, fast = slow.next, fast.next.next
         if fast == slow:
             # find where head and slow intersect
-            while slow.next:
+            while slow:
                 if head == slow:
                     return slow
                 slow, head = slow.next, head.next

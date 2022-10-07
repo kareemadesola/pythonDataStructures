@@ -1,6 +1,6 @@
 import collections
 from functools import lru_cache
-from typing import List, Optional
+from typing import List, Optional, Tuple, DefaultDict
 
 from LeetCode.daily.july_22 import TreeNode
 
@@ -113,3 +113,28 @@ def add_one_row(root: Optional[TreeNode], val: int, depth: int) -> Optional[Tree
             q.append(curr.right)
         curr_depth += 1
     return root
+
+
+class TimeMap:
+
+    def __init__(self):
+        self.data: DefaultDict[str, List[Tuple[str, int]]] = collections.defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.data[key].append((value, timestamp))
+
+    def get(self, key: str, timestamp: int) -> str:
+        def binary_search(arr: List[Tuple[str, int]], timestamp_) -> int:
+            l, r = 0, len(arr) - 1
+            while l <= r:
+                mid = l + (r - l) // 2
+                if arr[l][1] < timestamp_:
+                    l = mid + 1
+                elif arr[l][1] > timestamp_:
+                    r = mid - 1
+                else:
+                    return l
+            return r
+
+        if not self.data[key]: return ''
+        return self.data[key][binary_search(self.data[key], timestamp)][0]

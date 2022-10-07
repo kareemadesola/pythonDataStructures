@@ -137,4 +137,6 @@ class TimeMap:
             return r
 
         if not self.data[key]: return ''
-        return self.data[key][binary_search(self.data[key], timestamp)][0]
+        tmp = binary_search(self.data[key], timestamp)
+        if tmp < 0: return ''
+        return self.data[key][tmp][0]

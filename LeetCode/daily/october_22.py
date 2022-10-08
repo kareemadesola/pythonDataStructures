@@ -140,3 +140,24 @@ class TimeMap:
         tmp = binary_search(self.data[key], timestamp)
         if tmp < 0: return ''
         return self.data[key][tmp][0]
+
+
+def three_sum_closet(nums: List[int], target: int) -> int:
+    nums.sort()
+    res = nums[0] + nums[1] + nums[2]
+    for i in range(len(nums) - 2):
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            current_sum = nums[i] + nums[l] + nums[r]
+            if current_sum == target: return current_sum
+            if abs(target - current_sum) < abs(target - res):
+                res = current_sum
+            if current_sum < target:
+                l += 1
+            else:
+                r -= 1
+    return res
+
+
+def test_three_sum_closet():
+    three_sum_closet([-1, 2, 1, -4], 1)

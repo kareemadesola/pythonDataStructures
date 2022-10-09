@@ -179,3 +179,21 @@ def reverse_linked_list_recursion(head: ListNode):
     head.next.next = head
     head.next = None
     return p
+
+
+def merge_two_sorted_list(l1: ListNode, l2: ListNode):
+    def sorted_merge(a: ListNode, b: ListNode):
+        if not a: return b
+        if not b: return a
+        if a.val < b.val:
+            a.next = sorted_merge(a.next, b)
+            return a
+        else:
+            b.next = sorted_merge(a, b.next)
+            return b
+
+    return sorted_merge(l1, l2)
+
+
+def test_merge_two_sorted_list():
+    assert merge_two_sorted_list(ListNode(4), ListNode())

@@ -161,3 +161,16 @@ def three_sum_closet(nums: List[int], target: int) -> int:
 
 def test_three_sum_closet():
     three_sum_closet([-1, 2, 1, -4], 1)
+
+
+def find_target(root: TreeNode, k: int) -> bool:
+    seen = set()
+
+    def dfs(curr: TreeNode, target: int) -> bool:
+        if not curr: return False
+        if target - curr.val in seen:
+            return True
+        seen.add(curr.val)
+        return dfs(curr.left, target) or dfs(curr.right, target)
+
+    return dfs(root, k)

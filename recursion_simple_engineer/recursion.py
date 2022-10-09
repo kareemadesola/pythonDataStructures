@@ -171,3 +171,11 @@ def test_reverse_linked_list():
         a = a.next
         c += 1
     print(c)
+
+
+def reverse_linked_list_recursion(head: ListNode):
+    if not head or not head.next: return head
+    p = reverse_linked_list_recursion(head.next)
+    head.next.next = head
+    head.next = None
+    return p

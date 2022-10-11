@@ -182,3 +182,15 @@ def break_palindrome(palindrome: str) -> str:
         if palindrome[i] != 'a':
             return palindrome[:i] + 'a' + palindrome[i + 1:]
     return palindrome[:-1] + 'b' if palindrome[:-1] else ''
+
+
+def increasing_triplet(nums: List[int]) -> bool:
+    i = j = 2 ** 31 - 1
+    for num in nums:
+        if num <= i:
+            i = num
+        elif num <= j:
+            j = num
+        else:
+            return True
+    return False

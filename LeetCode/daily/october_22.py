@@ -174,3 +174,11 @@ def find_target(root: TreeNode, k: int) -> bool:
         return dfs(curr.left, target) or dfs(curr.right, target)
 
     return dfs(root, k)
+
+
+def break_palindrome(palindrome: str) -> str:
+    len_ = len(palindrome)
+    for i in range(len_ // 2):
+        if palindrome[i] != 'a':
+            return palindrome[:i] + 'a' + palindrome[i + 1:]
+    return palindrome[:-1] + 'b' if palindrome[:-1] else ''

@@ -197,6 +197,7 @@ def increasing_triplet(nums: List[int]) -> bool:
 
 
 def largest_perimeter(nums: List[int]) -> int:
+    """ to form a triangle the largest side must be less than sum of the other two sides"""
     nums.sort(reverse=True)
     for i in range(len(nums) - 2):
         if nums[i] < nums[i + 1] + nums[i + 2]:

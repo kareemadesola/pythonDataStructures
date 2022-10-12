@@ -36,3 +36,30 @@ def test_can_sum():
     # assert not can_sum(7, [2, 4, ])
     # assert can_sum(8, [2, 3])
     # assert not can_sum(300, [7, 14])
+
+
+def can_sum_memo(target_sum, numbers) -> bool:
+    memo = {}
+
+    def helper(target):
+        if target in memo: return memo[target]
+        if target == 0:
+            return True
+        if target < 0:
+            return False
+        for num in numbers:
+            if helper(target - num):
+                memo[target] = True
+                return True
+        memo[target] = False
+        return False
+
+    return helper(target_sum)
+
+
+def test_can_sum_memo():
+    assert can_sum_memo(7, [2, 3])
+    assert can_sum_memo(7, [5, 3, 4, 7])
+    assert not can_sum_memo(7, [2, 4, ])
+    assert can_sum_memo(8, [2, 3])
+    assert not can_sum_memo(300, [7, 14])

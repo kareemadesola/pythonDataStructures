@@ -3,6 +3,7 @@ from functools import lru_cache
 from typing import List, Optional, Tuple, DefaultDict
 
 from LeetCode.daily.july_22 import TreeNode
+from LeetCode.daily.june_22 import ListNode
 
 
 def num_decodings_memo(s: str) -> int:
@@ -203,3 +204,9 @@ def largest_perimeter(nums: List[int]) -> int:
         if nums[i] < nums[i + 1] + nums[i + 2]:
             return nums[i] + nums[i + 1] + nums[i + 2]
     return 0
+
+
+def delete_node(node: ListNode):
+    next_node = node.next
+    node.val = next_node.val
+    node.next = node.next.next

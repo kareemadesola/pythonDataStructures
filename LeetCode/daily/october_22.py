@@ -210,3 +210,7 @@ def delete_node(node: ListNode):
     next_node = node.next
     node.val = next_node.val
     node.next = node.next.next
+
+
+def check_if_pangram(sentence: str) -> bool:
+    return len(set(sentence)) == 26

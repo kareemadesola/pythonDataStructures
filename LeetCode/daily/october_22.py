@@ -214,3 +214,8 @@ def delete_node(node: ListNode):
 
 def check_if_pangram(sentence: str) -> bool:
     return len(set(sentence)) == 26
+
+
+def top_k_frequent(words: List[str], k: int) -> List[str]:
+    return [i[0] for i in collections.Counter(sorted(words)).most_common(k)
+            ]

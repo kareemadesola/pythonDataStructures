@@ -227,3 +227,12 @@ def int_to_roman(num: int) -> str:
     X = ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC']
     I = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']
     return M[num // 1000] + C[num % 1000 // 100] + X[num % 100 // 10] + I[num % 10]
+
+
+def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
+    seen = {}
+    for idx, num in enumerate(nums):
+        if num in seen and abs(idx - seen[num]) <= k:
+            return True
+        seen[num] = idx
+    return False

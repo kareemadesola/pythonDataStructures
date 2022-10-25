@@ -236,3 +236,7 @@ def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
             return True
         seen[num] = idx
     return False
+
+
+def array_strings_are_equal(word1: List[str], word2: List[str]) -> bool:
+    return ''.join(word1) == ''.join(word2)

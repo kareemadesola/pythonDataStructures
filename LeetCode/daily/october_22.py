@@ -240,3 +240,34 @@ def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
 
 def array_strings_are_equal(word1: List[str], word2: List[str]) -> bool:
     return ''.join(word1) == ''.join(word2)
+
+
+def check_sub_array_sum_tle(nums: List[int], k: int) -> bool:
+    # TLE
+    arr_len = len(nums)
+    if arr_len < 2: return False
+    l, r = 0, 1
+    p_sum = nums[l]
+    while True:
+        p_sum += nums[r]
+        if p_sum % k == 0:
+            return True
+        r += 1
+        if r == arr_len:
+            l += 1
+            if l > arr_len - 2:
+                return False
+            r = l + 1
+            p_sum = nums[l]
+
+
+def check_sub_array_sum(nums: List[int], k: int) -> bool:
+    hash_map = {0: 0}
+    s = 0
+    for i in range(len(nums)):
+        s += nums[i]
+        if s % k not in hash_map:
+            hash_map[s % k] = i + 1
+        elif hash_map[s % k] < i:
+            return True
+    return False

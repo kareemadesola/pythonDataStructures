@@ -271,3 +271,19 @@ def check_sub_array_sum(nums: List[int], k: int) -> bool:
         elif hash_map[s % k] < i:
             return True
     return False
+
+
+def largest_overlap(img1: List[List[int]], img2: List[List[int]]) -> int:
+    d = collections.defaultdict(int)
+    n = len(img1)
+    a = [(i, j) for i in range(n) for j in range(n) if img1[i][j]]
+    b = [(i, j) for i in range(n) for j in range(n) if img2[i][j]]
+
+    ans = 0
+    for t1 in a:
+        for t2 in b:
+            # how many 1s exist in this sliding pattern
+            t3 = (t2[0] - t1[0], t2[1] - t1[1])
+            d[t3] += 1
+            ans = max(ans, d[t3])
+    return ans

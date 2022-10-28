@@ -287,3 +287,11 @@ def largest_overlap(img1: List[List[int]], img2: List[List[int]]) -> int:
             d[t3] += 1
             ans = max(ans, d[t3])
     return ans
+
+
+def group_anagrams(strs: List[str]) -> List[List[str]]:
+    hash_map = collections.defaultdict(list)
+    for i in strs:
+        hash_map[tuple(sorted(i))].append(i)
+    return list(hash_map.values())
+

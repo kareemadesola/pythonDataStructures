@@ -295,3 +295,9 @@ def group_anagrams(strs: List[str]) -> List[List[str]]:
         hash_map[tuple(sorted(i))].append(i)
     return list(hash_map.values())
 
+
+def earliest_full_bloom(plantTime: List[int], growTime: List[int]) -> int:
+    res = 0
+    for grow, plant in sorted(zip(growTime, plantTime)):
+        res = max(res, grow) + plant
+    return res

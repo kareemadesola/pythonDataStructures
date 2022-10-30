@@ -301,3 +301,33 @@ def earliest_full_bloom(plantTime: List[int], growTime: List[int]) -> int:
     for grow, plant in sorted(zip(growTime, plantTime)):
         res = max(res, grow) + plant
     return res
+
+
+def shortest_path(grid: List[List[int]], k: int) -> int:
+    if len(grid) == 1 and len(grid[0]) == 1:
+        return 0
+    q = collections.deque([(0, 0, 0, k)])
+    m, n = len(grid), len(grid[0])
+    visited = {}
+
+    while q:
+        x, y, path, obstacle = q.popleft()
+        if x < 0 or x == m or y < 0 or y == n:
+            continue
+        if x == m - 1 and y == n - 1:
+            return path
+        if grid[x][y] == 1:
+            if obstacle > 0:
+                obstacle -= 1
+            else:
+                continue
+
+        if (x, y) in visited and visited[(x, y)] >= obstacle:
+            continue
+        visited[(x, y)] = obstacle
+
+        q.append((x + 1, y, path + 1, obstacle))
+        q.append((x - 1, y, path + 1, obstacle))
+        q.append((x, y - 1, path + 1, obstacle))
+        q.append((x, y + 1, path + 1, obstacle))
+    return -1

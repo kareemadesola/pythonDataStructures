@@ -331,3 +331,24 @@ def shortest_path(grid: List[List[int]], k: int) -> int:
         q.append((x, y - 1, path + 1, obstacle))
         q.append((x, y + 1, path + 1, obstacle))
     return -1
+
+
+def is_toeplitz_matrix(matrix: List[List[int]]) -> bool:
+    # time O(m * n) where m is the row size
+    # space O(m * n) and n is the column size
+    m, n = len(matrix), len(matrix[0])
+    hash_map = collections.defaultdict(list)
+
+    # fill the hash_map with elements of the same diagonal
+    for i in range(m):
+        for j in range(n):
+            # two elements are on the same diagonal
+            # if the difference of the row and column position
+            # are equal
+            hash_map[(i - j)].append(matrix[i][j])
+
+    for key in hash_map:
+        # check if there is any element not homogenous with the rest
+        if any(i != hash_map[key][0] for i in hash_map[key]):
+            return False
+    return True

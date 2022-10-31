@@ -352,3 +352,24 @@ def is_toeplitz_matrix(matrix: List[List[int]]) -> bool:
         if any(i != hash_map[key][0] for i in hash_map[key]):
             return False
     return True
+
+
+def is_toeplitz_matrix_better(matrix: List[List[int]]) -> bool:
+    # time O(m * n) where m is the row size
+    # space O(m + n) and n is the column size
+    m, n = len(matrix), len(matrix[0])
+    hash_map = {}
+    for i in range(m):
+        for j in range(n):
+            if hash_map[i - j] not in hash_map:
+                hash_map[i - j] = matrix[i][j]
+            elif hash_map[i - j] != matrix[i][j]:
+                return False
+    return True
+
+
+def is_toeplitz_matrix_better_optimal(matrix: List[List[int]]) -> bool:
+    # time O(m * n) where m is the row size
+    # space O(1) and n is the column size
+    m, n = len(matrix), len(matrix[0])
+    return all(i == 0 or j == 0 or matrix[i - 1][j - 1] == matrix[i][j] for i in range(m) for j in range(n))

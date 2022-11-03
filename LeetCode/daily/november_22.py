@@ -34,23 +34,23 @@ def min_mutation(start: str, end: str, bank: List[str]) -> int:
 
 
 def longest_palindrome(words: List[str]) -> int:
-    # a count variable contains the number of
-    # each word
-    count = collections.Counter(words)
-    res = 0
-    central = False
-    for word, count_of_word in count.items():
+    hash_map = collections.defaultdict(int)
+    unpaired = res = 0
+    for word in words:
         if word[0] == word[1]:
-            if count_of_word % 2 == 0:
-                res += count_of_word
+            if hash_map[word] > 0:
+                hash_map[word] -= 1
+                unpaired -= 1
+                res += 4
             else:
-                res += count_of_word - 1
-                central = True
-        # consider a pair of non-palindrome words,
-        # such that one is the reverse of another
-        # word[1] + word[0] is the reversed word
-        elif word[0] < word[1]:
-            res += 2 * min(count_of_word, count[word[1] + word[0]])
-    if central:
-        res += 1
-    return 2 * res
+                hash_map[word] += 1
+                unpaired += 1
+        else:
+            if hash_map[word[::-1]] > 0:
+                hash_map[word[::-1]] -= 1
+                res += 4
+            else:
+                hash_map[word] += 1
+    return res + 2 if unpaired else res
+
+

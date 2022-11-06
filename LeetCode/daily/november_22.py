@@ -70,3 +70,7 @@ def reverse_vowels(s: str) -> str:
             l += 1
             r -= 1
     return ''.join(s)
+
+
+def orderly_queue(s: str, k: int) -> str:
+    return ''.join(sorted(s)) if k != 1 else min(s[i:] + s[:i] for i in range(len(s)))

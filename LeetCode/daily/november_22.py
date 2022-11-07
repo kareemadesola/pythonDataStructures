@@ -97,3 +97,14 @@ def exist(board: List[List[str]], word: str) -> bool:
         for j in range(n):
             if dfs(i, j, 0): return True
     return False
+
+
+def maximum69Number(num: int) -> int:
+    # Mon, 07 Nov 2022  07:02:07
+    # time O(num)
+    # space O(num)
+    num = str(num)
+    for i in range(len(num)):
+        if num[i] == '6':
+            return int(num[:i] + '9' + num[i + 1:])
+    return int(num)

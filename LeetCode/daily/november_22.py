@@ -74,3 +74,26 @@ def reverse_vowels(s: str) -> str:
 
 def orderly_queue(s: str, k: int) -> str:
     return ''.join(sorted(s)) if k != 1 else min(s[i:] + s[:i] for i in range(len(s)))
+
+
+def exist(board: List[List[str]], word: str) -> bool:
+    m, n, word_len = len(board), len(board[0]), len(word)
+    seen = set()
+
+    def dfs(x, y, len_):
+        if len_ == word_len:
+            return True
+        if not 0 <= x < m or not 0 <= y < n or \
+                word[len_] != board[x][y] or (x, y) in seen:
+            return False
+        seen.add((x, y))
+
+        res = dfs(x - 1, y, len_ + 1) or dfs(x + 1, y, len_ + 1) or \
+              dfs(x, y - 1, len_ + 1) or dfs(x, y + 1, len_ + 1)
+        seen.remove((x, y))
+        return res
+
+    for i in range(m):
+        for j in range(n):
+            if dfs(i, j, 0): return True
+    return False

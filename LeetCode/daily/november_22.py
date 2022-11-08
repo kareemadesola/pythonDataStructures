@@ -108,3 +108,15 @@ def maximum69Number(num: int) -> int:
         if num[i] == '6':
             return int(num[:i] + '9' + num[i + 1:])
     return int(num)
+
+
+def makeGood(s: str) -> str:
+    s: List[str] = list(s)
+    i = 0
+    while len(s) > 1 and i < len(s) - 1:
+        if s[i] != s[i + 1] and ord(s[i].lower()) == ord(s[i + 1].lower()):
+            s[i:i + 2] = ''
+            if i: i -= 1
+        else:
+            i += 1
+        return ''.join(s)

@@ -127,3 +127,18 @@ def makeGood(s: str) -> str:
         else:
             i += 1
         return ''.join(s)
+
+
+class StockSpanner:
+    def __init__(self):
+        self.stack = []
+
+    def next(self, price: int) -> int:
+        # Wed, 09 Nov 2022  17:47:30
+        # amortized time O(1) worst time 0(n)
+        # amortized space O(1) worst time 0(n)
+        res = 1
+        while self.stack and self.stack[-1][0] <= price:
+            res += self.stack.pop()[1]
+        self.stack.append((price, res))
+        return res

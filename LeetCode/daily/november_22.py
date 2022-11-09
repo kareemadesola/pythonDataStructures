@@ -111,12 +111,19 @@ def maximum69Number(num: int) -> int:
 
 
 def makeGood(s: str) -> str:
+    # Tue, 08 Nov 2022  18:21:50
+    # time O(S) where S= len(s)
+    # space O(S)
     s: List[str] = list(s)
     i = 0
     while len(s) > 1 and i < len(s) - 1:
+        # check if the two characters are different and have the same
+        # lowercase form
         if s[i] != s[i + 1] and ord(s[i].lower()) == ord(s[i + 1].lower()):
             s[i:i + 2] = ''
-            if i: i -= 1
+            # for cases like "abBAcC"
+            if i != 0: i -= 1
+
         else:
             i += 1
         return ''.join(s)

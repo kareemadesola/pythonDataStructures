@@ -142,3 +142,16 @@ class StockSpanner:
             res += self.stack.pop()[1]
         self.stack.append((price, res))
         return res
+
+
+def remove_duplicates(s: str) -> str:
+    # Thu, 10 Nov 2022  14:07:25
+    # time O(S) where S is len(s)
+    # space O(S)
+    stack = []
+    for i in s:
+        if stack and stack[-1] == i:
+            stack.pop()
+        else:
+            stack.append(i)
+    return ''.join(stack)

@@ -155,3 +155,16 @@ def remove_duplicates(s: str) -> str:
         else:
             stack.append(i)
     return ''.join(stack)
+
+
+def remove_duplicates_sorted_array(nums: List[int]) -> int:
+    # Fri, 11 Nov 2022  17:41:28
+    # time O(N) where N = len(nums)
+    # space O(N)
+    k = 0
+    for j in nums[1:]:
+        if nums[k] == j:
+            continue
+        k += 1
+        nums[k] = j
+    return k + 1

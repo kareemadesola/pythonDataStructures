@@ -176,6 +176,7 @@ class MedianFinder:
         self.data = []
 
     def addNum(self, num: int) -> None:
+        # total time 0(NlogN)
         # bisect_left algorithm
         # time O(log(N)) where N=len(self.data)
         # space O(1)

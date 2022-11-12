@@ -168,3 +168,29 @@ def remove_duplicates_sorted_array(nums: List[int]) -> int:
         k += 1
         nums[k] = j
     return k + 1
+
+
+class MedianFinder:
+    # Sat, 12 Nov 2022  19:04:56
+    def __init__(self):
+        self.data = []
+
+    def addNum(self, num: int) -> None:
+        # bisect_left algorithm
+        # time O(log(N)) where N=len(self.data)
+        # space O(1)
+        l, r = 0, len(self.data)
+        while l < r:
+            mid = l + (r - l) // 2
+            if self.data[mid] < num:
+                l = mid + 1
+            else:
+                r = mid
+        self.data.insert(l, num)
+
+    def findMedian(self) -> float:
+        # time O(1)
+        # space O(1)
+        len_ = len(self.data)
+        mid = ((len_ // 2) - 1, len_ // 2) if len_ % 2 == 0 else (len_ // 2, len_ // 2)
+        return (self.data[mid[0]] + self.data[mid[1]]) / 2

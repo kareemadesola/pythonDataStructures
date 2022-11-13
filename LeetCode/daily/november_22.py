@@ -195,3 +195,10 @@ class MedianFinder:
         len_ = len(self.data)
         mid = ((len_ // 2) - 1, len_ // 2) if len_ % 2 == 0 else (len_ // 2, len_ // 2)
         return (self.data[mid[0]] + self.data[mid[1]]) / 2
+
+
+def reverse_words(s: str) -> str:
+    # Sun, 13 Nov 2022  16:30:52
+    # time O(S) where S = len(s)
+    # space O(S)
+    return ' '.join(s.split()[::-1])

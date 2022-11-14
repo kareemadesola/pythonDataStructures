@@ -202,3 +202,16 @@ def reverse_words(s: str) -> str:
     # time O(S) where S = len(s)
     # space O(S)
     return ' '.join(s.split()[::-1])
+
+
+def removeStones(points):
+    uf = {}
+
+    def find(x):
+        if x != uf.setdefault(x, x):
+            uf[x] = find(uf[x])
+        return uf[x]
+
+    for i, j in points:
+        uf[find(i)] = find(~j)
+    return len(points) - len({find(x) for x in uf})

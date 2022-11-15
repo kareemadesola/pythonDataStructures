@@ -1,5 +1,7 @@
 import collections
-from typing import List
+from typing import List, Optional
+
+from LeetCode.daily.june_22 import TreeNode
 
 
 def find_ball(grid: List[List[int]]) -> List[int]:
@@ -215,3 +217,12 @@ def removeStones(points):
     for i, j in points:
         uf[find(i)] = find(~j)
     return len(points) - len({find(x) for x in uf})
+
+
+def count_nodes(root: Optional[TreeNode]) -> int:
+    # Tue, 15 Nov 2022  21:01:03
+    # time O(N) where N is the number of nodes present
+    # space O(H) H is the height of tree
+    if not root:
+        return 0
+    return 1 + count_nodes(root.left) + count_nodes(root.right)

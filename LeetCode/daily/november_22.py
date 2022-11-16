@@ -240,6 +240,7 @@ def guess_number(n: int) -> int:
         mid = low + (high - low) // 2
         num_guess = guess(mid)
 
+        # guessed number higher than picked number
         if num_guess == -1:
             high = mid - 1
         elif num_guess == 1:

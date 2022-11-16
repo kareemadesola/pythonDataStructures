@@ -1,4 +1,5 @@
 import collections
+import random
 from typing import List, Optional
 
 from LeetCode.daily.june_22 import TreeNode
@@ -226,3 +227,22 @@ def count_nodes(root: Optional[TreeNode]) -> int:
     if not root:
         return 0
     return 1 + count_nodes(root.left) + count_nodes(root.right)
+
+
+def guess_number(n: int) -> int:
+    def guess(num) -> int:
+        """predefined api"""
+        return random.randint(-1, 1)
+
+    low, high = 1, n
+
+    while not low > high:
+        mid = low + (high - low) // 2
+        num_guess = guess(mid)
+
+        if num_guess == -1:
+            high = mid - 1
+        elif num_guess == 1:
+            low = mid + 1
+        else:
+            return mid

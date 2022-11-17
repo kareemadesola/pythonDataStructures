@@ -247,3 +247,19 @@ def guess_number(n: int) -> int:
             low = mid + 1
         else:
             return mid
+
+
+def compute_area(ax1: int, ay1: int,
+                 ax2: int, ay2: int,
+                 bx1: int, by1: int,
+                 bx2: int, by2: int) -> int:
+    # Thu, 17 Nov 2022  06:45:51
+    # time O(1)
+    # space O(1)
+    area_a: int = (ax2 - ax1) * (ay2 - ay1)
+    area_b: int = (bx2 - bx1) * (by2 - by1)
+
+    x_overlap = max(min(ax2, bx2) - max(ax1, bx1), 0)
+    y_overlap = max(min(ay2, by2) - max(ay1, by1), 0)
+    area_overlap: int = x_overlap * y_overlap
+    return area_a + area_b - area_overlap

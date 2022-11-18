@@ -263,3 +263,20 @@ def compute_area(ax1: int, ay1: int,
     y_overlap = max(min(ay2, by2) - max(ay1, by1), 0)
     area_overlap: int = x_overlap * y_overlap
     return area_a + area_b - area_overlap
+
+
+def is_ugly(n: int) -> bool:
+    # Fri, 18 Nov 2022  19:22:54
+    # time O(n)
+    # space O(1)
+
+    # singular point
+    if n == 0: return False
+    while n % 2 == 0 or n % 3 == 0 or n % 5 == 0:
+        if n % 2 == 0:
+            n /= 2
+        if n % 3 == 0:
+            n /= 3
+        if n % 5 == 0:
+            n /= 5
+    return n == 1

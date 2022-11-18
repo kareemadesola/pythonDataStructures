@@ -280,3 +280,17 @@ def is_ugly(n: int) -> bool:
         if n % 5 == 0:
             n /= 5
     return n == 1
+
+
+def is_ugly_optimal(n: int) -> bool:
+    if n <= 0: return False
+
+    def keep_dividing(divisor):
+        nonlocal n
+        while n % divisor == 0:
+            n /= divisor
+        return n
+
+    for i in (2, 3, 5):
+        n = keep_dividing(i)
+    return n == 1

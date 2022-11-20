@@ -294,3 +294,25 @@ def is_ugly_optimal(n: int) -> bool:
     for i in (2, 3, 5):
         n = keep_dividing(i)
     return n == 1
+
+
+def calculate(s: str) -> int:
+    # Sun, 20 Nov 2022  19:54:54
+    # time O(N) where N = len(s)
+    # space O(N)
+    res, sign, num = 0, 1, 0
+    stack = [sign]
+
+    for c in s:
+        if '0' <= c <= '9':
+            num = num * 10 + int(c)
+        elif c in '+-':
+            res += sign * num
+            sign = stack[-1] * (1 if c == '+' else -1)
+            num = 0
+        elif c == '(':
+            stack.append(sign)
+        elif c == ')':
+            stack.pop()
+
+    return res + sign * num

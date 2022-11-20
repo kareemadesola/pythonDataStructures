@@ -297,6 +297,7 @@ def is_ugly_optimal(n: int) -> bool:
 
 
 def calculate(s: str) -> int:
+    # adapted from a post by yavinci
     # Sun, 20 Nov 2022  19:54:54
     # time O(N) where N = len(s)
     # space O(N)

@@ -322,6 +322,9 @@ def calculate(s: str) -> int:
 
 
 def num_squares(n: int) -> int:
+    # Tue, 22 Nov 2022  06:04:28
+    # time O(N**2) as (sqrt(n))^4 = n²---Four square theorem)
+    # space O(N) not sure
     if n < 4:
         return n
     breadth = []

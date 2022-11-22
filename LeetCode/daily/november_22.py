@@ -322,7 +322,7 @@ def calculate(s: str) -> int:
 
 
 def num_squares(n: int) -> int:
-    if n <= 2:
+    if n < 4:
         return n
     breadth = []
 

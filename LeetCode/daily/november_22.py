@@ -319,3 +319,27 @@ def calculate(s: str) -> int:
             stack.pop()
 
     return res + sign * num
+
+
+def num_squares(n: int) -> int:
+    if n <= 2:
+        return n
+    breadth = []
+
+    i = 1
+    while i * i <= n:
+        breadth.append(i * i)
+        i += 1
+
+    res, to_check = 0, {n}
+    while to_check:
+        temp = set()
+        for i in to_check:
+            for j in breadth:
+                if i == j:
+                    return res + 1
+                if i < j:
+                    break
+                temp.add(i - j)
+        to_check = temp
+        res += 1

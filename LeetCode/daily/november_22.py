@@ -349,6 +349,9 @@ def num_squares(n: int) -> int:
 
 
 def is_valid_sudoku(board: List[List[str]]) -> bool:
+    # Wed, 23 Nov 2022  16:52:11
+    # time O(1) since it is a 9 * 9 board
+    # space O(1)
     m, n = len(board), len(board[0])
     row = collections.defaultdict(list)
     col = collections.defaultdict(list)

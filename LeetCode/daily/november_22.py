@@ -346,3 +346,24 @@ def num_squares(n: int) -> int:
                 temp.add(i - j)
         to_check = temp
         res += 1
+
+
+def is_valid_sudoku(board: List[List[str]]) -> bool:
+    m, n = len(board), len(board[0])
+    row = collections.defaultdict(list)
+    col = collections.defaultdict(list)
+    square = collections.defaultdict(list)
+    for i in range(m):
+        for j in range(n):
+            elem = board[i][j]
+            if elem == '.':
+                continue
+            # portion of the box it exists
+            x = i // 3
+            y = j // 3
+            if elem in row[i] or elem in col[j] or elem in square[(x, y)]:
+                return False
+            row[i].append(elem)
+            col[j].append(elem)
+            square[(x, y)].append(elem)
+    return True

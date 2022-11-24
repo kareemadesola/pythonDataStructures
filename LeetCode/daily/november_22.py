@@ -370,3 +370,31 @@ def is_valid_sudoku(board: List[List[str]]) -> bool:
             col[j].append(elem)
             square[(x, y)].append(elem)
     return True
+
+
+def exist(board: List[List[str]], word: str) -> bool:
+    len_ = len(word)
+
+    def dfs(i, j, remains):
+        if remains == 0:  # all the characters are checked
+            return True
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or \
+                word[remains - 1] != board[i][j]:
+            return False
+        tmp = board[i][j]  # first character is found, check the remaining part
+        board[i][j] = "#"  # avoid visit agian
+        # check whether can find "word" along one direction
+        res = dfs(i + 1, j, remains - 1) or dfs(i - 1, j, remains - 1) or \
+              dfs(i, j + 1, remains - 1) or dfs(i, j - 1, remains - 1)
+        board[i][j] = tmp
+        return res
+
+    if not board:
+        return False
+
+    # check whether can find word, start at (i,j) position
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if dfs(i, j, len_):
+                return True
+    return False

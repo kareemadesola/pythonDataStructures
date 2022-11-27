@@ -400,7 +400,6 @@ def exist(board: List[List[str]], word: str) -> bool:
                 return True
     return False
 
-
 def jobScheduling(startTime, endTime, profit):
     jobs = sorted(zip(startTime, endTime, profit), key=lambda v: v[1])
     dp = [[0, 0]]

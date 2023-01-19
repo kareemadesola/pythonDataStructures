@@ -287,3 +287,18 @@ def clone_graph(node: Node) -> Node:
         return copy
 
     return dfs(node) if node else None
+
+
+def find_target_sum_ways(nums: List[int], target: int) -> int:
+    dp = {}
+
+    def backtrack(i, total):
+        if i == len(nums):
+            return 1 if total == target else 0
+        if (i, total) in dp:
+            return dp[(i, total)]
+        dp[(i, total)] = backtrack(i + 1, total + nums[i]) + \
+                         backtrack(i + 1, total - nums[i])
+        return dp[(i, total)]
+
+    return backtrack(0, 0)

@@ -1,5 +1,5 @@
 import collections
-from typing import List
+from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
 
@@ -302,3 +302,16 @@ def find_target_sum_ways(nums: List[int], target: int) -> int:
         return dp[(i, total)]
 
     return backtrack(0, 0)
+
+
+def inorder_traversal(root: Optional[TreeNode]) -> List[int]:
+    res = []
+
+    def dfs_inorder(node: Optional[TreeNode]):
+        if not node: return
+        dfs_inorder(node.left)
+        res.append(node.val)
+        dfs_inorder(node.right)
+
+    dfs_inorder(root)
+    return res

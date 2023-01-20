@@ -315,3 +315,16 @@ def inorder_traversal(root: Optional[TreeNode]) -> List[int]:
 
     dfs_inorder(root)
     return res
+
+
+def inorder_traversal_stack(root: Optional[TreeNode]) -> List[int]:
+    stack, res = [], []
+    while root or stack:
+        while root:
+            stack.append(root)
+            root = root.left
+        temp = stack.pop()
+        res.append(temp.val)
+        root = temp.right
+
+    return res

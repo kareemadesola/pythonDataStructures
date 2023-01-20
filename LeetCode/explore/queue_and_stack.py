@@ -328,3 +328,29 @@ def inorder_traversal_stack(root: Optional[TreeNode]) -> List[int]:
         root = temp.right
 
     return res
+
+
+class MyQueue:
+
+    def __init__(self):
+        self.output = []
+        self.input = []
+
+    def push(self, x: int) -> None:
+        self.input.append(x)
+
+    def pop(self) -> int:
+        self.move()
+        return self.output.pop()
+
+    def peek(self) -> int:
+        self.move()
+        return self.output[-1]
+
+    def empty(self) -> bool:
+        return not self.output and not self.input
+
+    def move(self) -> None:
+        if not self.output:
+            while self.input:
+                self.output.append(self.input.pop())

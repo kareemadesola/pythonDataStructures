@@ -392,3 +392,19 @@ def decode_string(s: str) -> str:
         else:
             curr.append(char)
     return ''.join(curr)
+
+
+def flood_fill_dfs(image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+    mx_r, mx_c = len(image), len(image[0])
+    prev_color = image[sr][sc]
+
+    def dfs(r: int, c: int):
+        if 0 <= r < mx_r and 0 <= c < mx_c and image[r][c] == prev_color:
+            image[r][c] = color
+        dfs(r - 1, c)
+        dfs(r + 1, c)
+        dfs(r, c - 1)
+        dfs(r, c + 1)
+
+    if image[sr][sc] != color: dfs(sr, sc)
+    return image

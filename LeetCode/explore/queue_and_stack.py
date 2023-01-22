@@ -374,3 +374,21 @@ class MyStack:
 
     def empty(self) -> bool:
         return not self.queue
+
+
+def decode_string(s: str) -> str:
+    stack = []
+    curr: List[str] = []
+    num = 0
+    for char in s:
+        if char == '[':
+            stack.append((curr, num))
+            curr, num = [], 0
+        elif char == "]":
+            prev, prev_num = stack.pop()
+            curr = prev + curr * prev_num
+        elif char.isdigit():
+            num = 10 * num + int(char)
+        else:
+            curr.append(char)
+    return ''.join(curr)

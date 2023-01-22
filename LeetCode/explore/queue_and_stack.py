@@ -408,3 +408,17 @@ def flood_fill_dfs(image: List[List[int]], sr: int, sc: int, color: int) -> List
 
     if image[sr][sc] != color: dfs(sr, sc)
     return image
+
+
+def flood_fill_bfs(image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+    if image[sr][sc] == color:
+        return image
+    q = collections.deque([(sr, sc)])
+    mx_r, mx_c = len(image), len(image[0])
+    prev_color = image[sr][sc]
+    while q:
+        r, c = q.popleft()
+        if 0 <= r < mx_r and 0 <= c < mx_c and image[r][c] == prev_color:
+            image[r][c] = color
+            q.extend([(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)])
+    return image

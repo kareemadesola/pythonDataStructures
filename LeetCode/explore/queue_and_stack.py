@@ -422,3 +422,24 @@ def flood_fill_bfs(image: List[List[int]], sr: int, sc: int, color: int) -> List
             image[r][c] = color
             q.extend([(r - 1, c), (r + 1, c), (r, c - 1), (r, c + 1)])
     return image
+
+
+def update_matrix_bfs(mat: List[List[int]]) -> List[List[int]]:
+    q = collections.deque()
+    mx_r, mx_c = len(mat), len(mat[0])
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    for r in range(mx_r):
+        for c in range(mx_c):
+            if mat[r][c] == 0:
+                q.append((r, c))
+            else:
+                mat[r][c] = -1
+
+    while q:
+        r, c = q.popleft()
+        for i, j in directions:
+            nr, nc = r + i, c + j
+            if 0 <= nr < mx_r and 0 <= nc < mx_c and mat[nr][nc] == -1:
+                mat[nr][nc] = mat[r][c] + 1
+                q.append((nr, nc))
+    return mat

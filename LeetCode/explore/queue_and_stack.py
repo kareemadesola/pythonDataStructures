@@ -443,3 +443,16 @@ def update_matrix_bfs(mat: List[List[int]]) -> List[List[int]]:
                 mat[nr][nc] = mat[r][c] + 1
                 q.append((nr, nc))
     return mat
+
+
+def can_visit_all_rooms(rooms: List[List[int]]) -> bool:
+    stack = [0]
+    seen = set(stack)
+    while stack:
+        i = stack.pop()
+        for j in rooms[i]:
+            if j not in seen:
+                stack.append(j)
+                seen.add(j)
+                if len(seen) == len(rooms): return True
+    return len(seen) == len(rooms)

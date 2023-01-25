@@ -1,7 +1,9 @@
 import collections
 import unittest
 from collections import Counter
-from typing import List
+from typing import List, Optional
+
+from LeetCode.daily.july_22 import TreeNode
 
 """Practical Application Hash Set"""
 
@@ -313,6 +315,23 @@ def is_valid_sudoku(board: List[List[str]]) -> bool:
             cols[c].add(element)
             squares[(r_, c_)].add(element)
     return True
+
+
+def find_duplicate_subtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+    res: List[Optional[TreeNode]] = []
+    cnt = collections.defaultdict(int)
+
+    def traverse(node: TreeNode):
+        if not node:
+            return ''
+        rep = f'({traverse(node.left)}){node.val}({traverse(node.right)})'
+        cnt[rep] += 1
+        if cnt[rep] == 2:
+            res.append(node)
+        return rep
+
+    traverse(root)
+    return res
 
 
 class Test(unittest.TestCase):

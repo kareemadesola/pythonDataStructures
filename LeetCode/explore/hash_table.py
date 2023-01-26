@@ -334,6 +334,18 @@ def find_duplicate_subtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]
     return res
 
 
+def length_of_longest_substring_set(s: str) -> int:
+    res = l = 0
+    seen = set()
+    for r in range(len(s)):
+        while s[r] in seen:
+            seen.remove(s[l])
+            l += 1
+        seen.add(s[r])
+        res = max(res, r - l + 1)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

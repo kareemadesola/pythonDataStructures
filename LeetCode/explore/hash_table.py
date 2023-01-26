@@ -346,6 +346,17 @@ def length_of_longest_substring_set(s: str) -> int:
     return res
 
 
+def length_of_longest_substring_hash_map(s: str) -> int:
+    res = l = 0
+    char_to_idx = {}
+    for r in range(len(s)):
+        if s[r] in char_to_idx and l <= char_to_idx[s[r]]:
+            l = char_to_idx[s[r]] + 1
+        char_to_idx[s[r]] = r
+        res = max(res, r - l + 1)
+    return res
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

@@ -349,6 +349,11 @@ def four_sum_count(nums1: List[int], nums2: List[int],
     return res
 
 
+def top_k_frequent(self, nums: List[int], k: int) -> List[int]:
+    num_to_cnt = collections.Counter(nums)
+    return [i[0] for i in num_to_cnt.most_common(k)]
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

@@ -334,14 +334,6 @@ def find_duplicate_subtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]
     return res
 
 
-def num_jewels_in_stones(jewels: str, stones: str) -> int:
-    res = 0
-    cnt = collections.Counter(stones)
-    for jewel in jewels:
-        res += cnt[jewel]
-    return res
-
-
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

@@ -1,4 +1,5 @@
 import collections
+import random
 import unittest
 from collections import Counter
 from typing import List, Optional
@@ -352,6 +353,33 @@ def four_sum_count(nums1: List[int], nums2: List[int],
 def top_k_frequent(self, nums: List[int], k: int) -> List[int]:
     num_to_cnt = collections.Counter(nums)
     return [i[0] for i in num_to_cnt.most_common(k)]
+
+
+class RandomizedSet:
+
+    def __init__(self):
+        self.values = []
+        self.val_to_idx = {}
+
+    def insert(self, val: int) -> bool:
+        if val not in self.val_to_idx:
+            self.val_to_idx[val] = len(self.values)
+            self.values.append(val)
+            return True
+        return False
+
+    def remove(self, val: int) -> bool:
+        if val in self.val_to_idx:
+            idx = self.val_to_idx.pop(val)
+            last_val = self.values.pop()
+            if idx != len(self.values):
+                self.values[idx] = last_val
+                self.val_to_idx[last_val] = idx
+            return True
+        return False
+
+    def getRandom(self) -> int:
+        return random.choice(self.values)
 
 
 class Test(unittest.TestCase):

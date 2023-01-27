@@ -334,6 +334,21 @@ def find_duplicate_subtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]
     return res
 
 
+def four_sum_count(nums1: List[int], nums2: List[int],
+                   nums3: List[int], nums4: List[int]) -> int:
+    res = 0
+    num_to_cnt = {}
+    for i in nums1:
+        for j in nums2:
+            num_to_cnt[i + j] = num_to_cnt.get(i + j, 0) + 1
+
+    for k in nums3:
+        for l in nums4:
+            res += num_to_cnt.get(-(k + l), 0)
+
+    return res
+
+
 class Test(unittest.TestCase):
     def test_find_restaurant(self):
         list1 = ["Shogun", "Tapioca Express", "Burger King", "KFC"]

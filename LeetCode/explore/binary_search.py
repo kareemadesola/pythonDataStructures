@@ -1,3 +1,4 @@
+import random
 from typing import List
 
 
@@ -44,3 +45,19 @@ def search_rotated(nums: List[int], target: int) -> int:
             else:
                 r = mid - 1
     return -1
+
+
+def is_bad_version(version: int) -> bool:
+    return random.choice([True, False])
+
+
+def first_bad_version(n: int) -> int:
+    l, r = 1, n
+    while l <= r:
+        mid = l + (r - l) // 2
+        if is_bad_version(mid):
+            if mid - 1 > 0 and not is_bad_version(mid - 1):
+                return mid
+            r = mid - 1
+        else:
+            l = mid + 1

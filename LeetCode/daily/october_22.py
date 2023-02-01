@@ -238,6 +238,22 @@ def contains_nearby_duplicate(nums: List[int], k: int) -> bool:
     return False
 
 
+def findErrorNums(self, nums: List[int]) -> List[int]:
+    seen = set()
+    gotten = False
+    for i in nums:
+        if gotten:
+            seen.add(i)
+        elif i in seen:
+            gotten = True
+            result = [i]
+            seen.add(i)
+    for i in range(1, len(nums) + 1):
+        if i not in seen:
+            result.append(i)
+            return result
+
+
 def array_strings_are_equal(word1: List[str], word2: List[str]) -> bool:
     return ''.join(word1) == ''.join(word2)
 

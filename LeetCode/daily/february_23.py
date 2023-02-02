@@ -1,3 +1,4 @@
+import bisect
 import math
 from typing import List
 
@@ -29,3 +30,8 @@ def isAlienSorted(words: List[str], order: str) -> bool:
                     return False
                 break
     return True
+
+
+def searchRange(self, nums: List[int], target: int) -> List[int]:
+    l, r = bisect.bisect_left(nums, target), bisect.bisect(nums, target)
+    return [l, r - 1] if l != r else [-1, -1]

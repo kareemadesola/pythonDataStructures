@@ -1,5 +1,5 @@
 import math
-from typing import List
+from typing import List, Optional
 
 
 def gcdOfStrings(str1: str, str2: str) -> str:
@@ -31,3 +31,39 @@ def isAlienSorted(words: List[str], order: str) -> bool:
     return True
 
 
+def convert(s: str, num_rows: int) -> str:
+    if num_rows == 1: return s
+    # get no of columns
+    # num_cols = (no of Sections) * (no of cols per section)
+    # no of sections = no of chars/ chars per section
+    n = len(s)
+    num_cols = math.ceil(n / (2 * num_rows - 2)) * (num_rows - 1)
+
+    # create matrix of size numRoms * num_cols
+    matrix: List[List[Optional[str]]] = [[None] * num_cols for _ in range(num_rows)]
+
+    # fill matrix in the required order
+    curr_row, curr_col = 0, 0
+    curr_string_index = 0
+
+    while curr_string_index < n:
+        # move down
+        while curr_row < num_rows and curr_string_index < n:
+            matrix[curr_row][curr_col] = s[curr_string_index]
+            curr_row += 1
+            curr_string_index += 1
+
+        curr_row -= 2
+        curr_col += 1
+
+        # move up and right also
+        while curr_row > 0 and curr_col < num_cols and curr_string_index < n:
+            matrix[curr_row][curr_col] = s[curr_string_index]
+            curr_row -= 1
+            curr_col += 1
+            curr_string_index += 1
+
+    res = ''
+    for row in matrix:
+        res += ''.join(i for i in row if i)
+    return res

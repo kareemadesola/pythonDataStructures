@@ -1,3 +1,4 @@
+import collections
 import math
 from typing import List, Optional
 
@@ -67,3 +68,21 @@ def convert(s: str, num_rows: int) -> str:
     for row in matrix:
         res += ''.join(i for i in row if i)
     return res
+
+
+def check_inclusion(s1: str, s2: str) -> bool:
+    s1_len = len(s1)
+    s1_counter = collections.Counter(s1)
+    s2_counter = collections.Counter()
+
+    i = 0
+    for j in range(len(s2)):
+        s2_counter[s2[j]] += 1
+
+        if j - i + 1 == s1_len:
+            if s1_counter == s2_counter:
+                return True
+
+            s2_counter[s2[i]] -= 1
+            i += 1
+    return False

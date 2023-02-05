@@ -109,3 +109,19 @@ def findAnagrams(s: str, p: str) -> List[int]:
             s_counter[s[i]] -= 1
             i += 1
     return res
+
+
+def findAnagramsOptimized(s: str, p: str) -> List[int]:
+    res = []
+    p_len = len(p)
+    p_counter = collections.Counter(p)
+
+    # pre fill excluding the last element
+    s_counter = collections.Counter(s[:p_len - 1])
+
+    for i in range(p_len - 1, len(s)):
+        s_counter[s[i]] += 1
+        if p_counter == s_counter:
+            res.append(i - p_len + 1)
+        s_counter[s[i - p_len + 1]] -= 1
+    return res

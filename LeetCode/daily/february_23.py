@@ -89,6 +89,10 @@ def check_inclusion(s1: str, s2: str) -> bool:
 
 
 def findAnagrams(s: str, p: str) -> List[int]:
+    # Sun, 05 Feb 2023  10:11:07
+    # time O(S) => length of s
+    # space O(P)
+
     res = []
     p_len = len(p)
     p_counter = collections.Counter(p)

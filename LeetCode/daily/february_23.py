@@ -86,3 +86,22 @@ def check_inclusion(s1: str, s2: str) -> bool:
             s2_counter[s2[i]] -= 1
             i += 1
     return False
+
+
+def findAnagrams(s: str, p: str) -> List[int]:
+    res = []
+    p_len = len(p)
+    p_counter = collections.Counter(p)
+    s_counter = collections.Counter()
+
+    i = 0
+    for j in range(len(s)):
+        s_counter[s[j]] += 1
+
+        if j - i + 1 == p_len:
+            if p_counter == s_counter:
+                res.append(i)
+
+            s_counter[s[i]] -= 1
+            i += 1
+    return res

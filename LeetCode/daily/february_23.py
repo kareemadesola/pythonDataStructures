@@ -135,3 +135,15 @@ def shuffle(nums: List[int], n: int) -> List[int]:
     for i in range(n):
         res.extend([nums[i], nums[i + n]])
     return res
+
+
+def shuffle_bitmask(nums: List[int], n: int) -> List[int]:
+    for i in range(n, len(nums)):
+        nums[i - n] |= nums[i] << 10
+
+    all_1s = 2 ** 10 - 1
+
+    for i in range(n - 1, -1, -1):
+        nums[2 * i + 1] = nums[i] >> 10
+        nums[2 * i] = nums[i] & all_1s
+    return nums

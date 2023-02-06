@@ -32,3 +32,14 @@ def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optio
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
     return dummy.next
+
+
+def lengthOfLongestSubstring(s: str) -> int:
+    res = l = 0
+    char_to_idx = {}
+    for r in range(len(s)):
+        if s[r] in char_to_idx and l <= char_to_idx[s[r]]:
+            l = char_to_idx[s[r]] + 1
+        res = max(res, r - l + 1)
+        char_to_idx[s[r]] = r
+    return res

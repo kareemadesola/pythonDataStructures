@@ -43,3 +43,34 @@ def lengthOfLongestSubstring(s: str) -> int:
         res = max(res, r - l + 1)
         char_to_idx[s[r]] = r
     return res
+
+
+def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
+    # Mon, 06 Feb 2023  23:55:59
+    # time O(N) N=> len(nums1 + nums2)
+    # space O(N)
+    l = l1 = l2 = 0
+    nums1_len, nums2_len = len(nums1), len(nums2)
+    nums_1_2 = [0] * (nums1_len + nums2_len)
+    nums1_2_len = len(nums_1_2)
+
+    while l1 < nums1_len and l2 < nums2_len and l < nums1_2_len:
+        if nums1[l1] <= nums2[l2]:
+            nums_1_2[l] = nums1[l1]
+            l1 += 1
+        else:
+            nums_1_2[l] = nums2[l2]
+            l2 += 1
+        l += 1
+
+    if l < nums1_2_len:
+        while l1 < nums1_len:
+            nums_1_2[l] = nums1[l1]
+            l1 += 1
+            l += 1
+        while l2 < nums2_len:
+            nums_1_2[l] = nums2[l2]
+            l2 += 1
+            l += 1
+
+    return (nums_1_2[nums1_2_len // 2] + nums_1_2[-(nums1_2_len // 2) - 1]) / 2

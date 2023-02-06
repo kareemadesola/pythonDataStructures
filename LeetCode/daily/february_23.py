@@ -125,3 +125,13 @@ def findAnagramsOptimized(s: str, p: str) -> List[int]:
             res.append(i - p_len + 1)
         s_counter[s[i - p_len + 1]] -= 1
     return res
+
+
+def shuffle(nums: List[int], n: int) -> List[int]:
+    # Mon, 06 Feb 2023  19:13:26
+    # time O(n) => 2n == n
+    # space O(n)
+    res = []
+    for i in range(n):
+        res.extend([nums[i], nums[i + n]])
+    return res

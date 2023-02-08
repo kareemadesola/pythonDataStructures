@@ -147,3 +147,19 @@ def shuffle_bitmask(nums: List[int], n: int) -> List[int]:
         nums[2 * i + 1] = nums[i] >> 10
         nums[2 * i] = nums[i] & all_1s
     return nums
+
+
+def totalFruit(fruits: List[int]) -> int:
+    mx_picked = 0
+    basket = {}
+    l = 0
+    for r in range(len(fruits)):
+        basket[fruits[r]] = basket.get(fruits[r], 0) + 1
+        while len(basket) > 2:
+            basket[fruits[l]] -= 1
+            if not basket[fruits[l]]:
+                del basket[fruits[l]]
+            l += 1
+
+        mx_picked = max(mx_picked, r - l + 1)
+    return mx_picked

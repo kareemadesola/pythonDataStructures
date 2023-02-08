@@ -163,3 +163,13 @@ def totalFruit(fruits: List[int]) -> int:
 
         mx_picked = max(mx_picked, r - l + 1)
     return mx_picked
+
+
+def jump(nums: List[int]) -> int:
+    res = l = r = farthest = 0
+    while r < len(nums) - 1:
+        for i in range(l, r + 1):
+            farthest = max(farthest, i + nums[i])
+        l, r = r + 1, farthest
+        res += 1
+    return res

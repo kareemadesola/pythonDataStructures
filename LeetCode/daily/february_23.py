@@ -1,4 +1,5 @@
 import collections
+import itertools
 import math
 from typing import List, Optional
 
@@ -172,4 +173,14 @@ def jump(nums: List[int]) -> int:
             farthest = max(farthest, i + nums[i])
         l, r = r + 1, farthest
         res += 1
+    return res
+
+
+def distinctNames(ideas: List[str]) -> int:
+    # brute force solution
+    ideas = set(ideas)
+    res = 0
+    for idea_a, idea_b in itertools.combinations(ideas, 2):
+        if idea_a[0] + idea_b[1:] not in ideas and idea_b[0] + idea_a[1:] not in ideas:
+            res += 2
     return res

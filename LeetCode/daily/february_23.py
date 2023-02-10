@@ -198,3 +198,24 @@ def distinctNamesOptimized(ideas: List[str]) -> int:
 
             res += 2 * (len(initial_groups[i]) - num_of_mutual) * len(initial_groups[j]) - num_of_mutual
     return res
+
+
+def maxDistance(grid: List[List[int]]) -> int:
+    # brute force TLE solution
+    n = len(grid)
+    ones = []
+    zeros = []
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j]:
+                ones.append((i, j))
+            else:
+                zeros.append((i, j))
+    if not ones or not zeros: return -1
+    temp = []
+    for x0, y0 in zeros:
+        mn = 2 * n - 2
+        for x1, y1 in ones:
+            mn = min(mn, abs(x0 - x1) + abs(y0 - y1))
+        temp.append(mn)
+    return max(temp)

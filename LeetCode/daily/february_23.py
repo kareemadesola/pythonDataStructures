@@ -219,3 +219,25 @@ def maxDistance(grid: List[List[int]]) -> int:
             mn = min(mn, abs(x0 - x1) + abs(y0 - y1))
         temp.append(mn)
     return max(temp)
+
+
+def maxDistanceBFS(grid: List[List[int]]) -> int:
+    n = len(grid)
+    q = collections.deque()
+
+    for r in range(n):
+        for c in range(n):
+            if grid[r][c]:
+                q.append((r, c))
+
+    res = 0
+    directions = ((0, -1), (0, 1), (-1, 0), (1, 0))
+    while q:
+        r, c = q.popleft()
+        res = grid[r][c]
+        for dr, dc in directions:
+            nr, nc = r + dr, c + dc
+            if min(nr, nc) >= 0 and max(nr, nc) < n and not grid[nr][nc]:
+                q.append((nr, nc))
+                grid[nr][nc] = res + 1
+    return res - 1 if res > 1 else -1

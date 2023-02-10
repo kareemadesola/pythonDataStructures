@@ -76,7 +76,7 @@ def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
     return (nums_1_2[nums1_2_len // 2] + nums_1_2[-(nums1_2_len // 2) - 1]) / 2
 
 
-def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
+def findMedianSortedArraysOptimal(nums1: List[int], nums2: List[int]) -> float:
     if len(nums2) < len(nums1):
         nums1, nums2 = nums2, nums1
     nums1_len = len(nums1)
@@ -103,3 +103,20 @@ def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
             r = i - 1
         else:
             l = i + 1
+
+
+def longestPalindrome(s: str) -> str:
+    res_l = res_r = 0
+
+    def palindrome(l, r):
+        nonlocal res_r, res_l
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l > res_r - res_l:
+                res_l, res_r = l, r
+            l -= 1
+            r += 1
+
+    for i in range(len(s)):
+        palindrome(i, i)
+        palindrome(i, i + 1)
+    return s[res_l:res_r + 1]

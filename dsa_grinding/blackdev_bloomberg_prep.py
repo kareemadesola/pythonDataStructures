@@ -133,3 +133,16 @@ def reverse_better(x: int) -> int:
     sign = 1 if x > 0 else -1
     res = sign * int(str(abs(x))[::-1])
     return res if -2 ** 31 <= res <= 2 ** 31 - 1 else 0
+
+
+def reverse_math(x: int) -> int:
+    mx, mn = 2 ** 31 - 1, -2 ** 31
+    res = 0
+    while x:
+        x, pop = divmod(x, 10)
+        if res > mx // 10 or (res == mx // 10 and pop > 7):
+            return 0
+        if res < mn // 10 or (res == mn // 10 and pop < -8):
+            return 0
+        res = res * 10 + pop
+    return res

@@ -1,7 +1,7 @@
 import collections
 import itertools
 import math
-from typing import List, Optional
+from typing import List, Optional, Deque
 
 
 def gcdOfStrings(str1: str, str2: str) -> str:
@@ -241,3 +241,34 @@ def maxDistanceBFS(grid: List[List[int]]) -> int:
                 q.append((nr, nc))
                 grid[nr][nc] = res + 1
     return res - 1 if res > 1 else -1
+
+
+def shortestAlternatingPaths(n: int, redEdges: List[List[int]], blueEdges: List[List[int]]) -> List[int]:
+    red, blue = collections.defaultdict(list), collections.defaultdict(list)
+
+    # populate adjacency list
+    for src, dst in redEdges:
+        red[src].append(dst)
+    for src, dst in blueEdges:
+        blue[src].append(dst)
+
+    q: Deque[tuple[int, int, Optional[str]]] = collections.deque([(0, 0, None)])
+    visited = {(0, None)}
+    res = [-1] * n
+    while q:
+        node, length, edge_color = q.popleft()
+        if res[node] == -1:
+            res[node] = length
+
+        if edge_color != 'RED':
+            for nei in red[node]:
+                if (nei, 'RED') not in visited:
+                    visited.add((nei, 'RED'))
+                    q.append((nei, length + 1, 'RED'))
+
+        if edge_color != 'BLUE':
+            for nei in blue[node]:
+                if (nei, 'BLUE') not in visited:
+                    visited.add((nei, 'BLUE'))
+                    q.append((nei, length + 1, 'BLUE'))
+    return res

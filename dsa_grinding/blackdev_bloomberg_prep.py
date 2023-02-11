@@ -1,3 +1,4 @@
+import math
 from typing import List, Optional
 
 from LeetCode.explore.linked_list import ListNode
@@ -139,10 +140,12 @@ def reverse_math(x: int) -> int:
     mx, mn = 2 ** 31 - 1, -2 ** 31
     res = 0
     while x:
-        x, pop = divmod(x, 10)
-        if res > mx // 10 or (res == mx // 10 and pop > 7):
+        tmp = x % 10
+        pop = tmp if not tmp else tmp - 10 if x < 0 else tmp
+        x = math.trunc(x / 10)
+        if res > math.trunc(mx / 10) or (res == math.trunc(mx / 10) and pop > 7):
             return 0
-        if res < mn // 10 or (res == mn // 10 and pop < -8):
+        if res < math.trunc(mn / 10) or (res == math.trunc(mn / 10) and pop < -8):
             return 0
         res = res * 10 + pop
     return res

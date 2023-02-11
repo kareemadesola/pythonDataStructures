@@ -120,3 +120,10 @@ def longestPalindrome(s: str) -> str:
         palindrome(i, i)
         palindrome(i, i + 1)
     return s[res_l:res_r + 1]
+
+
+def reverse(x: int) -> int:
+    res = str(x)[::-1].strip('0-')
+    if not res or not -2 ** 31 <= int(res) <= 2 ** 31 - 1:
+        return 0
+    return int(res) if x > 0 else -int(res)

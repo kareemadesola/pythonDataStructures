@@ -1,3 +1,4 @@
+import itertools
 import math
 from typing import List, Optional
 
@@ -148,4 +149,15 @@ def reverse_math(x: int) -> int:
         if res < math.trunc(mn / 10) or (res == math.trunc(mn / 10) and pop < -8):
             return 0
         res = res * 10 + pop
+    return res
+
+
+def three_sum(nums: List[int]) -> List[List[int]]:
+    # TLE
+    seen = set()
+    res = []
+    for i in itertools.combinations(nums, 3):
+        if not sum(i) and tuple(sorted(i)) not in seen:
+            res.append(list(i))
+            seen.add(tuple(sorted(i)))
     return res

@@ -298,3 +298,9 @@ def minimumFuelCost(roads: List[List[int]], seats: int) -> int:
 def countOdds(low: int, high: int) -> int:
     res = math.ceil((high - low) / 2)
     return res + 1 if (low % 2 and high % 2) else res
+
+
+def countOddsBetter(low: int, high: int) -> int:
+    if not low % 2:
+        low += 1
+    return (high - low) // 2 + 1

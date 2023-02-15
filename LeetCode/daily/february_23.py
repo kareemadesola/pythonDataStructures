@@ -308,3 +308,9 @@ def countOddsBetter(low: int, high: int) -> int:
 
 def addToArrayForm(num: List[int], k: int) -> List[int]:
     return list(map(int, str(int(''.join(map(str, num))) + k)))
+
+
+def addToArrayFormMath(num: List[int], k: int) -> List[int]:
+    for i in range(len(num) - 1, -1, -1):
+        k, num[i] = divmod(num[i] + k, 10)
+    return num if not k else [int(i) for i in str(k)] + num

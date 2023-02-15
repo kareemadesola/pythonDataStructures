@@ -304,3 +304,7 @@ def countOddsBetter(low: int, high: int) -> int:
     if not low % 2:
         low += 1
     return (high - low) // 2 + 1
+
+
+def addToArrayForm(num: List[int], k: int) -> List[int]:
+    return list(map(int, str(int(''.join(map(str, num))) + k)))

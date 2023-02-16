@@ -3,6 +3,8 @@ import itertools
 import math
 from typing import List, Optional, Deque
 
+from LeetCode.daily.july_22 import TreeNode
+
 
 def gcdOfStrings(str1: str, str2: str) -> str:
     if str1 + str2 != str2 + str1:
@@ -314,3 +316,11 @@ def addToArrayFormMath(num: List[int], k: int) -> List[int]:
     for i in range(len(num) - 1, -1, -1):
         k, num[i] = divmod(num[i] + k, 10)
     return num if not k else [int(i) for i in str(k)] + num
+
+
+def maxDepth(self, root: Optional[TreeNode]) -> int:
+    def dfs(node: Optional[TreeNode]) -> int:
+        if not node: return 0
+        return 1 + max(dfs(node.left), dfs(node.right))
+
+    return dfs(root)

@@ -193,3 +193,14 @@ def nextGreaterElements(nums: List[int]) -> List[int]:
                 res[idx] = val_2
                 break
     return res
+
+
+def nextGreaterElementsStack(nums: List[int]) -> List[int]:
+    nums_len = len(nums)
+    res = [-1] * nums_len
+    stack = []
+    for i in range(2 * nums_len):
+        while stack and nums[i % nums_len] > nums[stack[-1]]:
+            res[stack.pop()] = nums[i % nums_len]
+        stack.append(i % nums_len)
+    return res

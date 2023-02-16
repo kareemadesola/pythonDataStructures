@@ -204,3 +204,17 @@ def nextGreaterElementsStack(nums: List[int]) -> List[int]:
             res[stack.pop()] = nums[i % nums_len]
         stack.append(i % nums_len)
     return res
+
+
+def isValid(s: str) -> bool:
+    close_to_open = {')': '(', ']': '[', '}': '{'}
+    stack = []
+    for bracket in s:
+        if bracket in '([{':
+            stack.append(bracket)
+        else:
+            if stack and stack[-1] == close_to_open[bracket]:
+                stack.pop()
+            else:
+                return False
+    return not stack

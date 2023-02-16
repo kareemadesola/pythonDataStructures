@@ -183,3 +183,13 @@ def three_sum_better(nums: List[int]) -> List[List[int]]:
                 while nums[l] == nums[l - 1] and l < r:
                     l += 1
     return res
+
+
+def nextGreaterElements(nums: List[int]) -> List[int]:
+    res = [-1] * len(nums)
+    for idx, val in enumerate(nums):
+        for val_2 in nums[idx + 1:] + nums[:idx]:
+            if val_2 > val:
+                res[idx] = val_2
+                break
+    return res

@@ -318,7 +318,10 @@ def addToArrayFormMath(num: List[int], k: int) -> List[int]:
     return num if not k else [int(i) for i in str(k)] + num
 
 
-def maxDepth(self, root: Optional[TreeNode]) -> int:
+def maxDepth(root: Optional[TreeNode]) -> int:
+    # Thu, 16 Feb 2023  07:19:39
+    # time O(N) => N is the total number of nodes in the tree
+    # space O(H) => H is height of tree
     def dfs(node: Optional[TreeNode]) -> int:
         if not node: return 0
         return 1 + max(dfs(node.left), dfs(node.right))

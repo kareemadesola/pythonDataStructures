@@ -218,3 +218,15 @@ def isValid(s: str) -> bool:
             else:
                 return False
     return not stack
+
+
+def isValidBetter(s: str) -> bool:
+    open_to_close = {'(': ')', '[': ']', '{': '}'}
+    stack = []
+    for bracket in s:
+        if bracket in open_to_close:
+            stack.append(open_to_close[bracket])
+        else:
+            if not stack or stack.pop() != bracket:
+                return False
+    return not stack

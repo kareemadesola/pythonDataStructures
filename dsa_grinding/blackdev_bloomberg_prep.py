@@ -244,3 +244,27 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
         tail = tail.next
     tail.next = list1 if list1 else list2
     return dummy.next
+
+
+def search(nums: List[int], target: int) -> int:
+    # get position of lowest number
+    nums_len = len(nums)
+    l, r = 0, nums_len - 1
+    while l < r:
+        mid = l + (r - l) // 2
+        if nums[mid] > nums[r]:
+            l = mid + 1
+        else:
+            r = mid
+    rot = l
+    l, r = 0, nums_len - 1
+    while l <= r:
+        mid = l + (r - l) // 2
+        real_mid = (mid + rot) % nums_len
+        if nums[real_mid] < target:
+            l = mid + 1
+        elif nums[real_mid] > target:
+            r = mid - 1
+        else:
+            return real_mid
+    return -1

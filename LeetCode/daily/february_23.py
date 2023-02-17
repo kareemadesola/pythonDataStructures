@@ -327,3 +327,25 @@ def maxDepth(root: Optional[TreeNode]) -> int:
         return 1 + max(dfs(node.left), dfs(node.right))
 
     return dfs(root)
+
+
+def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+    # Fri, 17 Feb 2023  18:07:25
+    # time O(N) => N = Number of nodes of root
+    # space O(H) => H = height of tree
+    res = 10 ** 5
+    prev: Optional[TreeNode] = None
+
+    def dfs(node: Optional[TreeNode]):
+        nonlocal res, prev
+        if not node:
+            return
+        dfs(node.left)
+        if prev:
+            res = min(res, node.val - prev.val)
+        prev = node
+
+        dfs(node.right)
+
+    dfs(root)
+    return res

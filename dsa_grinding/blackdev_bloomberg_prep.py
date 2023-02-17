@@ -268,3 +268,29 @@ def search(nums: List[int], target: int) -> int:
         else:
             return real_mid
     return -1
+
+
+def searchRange(nums: List[int], target: int) -> List[int]:
+    if not nums: return [-1, -1]
+
+    def left_range(arr: List[int], val) -> int:
+        l, r = 0, len(arr)
+        while l < r:
+            mid = l + (r - l) // 2
+            if arr[mid] < val:
+                l = mid + 1
+            else:
+                r = mid
+        return -1 if l == len(nums) and nums[l] != target else l
+
+    def right_range(arr: List[int], val) -> int:
+        l, r = 0, len(arr)
+        while l < r:
+            mid = l + (r - l) // 2
+            if arr[mid] <= val:
+                l = mid + 1
+            else:
+                r = mid
+        return -1 if l == 0 and nums[l - 1] != target else l
+
+    return [left_range(nums, target), right_range(nums, target)]

@@ -294,3 +294,19 @@ def searchRange(nums: List[int], target: int) -> List[int]:
         return -1 if l == 0 and nums[l - 1] != target else l
 
     return [left_range(nums, target), right_range(nums, target)]
+
+
+def trap(height: List[int]) -> int:
+    l, r = 0, len(height) - 1
+    mx_l, mx_r = height[l], height[r]
+    res = 0
+    while l < r:
+        if mx_l < mx_r:
+            l += 1
+            mx_l = max(mx_l, height[l])
+            res += mx_l - height[l]
+        else:
+            r -= 1
+            mx_r = max(mx_r, height[r])
+            res += mx_r - height[r]
+    return res

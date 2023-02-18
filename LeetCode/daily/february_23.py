@@ -349,3 +349,18 @@ def minDiffInBST(self, root: Optional[TreeNode]) -> int:
 
     dfs(root)
     return res
+
+
+def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:
+    # Sat, 18 Feb 2023  06:34:57
+    # time O(N) => N is number of nodes
+    # space O(H) => H is height of root
+    def dfs(node: Optional[TreeNode]):
+        if not node:
+            return
+        node.left, node.right = node.right, node.left
+        dfs(node.left)
+        dfs(node.right)
+
+    dfs(root)
+    return root

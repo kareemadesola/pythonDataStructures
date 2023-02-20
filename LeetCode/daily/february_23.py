@@ -384,3 +384,18 @@ def zigzagLevelOrder(root: Optional[TreeNode]) -> List[List[int]]:
             res.append(temp if not i % 2 else temp[::-1])
         i += 1
     return res
+
+
+def searchInsert(nums: List[int], target: int) -> int:
+    # Mon, 20 Feb 2023  07:31:19
+    # time O(log(n)) => n = len(nums)
+    # space O(1)
+    # bisect left algorithm
+    l, r = 0, len(nums)
+    while l < r:
+        mid = l + (r - l) // 2
+        if nums[mid] < target:
+            l = mid + 1
+        else:
+            r = mid
+    return l

@@ -364,3 +364,23 @@ def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:
 
     dfs(root)
     return root
+
+
+def zigzagLevelOrder(root: Optional[TreeNode]) -> List[List[int]]:
+    # time O(N) => N is the number of nodes
+    # space O(B) => B is the number of root nodes
+    q = collections.deque([root])
+    i = 0
+    res = []
+    while q:
+        temp = []
+        for _ in range(len(q)):
+            curr = q.popleft()
+            if curr:
+                q.append(curr.left)
+                q.append(curr.right)
+                temp.append(curr.val)
+        if temp:
+            res.append(temp if not i % 2 else temp[::-1])
+        i += 1
+    return res

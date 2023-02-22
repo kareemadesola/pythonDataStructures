@@ -410,3 +410,24 @@ def singleNonDuplicate(nums: List[int]) -> int:
         else:
             r = mid
     return nums[l]
+
+
+def shipWithinDays(weights: List[int], days: int) -> int:
+    def can_ship(cap: int):
+        days_needed, curr_cap = 1, cap
+        for weight in weights:
+            if curr_cap < weight:
+                days_needed += 1
+                curr_cap = cap
+            curr_cap -= weight
+        return days_needed <= days
+
+    l = max(weights)
+    r = sum(weights) // days + l
+    while l < r:
+        mid = l + (r - l) // 2
+        if can_ship(mid):
+            r = mid
+        else:
+            l = mid + 1
+    return l

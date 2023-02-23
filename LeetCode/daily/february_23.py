@@ -1,4 +1,5 @@
 import collections
+import heapq
 import itertools
 import math
 from typing import List, Optional, Deque
@@ -431,3 +432,18 @@ def shipWithinDays(weights: List[int], days: int) -> int:
         else:
             l = mid + 1
     return l
+
+
+def findMaximizedCapital(k: int, w: int, profits: List[int], capital: List[int]) -> int:
+    max_profit = []
+    min_capital = list(zip(capital, profits))
+    heapq.heapify(min_capital)
+
+    for _ in range(k):
+        while min_capital and min_capital[0][0] <= w:
+            _, p = heapq.heappop(min_capital)
+            heapq.heappush(max_profit, -p)
+        if not max_profit:
+            break
+        w += -heapq.heappop(max_profit)
+    return w

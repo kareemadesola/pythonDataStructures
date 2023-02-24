@@ -447,3 +447,24 @@ def findMaximizedCapital(k: int, w: int, profits: List[int], capital: List[int])
             break
         w += -heapq.heappop(max_profit)
     return w
+
+
+def minimumDeviation(nums: List[int]) -> int:
+    min_heap, heap_max = [], 0
+    for num in nums:
+        tmp = num
+        while num % 2 == 0:
+            num //= 2
+        min_heap.append((num, max(tmp, 2 * num)))
+        heap_max = max(heap_max, num)
+
+    res = 10 ** 9
+    heapq.heapify(min_heap)
+    while len(min_heap) == len(nums):
+        num, n_max = heapq.heappop(min_heap)
+        res = min(res, heap_max - num)
+
+        if num < n_max:
+            heapq.heappush(min_heap, (num * 2, n_max))
+            heap_max = max(heap_max, num * 2)
+    return res

@@ -482,3 +482,11 @@ def minimum_deviation_better(mx_heap: List[int]) -> int:
         mn = min(mn, n_mx // 2)
         heapq.heappush(mx_heap, -n_mx // 2)
     return min(res, -mx_heap[0] - mn)
+
+
+def maxProfit(prices: List[int]) -> int:
+    mx, res = prices[-1], 0
+    for i in range(len(prices) - 2, -1, -1):
+        mx = max(mx, prices[i])
+        res = max(res, mx - prices[i])
+    return res

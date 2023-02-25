@@ -468,3 +468,17 @@ def minimumDeviation(nums: List[int]) -> int:
             heapq.heappush(min_heap, (num * 2, n_max))
             heap_max = max(heap_max, num * 2)
     return res
+
+
+def minimum_deviation_better(mx_heap: List[int]) -> int:
+    res = 10 ** 9
+    mx_heap = [-2 * num if num % 2 else -num for num in mx_heap]
+    mn = -max(mx_heap)
+    heapq.heapify(mx_heap)
+
+    while mx_heap[0] % 2 == 0:
+        n_mx = -heapq.heappop(mx_heap)
+        res = min(res, n_mx - mn)
+        mn = min(mn, n_mx // 2)
+        heapq.heappush(mx_heap, -n_mx // 2)
+    return min(res, -mx_heap[0] - mn)

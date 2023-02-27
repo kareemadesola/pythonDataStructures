@@ -490,3 +490,23 @@ def maxProfit(prices: List[int]) -> int:
         mx = max(mx, prices[i])
         res = max(res, mx - prices[i])
     return res
+
+
+def minDistance(word1: str, word2: str) -> int:
+    word2_len = len(word2)
+    word1_len = len(word1)
+    cache = [[500] * (word2_len + 1) for _ in range(word1_len + 1)]
+    # fill base column
+    for i in range(word1_len + 1):
+        cache[i][word2_len] = word1_len - i
+    # fill base row
+    for j in range(word2_len + 1):
+        cache[word1_len][j] = word2_len - j
+
+    for i in range(word1_len - 1, -1, -1):
+        for j in range(word2_len - 1, -1, -1):
+            if word1[i] == word2[j]:
+                cache[i][j] = cache[i + 1][j + 1]
+            else:
+                cache[i][j] = 1 + min(cache[i][j + 1], cache[i + 1][j], cache[i + 1][j + 1])
+    return cache[0][0]

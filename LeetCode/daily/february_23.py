@@ -510,3 +510,35 @@ def minDistance(word1: str, word2: str) -> int:
             else:
                 cache[i][j] = 1 + min(cache[i][j + 1], cache[i + 1][j], cache[i + 1][j + 1])
     return cache[0][0]
+
+
+# Definition for a QuadTree node.
+class Node:
+    def __init__(self, val, isLeaf, topLeft=None, topRight=None, bottomLeft=None, bottomRight=None):
+        self.val = val
+        self.isLeaf = isLeaf
+        self.topLeft = topLeft
+        self.topRight = topRight
+        self.bottomLeft = bottomLeft
+        self.bottomRight = bottomRight
+
+
+def construct(grid: List[List[int]]) -> 'Node':
+    def dfs(n, r, c):
+        all_same = True
+        for i in range(n):
+            for j in range(n):
+                if grid[r][c] != grid[r + i][c + j]:
+                    all_same = False
+                    break
+
+        if all_same:
+            return Node(grid[r][c], True)
+        n //= 2
+        top_left = dfs(n, r, c)
+        top_right = dfs(n, r, c + n)
+        bottom_left = dfs(n, r + n, c)
+        bottom_right = dfs(n, r + n, c + n)
+        return Node(0, False, top_left, top_right, bottom_left, bottom_right)
+
+    return dfs(len(grid), 0, 0)

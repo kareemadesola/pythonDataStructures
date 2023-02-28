@@ -542,3 +542,19 @@ def construct(grid: List[List[int]]) -> 'Node':
         return Node(0, False, top_left, top_right, bottom_left, bottom_right)
 
     return dfs(len(grid), 0, 0)
+
+
+def findDuplicateSubtrees(root: Optional[TreeNode]) -> List[Optional[TreeNode]]:
+    def dfs(node: TreeNode):
+        if not node:
+            return ''
+        str_rep = f"({dfs(node.left)}){node.val}({dfs(node.right)})"
+        if node_to_cnt[str_rep] == 1:
+            res.append(node)
+        node_to_cnt[str_rep] += 1
+        return str_rep
+
+    node_to_cnt = collections.defaultdict(int)
+    res = []
+    dfs(root)
+    return res

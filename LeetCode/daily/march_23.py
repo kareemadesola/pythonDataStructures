@@ -3,6 +3,7 @@ from typing import List
 
 def sortArray(nums: List[int]) -> List[int]:
     def merge_sort(arr: List[int]):
+
         if len(arr) <= 1:
             return
         mid = len(arr) // 2
@@ -25,6 +26,6 @@ def sortArray(nums: List[int]) -> List[int]:
         while j < arr2_len:
             arr[i + j] = r[j]
             j += 1
-        return arr
 
-    return merge_sort(nums)
+    merge_sort(nums)
+    return nums

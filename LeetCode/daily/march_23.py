@@ -29,3 +29,20 @@ def sortArray(nums: List[int]) -> List[int]:
 
     merge_sort(nums)
     return nums
+
+
+def compress(chars: List[str]) -> int:
+    idx = idx_ans = 0
+    while idx < len(chars):
+        curr_char = chars[idx]
+        cnt = 0
+        while idx < len(chars) and chars[idx] == curr_char:
+            idx += 1
+            cnt += 1
+        chars[idx_ans] = curr_char
+        idx_ans += 1
+        if cnt != 1:
+            for char in str(cnt):
+                chars[idx_ans] = char
+                idx_ans += 1
+    return idx_ans

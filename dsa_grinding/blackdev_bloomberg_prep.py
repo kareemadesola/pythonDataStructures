@@ -1,3 +1,4 @@
+import collections
 import itertools
 import math
 from typing import List, Optional
@@ -310,3 +311,10 @@ def trap(height: List[int]) -> int:
             mx_r = max(mx_r, height[r])
             res += mx_r - height[r]
     return res
+
+
+def groupAnagrams(strs: List[str]) -> List[List[str]]:
+    word_to_anagrams = collections.defaultdict(list)
+    for word in strs:
+        word_to_anagrams[tuple(sorted(word))].append(word)
+    return word_to_anagrams.values()

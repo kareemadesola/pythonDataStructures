@@ -46,3 +46,7 @@ def compress(chars: List[str]) -> int:
                 chars[idx_ans] = char
                 idx_ans += 1
     return idx_ans
+
+
+def strStr(haystack: str, needle: str) -> int:
+    return haystack.find(needle)

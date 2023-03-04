@@ -329,3 +329,9 @@ def maxSubArray(nums: List[int]) -> int:
         curr_sum += num
         res = max(res, curr_sum)
     return res
+
+
+def spiralOrderRecursive(matrix: List[List[int]]) -> List[int]:
+    if not matrix:
+        return []
+    return list(matrix.pop()) + spiralOrderRecursive([*zip(*matrix)][::-1])

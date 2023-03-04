@@ -318,3 +318,14 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     for word in strs:
         word_to_anagrams[tuple(sorted(word))].append(word)
     return word_to_anagrams.values()
+
+
+def maxSubArray(nums: List[int]) -> int:
+    res = nums[0]
+    curr_sum = 0
+    for num in nums:
+        if curr_sum < 0:
+            curr_sum = 0
+        curr_sum += num
+        res = max(res, curr_sum)
+    return res

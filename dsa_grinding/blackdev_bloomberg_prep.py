@@ -360,5 +360,13 @@ def spiralOrder(matrix: List[List[int]]) -> List[int]:
     return res[:len(matrix) * len(matrix[0])]
 
 
-if __name__ == '__main__':
-    spiralOrder([[1, 2, 3], [4, 5, 6], ])
+def merge(intervals: List[List[int]]) -> List[List[int]]:
+    intervals.sort()
+    res = [intervals[0]]
+    for start, end in intervals[1:]:
+        last_end = res[-1][1]
+        if start <= last_end:
+            res[-1][1] = max(last_end, end)
+        else:
+            res.append([start, end])
+    return res

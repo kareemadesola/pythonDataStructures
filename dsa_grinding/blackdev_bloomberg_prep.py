@@ -370,3 +370,22 @@ def merge(intervals: List[List[int]]) -> List[List[int]]:
         else:
             res.append([start, end])
     return res
+
+
+def exist(board: List[List[str]], word: str) -> bool:
+    word_len = len(word)
+
+    def dfs(i: int, j: int, k: int):
+        if k == word_len:
+            return True
+        if 0 <= i < len(board) and 0 <= j < len(board[0]) and board[i][j] == word[k]:
+            val = board[i][j]
+            board[i][j] = '#'
+            res = dfs(i - 1, j, k + 1) or dfs(i + 1, j, k + 1) or dfs(i, j - 1, k + 1) or dfs(i, j + 1, k + 1)
+            board[i][j] = val
+            return res
+
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if board[i][j] == word[0] and dfs(i, j, 0):
+                return True

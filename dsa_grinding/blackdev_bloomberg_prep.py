@@ -335,3 +335,30 @@ def spiralOrderRecursive(matrix: List[List[int]]) -> List[int]:
     if not matrix:
         return []
     return list(matrix.pop()) + spiralOrderRecursive([*zip(*matrix)][::-1])
+
+
+def spiralOrder(matrix: List[List[int]]) -> List[int]:
+    top = left = 0
+    button, right = len(matrix) - 1, len(matrix[0]) - 1
+    res = []
+    while top <= button and left <= right:
+        for col in range(left, right + 1):
+            res.append(matrix[top][col])
+        top += 1
+
+        for row in range(top, button + 1):
+            res.append(matrix[row][right])
+        right -= 1
+
+        for col in range(right, left - 1, -1):
+            res.append(matrix[button][col])
+        button -= 1
+
+        for row in range(button, top - 1, -1):
+            res.append(matrix[row][left])
+        left += 1
+    return res[:len(matrix) * len(matrix[0])]
+
+
+if __name__ == '__main__':
+    spiralOrder([[1, 2, 3], [4, 5, 6], ])

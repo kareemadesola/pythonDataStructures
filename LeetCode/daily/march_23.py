@@ -50,3 +50,13 @@ def compress(chars: List[str]) -> int:
 
 def strStr(haystack: str, needle: str) -> int:
     return haystack.find(needle)
+
+
+def findKthPositive(arr: List[int], k: int) -> int:
+    arr = set(arr)
+    res = 0
+    while k:
+        res += 1
+        if res not in arr:
+            k -= 1
+    return res

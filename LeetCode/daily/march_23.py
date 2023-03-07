@@ -73,5 +73,19 @@ def findKthPositiveBetter(A, k):
     return l + k
 
 
-if __name__ == '__main__':
-    findKthPositiveBetter([2, 3, 4, 7, 11], 5)
+def minimumTime(time: List[int], totalTrips: int) -> int:
+    l, r = 1, max(time) * totalTrips
+
+    def time_enough(given_time: int) -> bool:
+        actual_trips = 0
+        for t in time:
+            actual_trips += given_time // t
+        return actual_trips >= totalTrips
+
+    while l < r:
+        mid = l + (r - l) // 2
+        if time_enough(mid):
+            r = mid
+        else:
+            l = mid + 1
+    return l

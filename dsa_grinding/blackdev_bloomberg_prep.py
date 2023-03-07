@@ -389,3 +389,18 @@ def exist(board: List[List[str]], word: str) -> bool:
         for j in range(len(board[0])):
             if board[i][j] == word[0] and dfs(i, j, 0):
                 return True
+
+
+def mergeSortedArray(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+    m -= 1
+    n -= 1
+    while m != -1 and n != -1:
+        if nums1[m] < nums2[n]:
+            nums1[m + n + 1] = nums2[n]
+            n -= 1
+        else:
+            nums1[m + n + 1] = nums1[m]
+            m -= 1
+    while n != -1:
+        nums1[m + n + 1] = nums2[n]
+        n -= 1

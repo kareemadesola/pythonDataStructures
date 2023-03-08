@@ -1,3 +1,4 @@
+import math
 from typing import List
 
 
@@ -88,4 +89,23 @@ def minimumTime(time: List[int], totalTrips: int) -> int:
             r = mid
         else:
             l = mid + 1
+    return l
+
+
+def minEatingSpeed(piles: List[int], h: int) -> int:
+    l, r = 1, sum(piles)
+
+    def possible(k: int) -> bool:
+        return sum(math.ceil(pile / k) for pile in piles) <= h  # slower
+        # actual_h = 0
+        # for pile in piles:
+        #     actual_h += pile / k
+        # return h < actual_h
+
+    while l < r:
+        mid = l + (r - l) // 2
+        if possible(mid):
+            r = mid
+        else:
+            l = mid
     return l

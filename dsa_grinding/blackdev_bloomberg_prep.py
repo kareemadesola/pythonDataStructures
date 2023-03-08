@@ -3,6 +3,7 @@ import itertools
 import math
 from typing import List, Optional
 
+from LeetCode.daily.july_22 import TreeNode
 from LeetCode.explore.linked_list import ListNode
 
 
@@ -425,3 +426,14 @@ def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[
     left_prev.next.next = curr
     left_prev.next = prev
     return dummy.next
+
+
+def isValidBST(root: Optional[TreeNode]) -> bool:
+    def is_valid(node: Optional[TreeNode], l: int, r: int) -> bool:
+        if not node:
+            return True
+        if not l < node.val < r:
+            return False
+        return is_valid(node.left, l, node.val) and is_valid(node.right, node.val, r)
+
+    return is_valid(root, -2 ** 31 - 1, 2 ** 31)

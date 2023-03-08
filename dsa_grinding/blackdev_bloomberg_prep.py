@@ -404,3 +404,24 @@ def mergeSortedArray(nums1: List[int], m: int, nums2: List[int], n: int) -> None
     while n != -1:
         nums1[m + n + 1] = nums2[n]
         n -= 1
+
+
+def reverseBetween(head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+    dummy = ListNode(0, head)
+    # reach node at position 'left'
+    left_prev, curr = dummy, head
+    for _ in range(left - 1):
+        left_prev, curr = curr, curr.next
+
+    # Now curr = 'left', left_prev='node before left'
+    # reverse from left to right
+    prev = None
+    for _ in range(right - left + 1):
+        tmp_next = curr.next
+        curr.next = prev
+        prev, curr = curr, tmp_next
+
+    # update pointers
+    left_prev.next.next = curr
+    left_prev.next = prev
+    return dummy.next

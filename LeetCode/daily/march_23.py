@@ -124,3 +124,15 @@ class Solution:
 
     def getRandom(self) -> int:
         return random.choice(self.data)
+
+
+def detectCycle(head: Optional[ListNode]) -> Optional[ListNode]:
+    tortoise = hare = head
+    while tortoise and hare.next:
+        tortoise = tortoise.next
+        hare = hare.next.next
+        if tortoise == hare:
+            while head != tortoise:
+                head = head.next
+                tortoise = tortoise.next
+            return head

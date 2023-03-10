@@ -1,5 +1,8 @@
 import math
-from typing import List
+import random
+from typing import List, Optional
+
+from LeetCode.explore.linked_list import ListNode
 
 
 def sortArray(nums: List[int]) -> List[int]:
@@ -93,7 +96,7 @@ def minimumTime(time: List[int], totalTrips: int) -> int:
 
 
 def minEatingSpeed(piles: List[int], h: int) -> int:
-    l, r = 1, sum(piles)
+    l, r = 1, max(piles)
 
     def possible(k: int) -> bool:
         return sum(math.ceil(pile / k) for pile in piles) <= h  # slower
@@ -109,3 +112,15 @@ def minEatingSpeed(piles: List[int], h: int) -> int:
         else:
             l = mid
     return l
+
+
+class Solution:
+
+    def __init__(self, head: Optional[ListNode]):
+        self.data = []
+        while head:
+            self.data.append(head.val)
+            head = head.next
+
+    def getRandom(self) -> int:
+        return random.choice(self.data)

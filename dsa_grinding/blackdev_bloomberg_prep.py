@@ -437,3 +437,23 @@ def isValidBST(root: Optional[TreeNode]) -> bool:
         return is_valid(node.left, l, node.val) and is_valid(node.right, node.val, r)
 
     return is_valid(root, -2 ** 31 - 1, 2 ** 31)
+
+
+def buildTree(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    def array_to_tree(l: int, r: int) -> Optional[TreeNode]:
+        nonlocal pre_idx
+        if l > r: return None
+
+        root_val = preorder[pre_idx]
+        root = TreeNode(root_val)
+
+        pre_idx += 1
+
+        root.left = array_to_tree(l, in_val_to_idx[root_val] - 1)
+        root.right = array_to_tree(in_val_to_idx[root_val] + 1, r)
+
+        return root
+
+    pre_idx = 0
+    in_val_to_idx = {val: idx for idx, val in enumerate(inorder)}
+    return array_to_tree(0, len(preorder) - 1)

@@ -318,7 +318,7 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     word_to_anagrams = collections.defaultdict(list)
     for word in strs:
         word_to_anagrams[tuple(sorted(word))].append(word)
-    return word_to_anagrams.values()
+    return list(word_to_anagrams.values())
 
 
 def maxSubArray(nums: List[int]) -> int:
@@ -457,3 +457,18 @@ def buildTree(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
     pre_idx = 0
     in_val_to_idx = {val: idx for idx, val in enumerate(inorder)}
     return array_to_tree(0, len(preorder) - 1)
+
+
+def sortedListToBST(head: Optional[ListNode]) -> Optional[TreeNode]:
+    def to_bst(node: ListNode, tail: ListNode = None):
+        slow = fast = node
+        if node == tail: return None
+        while fast != tail and fast.next != tail:
+            fast = fast.next.next
+            slow = slow.next
+        root = TreeNode(slow.val)
+        root.left = to_bst(node, slow)
+        root.right = to_bst(slow.next, tail)
+        return root
+
+    return to_bst(head)

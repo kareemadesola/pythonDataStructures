@@ -2,6 +2,7 @@ import math
 import random
 from typing import List, Optional
 
+from LeetCode.daily.july_22 import TreeNode
 from LeetCode.explore.linked_list import ListNode
 
 
@@ -165,3 +166,14 @@ def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
             merged_lists.append(merge(l1, l2))
         lists = merged_lists
     return lists[0]
+
+
+def isSymmetric(root: Optional[TreeNode]) -> bool:
+    def dfs(left: TreeNode, right: TreeNode) -> bool:
+        if not left and not right:
+            return True
+        if not left or not right:
+            return False
+        return left.val == right.val and dfs(left.left, right.right) and dfs(left.right, right.left)
+
+    return dfs(root.left, root.right)

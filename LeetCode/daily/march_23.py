@@ -136,3 +136,32 @@ def detectCycle(head: Optional[ListNode]) -> Optional[ListNode]:
                 head = head.next
                 tortoise = tortoise.next
             return head
+
+
+def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+    def merge(node1: ListNode, node2: ListNode):
+        dummy = tail = ListNode()
+        while node1 and node2:
+            if node1.val < node2.val:
+                tail.next = node1
+                node1 = node1.next
+            else:
+                tail.next = node2
+                node2 = node2.next
+            tail = tail.next
+        if node1: tail.next = node1
+        if node2: tail.next = node2
+        return dummy.next
+
+    if not lists:
+        return None
+
+    while len(lists) > 1:
+        merged_lists = []
+
+        for i in range(0, len(lists), 2):
+            l1 = lists[i - 1]
+            l2 = lists[i + 1] if i + 1 < len(lists) else None
+            merged_lists.append(merge(l1, l2))
+        lists = merged_lists
+    return lists[0]

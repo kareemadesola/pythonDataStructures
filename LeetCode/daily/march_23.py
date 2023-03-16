@@ -177,3 +177,17 @@ def isSymmetric(root: Optional[TreeNode]) -> bool:
         return left.val == right.val and dfs(left.left, right.right) and dfs(left.right, right.left)
 
     return dfs(root.left, root.right)
+
+
+def buildTree(inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+    def array_to_tree(l: int, r: int) -> Optional[TreeNode]:
+        if l > r:
+            return None
+        root = TreeNode(postorder.pop())
+        idx = in_val_to_idx[root.val]
+        root.right = array_to_tree(idx + 1, r)
+        root.left = array_to_tree(l, idx - 1)
+        return root
+
+    in_val_to_idx = {val: idx for idx, val in enumerate(inorder)}
+    return array_to_tree(0, len(postorder) - 1)

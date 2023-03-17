@@ -1,5 +1,6 @@
 import math
 import random
+from collections import defaultdict
 from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
@@ -191,3 +192,37 @@ def buildTree(inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
 
     in_val_to_idx = {val: idx for idx, val in enumerate(inorder)}
     return array_to_tree(0, len(postorder) - 1)
+
+
+class TrieNode:
+    def __init__(self):
+        self.children = defaultdict(TrieNode)
+        self.end_of_word = False
+
+
+class Trie:
+
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        curr = self.root
+        for char in word:
+            curr = curr.children[char]
+        curr.end_of_word = True
+
+    def search(self, word: str) -> bool:
+        curr = self.root
+        for char in word:
+            if char not in curr.children:
+                return False
+            curr = curr.children[char]
+        return curr.end_of_word
+
+    def startsWith(self, prefix: str) -> bool:
+        curr = self.root
+        for char in prefix:
+            if char not in curr.children:
+                return False
+            curr = curr.children[char]
+        return True

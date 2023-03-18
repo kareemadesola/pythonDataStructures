@@ -18,7 +18,7 @@ def twoSum(nums: List[int], target: int) -> List[int]:
         seen[val] = idx
 
 
-def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
     # Mon, 06 Feb 2023  21:52:53
     # time O(max(l1,l2))
     # space O(max(l1,l2))
@@ -249,7 +249,7 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
 
 
 def search(nums: List[int], target: int) -> int:
-    # get position of lowest number
+    # get position of the lowest number
     nums_len = len(nums)
     l, r = 0, nums_len - 1
     while l < r:
@@ -492,3 +492,19 @@ def pathSum(root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
 
     dfs(root, targetSum, [])
     return res
+
+
+def flatten(root: Optional[TreeNode]) -> None:
+    def dfs(curr: TreeNode) -> Optional[TreeNode]:
+        if not curr:
+            return
+        left_tail = dfs(curr.left)
+        right_tail = dfs(curr.right)
+
+        if curr.left:
+            left_tail.right = curr.right
+            curr.right = curr.left
+            curr.left = None
+        return right_tail or left_tail or curr
+
+    dfs(root)

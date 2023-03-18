@@ -472,3 +472,23 @@ def sortedListToBST(head: Optional[ListNode]) -> Optional[TreeNode]:
         return root
 
     return to_bst(head)
+
+
+def pathSum(root: Optional[TreeNode], targetSum: int) -> List[List[int]]:
+    res = []
+
+    def dfs(curr: TreeNode, curr_sum: int, path: List[int]):
+        if not curr:
+            return
+        path.append(curr.val)
+        curr_sum -= curr.val
+        if not curr.left and not curr.right:
+            if curr_sum == 0:
+                res.append(path.copy())
+        else:
+            dfs(curr.left, curr_sum, path)
+            dfs(curr.right, curr_sum, path)
+        path.pop()
+
+    dfs(root, targetSum, [])
+    return res

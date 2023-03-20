@@ -226,3 +226,19 @@ class Trie:
                 return False
             curr = curr.children[char]
         return True
+
+
+def canPlaceFlowers(flowerbed: List[int], n: int) -> bool:
+    if n == 0:
+        return True
+
+    flowerbed.insert(0, 0)
+    flowerbed.append(0)
+    flowerbed_len = len(flowerbed)
+
+    for i in range(1, flowerbed_len - 1):
+        if flowerbed[i - 1] == 0 and flowerbed[i] == 0 and flowerbed[i + 1] == 0:
+            flowerbed[i] = 1
+            n -= 1
+            if n == 0: return True
+    return False

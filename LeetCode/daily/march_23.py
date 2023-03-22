@@ -254,3 +254,25 @@ def zeroFilledSubarray(nums: List[int]) -> int:
             res += (len_ * (len_ + 1)) // 2
             len_ = 0
     return res + (len_ * (len_ + 1)) // 2 if len_ else res
+
+
+def minScore(n: int, roads: List[List[int]]) -> int:
+    # convert to adjacency list
+    adj = defaultdict(list)
+    for src, dst, dist in roads:
+        adj[src].append((dst, dist))
+        adj[dst].append((src, dist))
+
+    def dfs(i):
+        if i in visited:
+            return
+        visited.add(i)
+        nonlocal res
+        for nei, dis in adj[i]:
+            res = min(res, dis)
+            dfs(nei)
+
+    res = 10 ** 5
+    visited = set()
+    dfs(1)
+    return res

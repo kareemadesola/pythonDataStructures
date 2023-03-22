@@ -242,3 +242,15 @@ def canPlaceFlowers(flowerbed: List[int], n: int) -> bool:
             n -= 1
             if n == 0: return True
     return False
+
+
+def zeroFilledSubarray(nums: List[int]) -> int:
+    res = 0
+    len_ = 0
+    for num in nums:
+        if num == 0:
+            len_ += 1
+        elif len_:
+            res += (len_ * (len_ + 1)) // 2
+            len_ = 0
+    return res + (len_ * (len_ + 1)) // 2 if len_ else res

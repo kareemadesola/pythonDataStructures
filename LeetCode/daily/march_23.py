@@ -276,3 +276,28 @@ def minScore(n: int, roads: List[List[int]]) -> int:
     visited = set()
     dfs(1)
     return res
+
+
+def minReorder(n: int, connections: List[List[int]]) -> int:
+    edges = {(src, dst) for src, dst in connections}
+
+    adj = defaultdict(list)
+    # convert to adjacency list
+    for src, dst in connections:
+        adj[src].append(dst)
+        adj[dst].append(src)
+    visited = {0}
+    res = 0
+
+    def dfs(city: int):
+        nonlocal res
+        for neighbour in adj[city]:
+            if neighbour in visited:
+                continue
+            if (neighbour, city) not in edges:
+                res += 1
+            visited.add(neighbour)
+            dfs(neighbour)
+
+    dfs(0)
+    return res

@@ -313,8 +313,6 @@ def countPairs(n: int, edges: List[List[int]]) -> int:
     def dfs(node: int) -> int:
         count = 1
         visited.add(node)
-        if node not in adj:
-            return count
         for nei in adj[node]:
             if nei not in visited:
                 count += dfs(nei)

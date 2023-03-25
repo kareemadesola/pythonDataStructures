@@ -301,3 +301,32 @@ def minReorder(n: int, connections: List[List[int]]) -> int:
 
     dfs(0)
     return res
+
+
+def countPairs(n: int, edges: List[List[int]]) -> int:
+    # convert to adjacency list
+    adj = defaultdict(list)
+    for src, dst in edges:
+        adj[src].append(dst)
+        adj[dst].append(src)
+
+    def dfs(node: int) -> int:
+        count = 1
+        visited.add(node)
+        if node not in adj:
+            return count
+        for nei in adj[node]:
+            if nei not in visited:
+                count += dfs(nei)
+        return count
+
+    visited = set()
+    res = 0
+    remaining_nodes = n
+    for i in range(n):
+        if i in visited:
+            continue
+        size_of_component = dfs(i)
+        res += size_of_component * (remaining_nodes - size_of_component)
+        remaining_nodes -= size_of_component
+    return res

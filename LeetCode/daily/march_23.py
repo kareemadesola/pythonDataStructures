@@ -328,3 +328,27 @@ def countPairs(n: int, edges: List[List[int]]) -> int:
         res += size_of_component * (remaining_nodes - size_of_component)
         remaining_nodes -= size_of_component
     return res
+
+
+def longestCycle(edges: List[int]) -> int:
+    longest_cycle_len = -1
+    time_step = 1
+    node_visited_at_time = [0] * len(edges)
+
+    for current_node in range(len(edges)):
+        if node_visited_at_time[current_node]:
+            continue
+        start_time = time_step
+        u = current_node
+        while u != -1 and node_visited_at_time[u] == 0:
+            node_visited_at_time[u] = time_step
+            time_step += 1
+            u = edges[u]
+        if u != -1 and node_visited_at_time[u] >= start_time:
+            longest_cycle_len = max(longest_cycle_len, time_step - node_visited_at_time[u])
+
+    return longest_cycle_len
+
+
+if __name__ == '__main__':
+    longestCycle([3, 3, 4, 2, 3])

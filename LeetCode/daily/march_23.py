@@ -352,3 +352,23 @@ def longestCycle(edges: List[int]) -> int:
 
 if __name__ == '__main__':
     longestCycle([3, 3, 4, 2, 3])
+
+
+def mincostTickets(days: List[int], costs: List[int]) -> int:
+    dp = {}
+
+    def dfs(i: int) -> int:
+        if i == len(days):
+            return 0
+        if i in dp:
+            return dp[i]
+        dp[i] = float('inf')
+        for d, c in zip([1, 7, 30], costs):
+            j = i
+            while j < len(days) and days[j] < days[i] + d:
+                j += 1
+            dp[i] = min(dp[i], dfs(j) + c)
+
+        return dp[i]
+
+    return dfs(0)

@@ -23,3 +23,14 @@ def distributeCookies(cookies: List[int], k: int) -> int:
         return res
 
     return dfs(0, k)
+
+
+def buddyStrings(s: str, goal: str) -> bool:
+    if len(s) != len(goal):
+        return False
+    if sorted(s) != sorted(goal):
+        return False
+    if s == goal and len(set(s)) < len(goal):
+        return True
+    dif = [(i, j) for i, j in zip(s, goal) if i != j]
+    return len(dif) == 2

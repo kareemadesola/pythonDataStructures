@@ -1,3 +1,4 @@
+import collections
 from typing import List
 
 
@@ -34,3 +35,9 @@ def buddyStrings(s: str, goal: str) -> bool:
         return True
     dif = [(i, j) for i, j in zip(s, goal) if i != j]
     return len(dif) == 2
+
+
+def singleNumber(nums: List[int]) -> int:
+    cnt = collections.Counter(nums)
+    for k in cnt:
+        if cnt[k] == 1: return k

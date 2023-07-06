@@ -41,3 +41,14 @@ def singleNumber(nums: List[int]) -> int:
     cnt = collections.Counter(nums)
     for k in cnt:
         if cnt[k] == 1: return k
+
+
+def longestSubarray(nums: List[int]) -> int:
+    k = 1
+    i = 0
+    for j in range(len(nums)):
+        k -= nums[j] == 0
+        if k < 0:
+            k += nums[i] == 0
+            i += 1
+    return j - i

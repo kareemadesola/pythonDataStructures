@@ -52,3 +52,16 @@ def longestSubarray(nums: List[int]) -> int:
             k += nums[i] == 0
             i += 1
     return j - i
+
+
+def minSubArrayLen(target: int, nums: List[int]) -> int:
+    start = 0
+    tmp = 0
+    res = len(nums) + 1
+    for end in range(len(nums)):
+        tmp += nums[end]
+        while tmp >= target:
+            res = min(res, end - start + 1)
+            tmp -= nums[start]
+            start += 1
+    return res if res <= len(nums) else 0

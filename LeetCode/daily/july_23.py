@@ -65,3 +65,20 @@ def minSubArrayLen(target: int, nums: List[int]) -> int:
             tmp -= nums[start]
             start += 1
     return res if res <= len(nums) else 0
+
+
+def maxConsecutiveAnswers(answerKey: str, k: int) -> int:
+    def check(chances, char) -> int:
+        start = 0
+        res = 0
+        for end in range(len(answerKey)):
+            if answerKey[end] == char:
+                chances -= 1
+                while chances < 0:
+                    if answerKey[start] == char:
+                        chances += 1
+                    start += 1
+            res = max(res, end - start + 1)
+        return res
+
+    return max(check(k, "F"), check(k, 'T'))

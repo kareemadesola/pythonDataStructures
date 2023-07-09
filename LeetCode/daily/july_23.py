@@ -130,17 +130,18 @@ def largestVariance(s: str) -> int:
             rest_minor = cnt[j]
 
             for char in s:
+                if minor_count > major_count and rest_minor:
+                    major_count = 0
+                    minor_count = 0
+
                 if char == major:
                     major_count += 1
-                if char == minor:
+
+                elif char == minor:
                     minor_count += 1
                     rest_minor -= 1
 
                 if minor_count > 0:
                     global_max = max(global_max, major_count - minor_count)
-
-                if minor_count > major_count and rest_minor:
-                    major_count = 0
-                    minor_count = 0
 
     return global_max

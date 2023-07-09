@@ -95,3 +95,15 @@ def putMarbles(weights: List[int], k: int) -> int:
     for i in range(k - 1):
         res += pair_weights[n - 2 - i] - pair_weights[i]
     return res
+
+
+def kadane_algorithm(nums) -> int:
+    max_so_far = nums[0]
+    max_ending_here = 0
+
+    for num in nums:
+        max_ending_here = max(max_ending_here, 0)
+        max_ending_here += num
+        max_so_far = max(max_so_far, max_ending_here)
+
+    return max_so_far

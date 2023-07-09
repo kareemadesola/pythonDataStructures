@@ -107,3 +107,40 @@ def kadane_algorithm(nums) -> int:
         max_so_far = max(max_so_far, max_ending_here)
 
     return max_so_far
+
+
+def largestVariance(s: str) -> int:
+    global_max = 0
+
+    cnt = [0] * 26
+    for i in s:
+        cnt[ord(i) - ord('a')] += 1
+
+    for i in range(26):
+        major = chr(ord('a') + i)
+        for j in range(26):
+
+            if i == j or cnt[i] == 0 or cnt[j] == 0:
+                continue
+
+            minor = chr(ord('a') + j)
+            major_count = 0
+            minor_count = 0
+
+            rest_minor = cnt[j]
+
+            for char in s:
+                if char == major:
+                    major_count += 1
+                if char == minor:
+                    minor_count += 1
+                    rest_minor -= 1
+
+                if minor_count > 0:
+                    global_max = max(global_max, major_count - minor_count)
+
+                if minor_count > major_count and rest_minor:
+                    major_count = 0
+                    minor_count = 0
+
+    return global_max

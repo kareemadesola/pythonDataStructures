@@ -162,3 +162,16 @@ def minDepthBFS(root: Optional[TreeNode]) -> int:
             if curr.left: q.append(curr.left)
             if curr.right: q.append(curr.right)
         res += 1
+
+
+def minDepth(root: Optional[TreeNode]) -> int:
+    def dfs(node: Optional[TreeNode]) -> int:
+        if not node:
+            return 0
+        if not node.left:
+            return 1 + dfs(node.right)
+        if not node.right:
+            return 1 + dfs(node.left)
+        return 1 + min(dfs(node.left), dfs(node.right))
+
+    return dfs(root)

@@ -1,5 +1,7 @@
 import collections
-from typing import List
+from typing import List, Optional
+
+from LeetCode.Biweekly.contest_82 import TreeNode
 
 
 def distributeCookies(cookies: List[int], k: int) -> int:
@@ -145,3 +147,18 @@ def largestVariance(s: str) -> int:
                     global_max = max(global_max, major_count - minor_count)
 
     return global_max
+
+
+def minDepthBFS(root: Optional[TreeNode]) -> int:
+    res = 0
+    if not root: return res
+    q = collections.deque([root])
+
+    while q:
+        for _ in range(len(q)):
+            curr = q.popleft()
+            if curr and not curr.left and not curr.right:
+                return res + 1
+            if curr.left: q.append(curr.left)
+            if curr.right: q.append(curr.right)
+        res += 1

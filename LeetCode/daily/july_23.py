@@ -175,3 +175,34 @@ def minDepth(root: Optional[TreeNode]) -> int:
         return 1 + min(dfs(node.left), dfs(node.right))
 
     return dfs(root)
+
+
+def distanceK(root: TreeNode, target: TreeNode, k: int) -> List[int]:
+    graph = collections.defaultdict(list)
+
+    def build_graph(curr: TreeNode, parent: Optional[TreeNode]):
+        if parent:
+            graph[curr.val].append(parent.val)
+            graph[parent.val].append(curr.val)
+        if curr.left:
+            build_graph(curr.left, curr)
+        if curr.right:
+            build_graph(curr.right, curr)
+
+    build_graph(root, None)
+    visited = {target.val}
+
+    q = collections.deque([target.val])
+    while q:
+        if k == 0:
+            return list(q)
+
+        for _ in range(len(q)):
+            cur = q.popleft()
+            for neighbour in graph[cur]:
+                if neighbour not in visited:
+                    visited.add(neighbour)
+                    q.append(neighbour)
+
+        k -= 1
+    return []

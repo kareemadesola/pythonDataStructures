@@ -206,3 +206,23 @@ def distanceK(root: TreeNode, target: TreeNode, k: int) -> List[int]:
 
         k -= 1
     return []
+
+
+def eventualSafeNodes(graph: List[List[int]]) -> List[int]:
+    safe = {}
+
+    def dfs(curr: int) -> bool:
+        if curr in safe:
+            return safe[curr]
+        safe[curr] = False
+        for nei in graph[curr]:
+            if not dfs(nei):
+                return False
+        safe[curr] = True
+        return True
+
+    res = []
+    for i in range(len(graph)):
+        if dfs(i):
+            res.append(i)
+    return res

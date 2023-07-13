@@ -226,3 +226,30 @@ def eventualSafeNodes(graph: List[List[int]]) -> List[int]:
         if dfs(i):
             res.append(i)
     return res
+
+
+def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
+    graph = {i: [] for i in range(numCourses)}
+    for curr, preq in prerequisites:
+        graph[curr].append(preq)
+
+    visited = set()
+
+    def dfs(i: int) -> bool:
+        if i in visited:
+            return False
+        if not graph[curr]:
+            return True
+
+        visited.add(i)
+        for nei in graph[i]:
+            if not dfs(nei):
+                return False
+        visited.remove(i)
+        graph[i].clear()
+        return True
+
+    for curr in graph:
+        if not dfs(curr):
+            return False
+    return True

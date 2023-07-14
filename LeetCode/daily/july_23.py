@@ -253,3 +253,16 @@ def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
         if not dfs(curr):
             return False
     return True
+
+
+def longestSubsequence(arr: List[int], difference: int) -> int:
+    n = len(arr)
+    dp = {}
+    res = 1
+    for i in range(n):
+        if dp[arr[i] - difference] in dp:
+            dp[arr[i]] = dp[arr[i] - difference] + 1
+            res = max(res, dp[arr[i]])
+        else:
+            dp[arr[i]] = 1
+    return res

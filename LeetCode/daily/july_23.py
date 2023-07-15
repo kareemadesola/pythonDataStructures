@@ -1,3 +1,4 @@
+import bisect
 import collections
 from typing import List, Optional
 
@@ -260,9 +261,27 @@ def longestSubsequence(arr: List[int], difference: int) -> int:
     dp = {}
     res = 1
     for i in range(n):
-        if dp[arr[i] - difference] in dp:
+        if arr[i] - difference in dp:
             dp[arr[i]] = dp[arr[i] - difference] + 1
             res = max(res, dp[arr[i]])
         else:
             dp[arr[i]] = 1
     return res
+
+
+def maxValue(events: List[List[int]], k: int) -> int:
+    events.sort()
+    n = len(events)
+    starts = [start for start, _, _ in events]
+    dp = [[-1] * n for _ in range(k + 1)]
+
+    def dfs(curr: int, count: int) -> int:
+        if count == 0 or curr == n:
+            return 0
+        if dp[count][curr] == -1:
+            return dp[count][curr]
+        nxt = bisect.bisect(starts, events[curr][1])
+        dp[count][curr] = max(dfs(curr + 1, count), dfs(nxt, count - 1) + events[curr][2])
+        return dp[count][curr]
+
+    return dfs(0, k)

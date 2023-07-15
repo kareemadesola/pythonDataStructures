@@ -285,3 +285,15 @@ def maxValue(events: List[List[int]], k: int) -> int:
         return dp[count][curr]
 
     return dfs(0, k)
+
+
+def maxValueBU(events: List[List[int]], k: int) -> int:
+    events.sort()
+    n = len(events)
+    starts = [start for start, _, _ in events]
+    dp = [[0] * (n + 1) for _ in range(k + 1)]
+    for count in range(1, k + 1):
+        for curr in range(n - 1, -1, -1):
+            nxt = bisect.bisect(starts, events[curr][1])
+            dp[count][curr] = max(dp[count][curr + 1], dp[count - 1][nxt] + events[curr][2])
+    return dp[k][0]

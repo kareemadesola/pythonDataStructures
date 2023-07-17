@@ -3,6 +3,7 @@ import collections
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
+from LeetCode.explore.linked_list import ListNode
 
 
 def distributeCookies(cookies: List[int], k: int) -> int:
@@ -329,3 +330,22 @@ def smallestSufficientTeam(req_skills: List[str], people: List[List[str]]) -> Li
             res.append(i)
 
     return res
+
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def ll_to_int(l: ListNode) -> int:
+        ans = []
+        while l:
+            ans.append(str(l.val))
+            l = l.next
+        return int(''.join(ans))
+
+    def int_to_ll(val: int) -> ListNode:
+        head = l = ListNode()
+        for digit in str(val):
+            l.next = ListNode(digit)
+            l = l.next
+        return head.next
+
+    res = ll_to_int(l1) + ll_to_int(l2)
+    return int_to_ll(res)

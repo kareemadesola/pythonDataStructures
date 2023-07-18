@@ -1,6 +1,6 @@
 import bisect
 import collections
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from LeetCode.Biweekly.contest_82 import TreeNode
 from LeetCode.explore.linked_list import ListNode
@@ -349,3 +349,45 @@ def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[Li
 
     res = ll_to_int(l1) + ll_to_int(l2)
     return int_to_ll(res)
+
+
+class LRUCache:
+    class Node:
+        def __init__(self, key=0, val=0):
+            self.prev: Optional[LRUCache.Node] = None
+            self.nxt: Optional[LRUCache.Node] = None
+            self.key, self.val = key, val
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.data: Dict[int, LRUCache.Node] = {}
+        self.left, self.right = self.Node(), self.Node()
+        self.left.next, self.right.prev = self.right, self.left
+
+    def get(self, key: int) -> int:
+
+        if key in self.data:
+            self.remove_node(self.data[key])
+            self.insert_node(self.data[key])
+            return self.data[key].val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.data:
+            self.remove_node(self.data[key])
+        self.data[key] = self.Node(key, value)
+        self.insert_node(self.data[key])
+
+        if len(self.data) > self.capacity:
+            lru = self.left.nxt
+            self.remove_node(lru)
+            del self.data[lru.key]
+
+    def insert_node(self, node: Node):
+        prev, nxt = self.right.prev, self.right
+        prev.nxt, node.prev = node, prev
+        node.nxt, nxt.prev = nxt, node
+
+    def remove_node(self, node: Node):
+        prev, nxt = node.prev, node.nxt
+        prev.nxt, nxt.prev = nxt, prev

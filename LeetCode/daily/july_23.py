@@ -437,3 +437,19 @@ def myPow(x: float, n: int) -> float:
 
     res = dfs(abs(n))
     return res if n >= 0 else 1 / res
+
+
+def asteroidCollision(asteroids: List[int]) -> List[int]:
+    stack = [asteroids[0]]
+    for ast in asteroids[1:]:
+        while stack and ast < 0 < stack[-1]:
+            if ast == -stack[-1]:
+                stack.pop()
+                break
+            elif abs(ast) > abs(stack[-1]):
+                stack.pop()
+            else:
+                break
+        else:
+            stack.append(ast)
+    return stack

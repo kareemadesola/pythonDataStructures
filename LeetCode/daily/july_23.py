@@ -409,17 +409,31 @@ def eraseOverlapIntervals(intervals: List[List[int]]) -> int:
 def allPossibleFBT(n: int) -> List[Optional[TreeNode]]:
     dp = {0: [], 1: [TreeNode()]}
 
-    def backtrack(num: int) -> List[Optional[TreeNode]]:
+    def dfs(num: int) -> List[Optional[TreeNode]]:
         if num in dp:
             return dp[num]
         res = []
         for l in range(num):
             r = num - 1 - l
-            l_tree, r_tree = backtrack(l), backtrack(r)
+            l_tree, r_tree = dfs(l), dfs(r)
             for t1 in l_tree:
                 for t2 in r_tree:
                     res.append(TreeNode(0, t1, t2))
         dp[num] = res
         return dp[num]
 
-    return backtrack(n)
+    return dfs(n)
+
+
+def myPow(x: float, n: int) -> float:
+    if x == 0: return 0
+
+    def dfs(i):
+        if i == 0:
+            return 1
+        ans = dfs(i // 2)
+        ans *= ans
+        return x * ans if i % 2 == 1 else ans
+
+    res = dfs(abs(n))
+    return res if n >= 0 else 1 / res

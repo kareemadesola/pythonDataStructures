@@ -453,3 +453,15 @@ def asteroidCollision(asteroids: List[int]) -> List[int]:
         else:
             stack.append(ast)
     return stack
+
+
+def peakIndexInMountainArray(arr: List[int]) -> int:
+    l, r = 0, len(arr)
+    while l <= r:
+        mid = l + (r - l) // 2
+        if arr[mid - 1] < arr[mid] > arr[mid + 1]:
+            return mid
+        elif arr[mid - 1] > arr[mid]:
+            r = mid
+        else:
+            l = mid + 1

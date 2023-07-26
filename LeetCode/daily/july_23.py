@@ -1,5 +1,6 @@
 import bisect
 import collections
+from math import ceil
 from typing import List, Optional, Dict
 
 from LeetCode.Biweekly.contest_82 import TreeNode
@@ -489,3 +490,21 @@ def findNumberOfLIS(nums: List[int]) -> int:
             result += count[i]
 
     return result
+
+
+def minSpeedOnTime(dist: List[int], hour: float) -> int:
+    def is_possible(x) -> bool:
+        time = 0
+        for i in range(len(dist)):
+            t = dist[i] / x
+            time += t if i == len(dist) - 1 else ceil(t)
+        return time <= hour
+
+    l, r = 1, 10 ** 7 + 1
+    while l < r:
+        mid = int(l + (r - l) // 2)
+        if is_possible(mid):
+            r = mid
+        else:
+            l = mid + 1
+    return -1 if l == 10 ** 7 + 1 else l

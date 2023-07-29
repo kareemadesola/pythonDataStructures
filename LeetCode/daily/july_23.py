@@ -508,3 +508,23 @@ def minSpeedOnTime(dist: List[int], hour: float) -> int:
         else:
             l = mid + 1
     return -1 if l == 10 ** 7 + 1 else l
+
+
+def PredictTheWinner(nums: List[int]) -> bool:
+    dp = {}
+
+    def dfs(l: int, r: int) -> int:
+        if (l, r) in dp:
+            return dp[(l, r)]
+        if l == r:
+            return nums[l]
+        l_score = nums[l] - dfs(l + 1, r)
+        r_score = nums[r] - dfs(l, r - 1)
+        dp[(l, r)] = max(l_score, r_score)
+        return dp[(l, r)]
+
+    return dfs(0, len(nums) - 1) >= 0
+
+
+if __name__ == '__main__':
+    PredictTheWinner([1, 5, 233, 7])

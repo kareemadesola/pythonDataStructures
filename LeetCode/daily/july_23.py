@@ -526,5 +526,20 @@ def PredictTheWinner(nums: List[int]) -> bool:
     return dfs(0, len(nums) - 1) >= 0
 
 
+def PredictTheWinnerBU(nums: List[int]) -> bool:
+    n = len(nums)
+    dp = [[0] * n for _ in range(n)]
+
+    for i in range(n):
+        dp[i][i] = nums[i]
+
+    for l in range(n - 2, -1, -1):
+        for r in range(l + 1, n):
+            l_score = nums[l] - dp[l + 1][r]
+            r_score = nums[r] - dp[l][r - 1]
+            dp[l][r] = max(l_score, r_score)
+    return dp[0][n - 1] > 0
+
+
 if __name__ == '__main__':
-    PredictTheWinner([1, 5, 233, 7])
+    PredictTheWinnerBU([1, 5, 233, 7])

@@ -45,3 +45,32 @@ def permuteRC(nums: List[int]) -> List[List[int]]:
     curr = []
     backtrack()
     return res
+
+
+def letterCombinations(digits: str) -> List[str]:
+    n = len(digits)
+
+    def backtrack(i: int):
+        if len(curr) == n:
+            res.append("".join(curr[:]))
+            return
+        for c in digit_to_str[digits[i]]:
+            curr.append(c)
+            backtrack(i + 1)
+            curr.pop()
+
+    digit_to_str = {
+        "2": "abc",
+        "3": "def",
+        "4": "ghi",
+        "5": "jkl",
+        "6": "mno",
+        "7": "pqrs",
+        "8": "tuv",
+        "9": "wxyz",
+    }
+    curr = []
+    if digits:
+        backtrack(0)
+    res = []
+    return res

@@ -24,3 +24,24 @@ def combineRC(n: int, k: int) -> List[List[int]]:
 
     backtrack(1)
     return res
+
+
+def permute(nums: List[int]) -> List[List[int]]:
+    return list(itertools.permutations(nums))
+
+
+def permuteRC(nums: List[int]) -> List[List[int]]:
+    def backtrack():
+        if len(curr) == n:
+            res.append(curr[:])
+        for num in nums:
+            if num not in curr:
+                curr.append(num)
+                backtrack()
+                curr.pop()
+
+    n = len(nums)
+    res = []
+    curr = []
+    backtrack()
+    return res

@@ -1,5 +1,7 @@
 import itertools
-from typing import List
+from typing import List, Optional
+
+from LeetCode.Biweekly.contest_82 import TreeNode
 
 
 def combine(n: int, k: int) -> List[List[int]]:
@@ -87,3 +89,25 @@ def wordBreak(s: str, wordDict: List[str]) -> bool:
             if dp[i]:
                 break
     return dp[0]
+
+
+def generateTrees(n: int) -> List[Optional[TreeNode]]:
+    dp = {}
+
+    def generate(l: int, r: int) -> List[Optional[TreeNode]]:
+        if l > r:
+            return [None]
+        if (l, r) in dp:
+            return dp[(l, r)]
+
+        res = []
+        for val in range(l, r + 1):
+            for l_tree in generate(l, val - 1):
+                for r_tree in generate(val + 1, r):
+                    root = TreeNode(val, l_tree, r_tree)
+                    res.append(root)
+
+        dp[(l, r)] = res
+        return res
+
+    return generate(1, n)

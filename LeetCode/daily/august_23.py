@@ -111,3 +111,26 @@ def generateTrees(n: int) -> List[Optional[TreeNode]]:
         return res
 
     return generate(1, n)
+
+
+def numMusicPlaylists(n: int, goal: int, k: int) -> int:
+    mod = 10**9 + 7
+    dp = {}
+
+    def count(curr_goal, old_songs):
+        if (curr_goal, old_songs) in dp:
+            return dp[(curr_goal, old_songs)]
+        if curr_goal == 0 and old_songs == n:
+            return 1
+        if curr_goal == 0 or old_songs > n:
+            return 0
+
+        # choose new song
+        res = (n - old_songs) * count(curr_goal - 1, old_songs + 1)
+        if old_songs > k:
+            # choose old song
+            res += (old_songs - k) * count(curr_goal - 1, old_songs)
+        dp[(curr_goal, old_songs)] = res % mod
+        return dp[(curr_goal, old_songs)]
+
+    return count(goal, 0)

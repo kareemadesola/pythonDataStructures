@@ -156,23 +156,22 @@ def searchMatrix(matrix: List[List[int]], target: int) -> bool:
 
 
 def searchMatrixBS(matrix: List[List[int]], target: int) -> bool:
-    l, r = 0, len(matrix)
+    top, down = 0, len(matrix)
 
+    while top < down:
+        mid = top + (down - top) // 2
+        if matrix[mid][-1] < target:
+            top = mid + 1
+        else:
+            down = mid
+
+    if top == len(matrix):
+        return False
+    l, r = 0, len(matrix[0])
     while l < r:
         mid = l + (r - l) // 2
-        if matrix[mid][0] < target:
+        if matrix[top][mid] < target:
             l = mid + 1
         else:
             r = mid
-
-    l = max(0, l - 1) if (l == len(matrix) or matrix[l][0] > target) else l
-    res = matrix[l]
-
-    l, r = 0, len(res)
-    while l < r:
-        mid = l + (r - l) // 2
-        if res[mid] < target:
-            l = mid + 1
-        else:
-            r = mid
-    return l < len(res) and res[l] == target
+    return l < len(matrix[top]) and matrix[top][l] == target

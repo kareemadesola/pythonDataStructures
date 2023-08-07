@@ -153,3 +153,26 @@ def searchMatrix(matrix: List[List[int]], target: int) -> bool:
     for row in matrix:
         res.extend(row)
     return binary_search(res)
+
+
+def searchMatrixBS(matrix: List[List[int]], target: int) -> bool:
+    l, r = 0, len(matrix)
+
+    while l < r:
+        mid = l + (r - l) // 2
+        if matrix[mid][0] < target:
+            l = mid + 1
+        else:
+            r = mid
+
+    l = max(0, l - 1) if (l == len(matrix) or matrix[l][0] > target) else l
+    res = matrix[l]
+
+    l, r = 0, len(res)
+    while l < r:
+        mid = l + (r - l) // 2
+        if res[mid] < target:
+            l = mid + 1
+        else:
+            r = mid
+    return l < len(res) and res[l] == target

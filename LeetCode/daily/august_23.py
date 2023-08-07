@@ -134,3 +134,22 @@ def numMusicPlaylists(n: int, goal: int, k: int) -> int:
         return dp[(curr_goal, old_songs)]
 
     return count(goal, 0)
+
+
+def searchMatrix(matrix: List[List[int]], target: int) -> bool:
+    def binary_search(arr: List[int]) -> bool:
+        l, r = 0, len(arr) - 1
+        while l <= r:
+            mid = l + (r - l) // 2
+            if arr[mid] < target:
+                l = mid + 1
+            elif arr[mid] == target:
+                return True
+            else:
+                r = mid - 1
+        return False
+
+    res = []
+    for row in matrix:
+        res.extend(row)
+    return binary_search(res)

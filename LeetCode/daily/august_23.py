@@ -192,7 +192,7 @@ def minimizeMax(nums: List[int], p: int) -> int:
 
     if p == 0:
         return 0
-    l, r = 0, 10**9
+    l, r = 0, nums[-1] - nums[0]
     nums.sort()
     while l < r:
         mid = l + (r - l) // 2

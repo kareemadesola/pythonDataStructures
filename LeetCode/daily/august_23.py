@@ -175,3 +175,27 @@ def searchMatrixBS(matrix: List[List[int]], target: int) -> bool:
         else:
             r = mid
     return l < len(matrix[top]) and matrix[top][l] == target
+
+
+def minimizeMax(nums: List[int], p: int) -> int:
+    def is_valid(x):
+        i = cnt = 0
+        while i < len(nums) - 1:
+            if abs(nums[i] - nums[i + 1]) <= x:
+                cnt += 1
+                i += 2
+            else:
+                i += 1
+            if cnt == p:
+                return True
+        return False
+
+    l, r = 0, 10**9
+    nums.sort()
+    while l < r:
+        mid = l + (r - l) // 2
+        if is_valid(mid):
+            r = mid
+        else:
+            l = mid + 1
+    return l

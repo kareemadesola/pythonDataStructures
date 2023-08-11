@@ -108,3 +108,14 @@ def calculate_special_bonus(employees: pd.DataFrame) -> pd.DataFrame:
         "bonus",
     ] = employees["salary"]
     return employees[["employee_id", "bonus"]].sort_values(by="employee_id")
+
+
+data = [[1, "aLice"], [2, "bOB"]]
+Users = pd.DataFrame(data, columns=["user_id", "name"]).astype(
+    {"user_id": "Int64", "name": "object"}
+)
+
+
+def fix_names(users: pd.DataFrame) -> pd.DataFrame:
+    users["name"] = users["name"].str.capitalize()
+    return users.sort_values(by="user_id")

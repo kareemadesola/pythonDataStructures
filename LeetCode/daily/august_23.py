@@ -241,3 +241,15 @@ def uniquePaths(m: int, n: int) -> int:
         for c in range(1, n):
             dp[r][c] = dp[r][c - 1] + dp[r - 1][c]
     return dp[m - 1][n - 1]
+
+
+def uniquePaths1d(m: int, n: int) -> int:
+    row = [1] * n
+
+    for _ in range(m - 1):
+        new_row = [1] * n
+        for j in range(n - 2, -1, -1):
+            new_row[j] = new_row[j + 1] + row[j]
+        row = new_row
+
+    return row[0]

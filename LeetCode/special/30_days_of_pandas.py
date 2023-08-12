@@ -147,3 +147,10 @@ def find_patients(patients: pd.DataFrame) -> pd.DataFrame:
     ).astype({"patient_id": "int64", "patient_name": "object", "conditions": "object"})
 
     return patients[patients["conditions"].str.contains(r"\bDIAB1")]
+
+
+def nth_highest_salary(employee: pd.DataFrame, N: int) -> pd.DataFrame:
+    unique_salaries = employee["salary"].drop_duplicates().sort_values(ascending=False)
+    if len(unique_salaries) >= N:
+        return pd.DataFrame({"Nth Highest Salary": [unique_salaries.iloc[N - 1]]})
+    return pd.DataFrame({"Nth Highest Salary": [None]})

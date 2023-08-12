@@ -232,3 +232,12 @@ def coinChange(coins: List[int], amount: int) -> int:
             if a - c >= 0:
                 dp[a] = min(dp[a], 1 + dp[a - c])
     return dp[amount] if dp[amount] != amount + 1 else -1
+
+
+def uniquePaths(m: int, n: int) -> int:
+    dp = [[1] * n for _ in range(m)]
+
+    for r in range(1, m):
+        for c in range(1, n):
+            dp[r][c] = dp[r][c - 1] + dp[r - 1][c]
+    return dp[m - 1][n - 1]

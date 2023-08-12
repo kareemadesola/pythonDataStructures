@@ -267,4 +267,28 @@ def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
         dp[(r, c)] = dfs(r - 1, c) + dfs(r, c - 1)
         return dp[(r, c)]
 
-    return dfs(0,0)
+    return dfs(0, 0)
+
+
+def uniquePathsWithObstaclesBU(obs: List[List[int]]) -> int:
+    m, n = len(obs), len(obs[0])
+
+    dp = [[0] * n for _ in range(m)]
+
+    if obs[m - 1][n - 1] == 1 or obs[0][0] == 1:
+        return 0
+
+    dp[m - 1][n - 1] = 1
+
+    for i in range(m - 2, -1, -1):
+        dp[i][n - 1] = dp[i + 1][n - 1] if obs[i][n - 1] == 0 else 0
+
+    for j in range(n - 2, -1, -1):
+        dp[m - 1][j] = dp[m - 1][j + 1] if obs[m - 1][j] == 0 else 0
+
+    for i in range(m - 2, -1, -1):
+        for j in range(n - 2, -1, -1):
+            if obs[i][j] == 0:
+                dp[i][j] = dp[i + 1][j] + dp[i][j + 1]
+
+    return dp[0][0]

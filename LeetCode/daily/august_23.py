@@ -306,3 +306,26 @@ def uniquePathsWithObstacles1dBU(obsobstacleGrid: List[List[int]]) -> int:
             elif c + 1 < n:
                 dp[c] += dp[c + 1]
     return dp[0]
+
+
+def validPartition(nums: List[int]) -> bool:
+    dp = {}
+
+    def dfs(i: int) -> bool:
+        if i == len(nums):
+            return True
+        if i in dp:
+            return dp[i]
+        res = False
+        if i + 1 < len(nums) and nums[i] == nums[i + 1]:
+            res = dfs(i + 2)
+        if i + 2 < len(nums):
+            if (
+                nums[i] == nums[i + 1] == nums[i + 2]
+                or nums[i] + 2 == nums[i + 1] + 1 == nums[i + 2]
+            ):
+                res |= dfs(i + 3)
+        dp[i] = res
+        return res
+
+    return dfs(0)

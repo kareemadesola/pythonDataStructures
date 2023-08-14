@@ -338,3 +338,23 @@ def findKthLargest(nums: List[int], k: int) -> int:
     for _ in range(k - 1):
         heapq.heappop(nums)
     return -heapq.heappop(nums)
+
+
+def findKthLargestQuickSelect(nums: List[int], k: int) -> int:
+    k = len(nums) - k
+
+    def quick_select(l: int, r: int) -> int:
+        pivot, ptr = nums[r], l
+        for i in range(l, r):
+            if nums[i] <= pivot:
+                nums[i], nums[ptr] = nums[ptr], nums[i]
+                ptr += 1
+        nums[ptr], nums[r] = nums[r], nums[ptr]
+
+        if ptr > k:
+            return quick_select(l, ptr - 1)
+        if ptr < k:
+            return quick_select(ptr + 1, r)
+        return nums[ptr]
+
+    return quick_select(0, len(nums) - 1)

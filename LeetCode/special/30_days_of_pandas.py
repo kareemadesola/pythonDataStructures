@@ -165,3 +165,13 @@ def second_highest_salary(employee: pd.DataFrame) -> pd.DataFrame:
     if len(salaries) >= 2:
         return pd.DataFrame({"SecondHighestSalary": [salaries.iloc[1]]})
     return pd.DataFrame({"SecondHighestSalary": [None]})
+
+
+def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
+    data = [[1, 3.5], [2, 3.65], [3, 4.0], [4, 3.85], [5, 4.0], [6, 3.65]]
+    Scores = pd.DataFrame(data, columns=["id", "score"]).astype(
+        {"id": "Int64", "score": "Float64"}
+    )
+    scores["rank"] = scores["score"].rank(method="dense", ascending=False)
+    res_df = scores.drop("id", axis=1).sort_values(by="score", ascending=False)
+    return res_df

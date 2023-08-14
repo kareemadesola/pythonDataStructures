@@ -1,3 +1,4 @@
+import heapq
 import itertools
 from typing import List, Optional
 
@@ -329,3 +330,11 @@ def validPartition(nums: List[int]) -> bool:
         return res
 
     return dfs(0)
+
+
+def findKthLargest(nums: List[int], k: int) -> int:
+    nums = [-i for i in nums]
+    heapq.heapify(nums)
+    for _ in range(k - 1):
+        heapq.heappop(nums)
+    return -heapq.heappop(nums)

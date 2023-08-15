@@ -205,3 +205,35 @@ def count_rich_customers(store: pd.DataFrame) -> pd.DataFrame:
     greater_500_df = store[store["amount"] > 500]
     greater_500_unique_df = greater_500_df[["customer_id"]].nunique()
     return pd.DataFrame(greater_500_unique_df, columns=["rich_count"])
+
+
+def food_delivery(delivery: pd.DataFrame) -> pd.DataFrame:
+    data = [
+        [1, 1, "2019-08-01", "2019-08-02"],
+        [2, 5, "2019-08-02", "2019-08-02"],
+        [3, 1, "2019-08-11", "2019-08-11"],
+        [4, 3, "2019-08-24", "2019-08-26"],
+        [5, 4, "2019-08-21", "2019-08-22"],
+        [6, 2, "2019-08-11", "2019-08-13"],
+    ]
+    Delivery = pd.DataFrame(
+        data,
+        columns=[
+            "delivery_id",
+            "customer_id",
+            "order_date",
+            "customer_pref_delivery_date",
+        ],
+    ).astype(
+        {
+            "delivery_id": "Int64",
+            "customer_id": "Int64",
+            "order_date": "datetime64[ns]",
+            "customer_pref_delivery_date": "datetime64[ns]",
+        }
+    )
+    immediate_df = delivery[
+        delivery["order_date"] == delivery["customer_pref_delivery_date"]
+    ]
+    percentage = round(immediate_df.size * 100 / delivery.size, 2)
+    return pd.DataFrame([percentage], columns=["immediate_percentage"])

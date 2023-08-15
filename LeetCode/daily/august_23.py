@@ -3,6 +3,7 @@ import itertools
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
+from LeetCode.explore.linked_list import ListNode
 
 
 def combine(n: int, k: int) -> List[List[int]]:
@@ -358,3 +359,20 @@ def findKthLargestQuickSelect(nums: List[int], k: int) -> int:
         return nums[ptr]
 
     return quick_select(0, len(nums) - 1)
+
+
+def partition(head: Optional[ListNode], x: int) -> Optional[ListNode]:
+    l_dummy = l = ListNode()
+    r_dummy = r = ListNode()
+    curr = head
+    while curr:
+        if curr.val < x:
+            l.next = curr
+            l = l.next
+        else:
+            r.next = curr
+            r = r.next
+        curr = curr.next
+    r.next = None
+    l.next = r_dummy.next
+    return l_dummy.next

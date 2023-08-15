@@ -195,3 +195,13 @@ def rearrange_products_table(products: pd.DataFrame) -> pd.DataFrame:
         {"product_id": "int64", "store1": "int64", "store2": "int64", "store3": "int64"}
     )
     return products.melt("product_id", var_name="store", value_name="price").dropna()
+
+
+def count_rich_customers(store: pd.DataFrame) -> pd.DataFrame:
+    data = [[6, 1, 549], [8, 1, 834], [4, 2, 394], [11, 3, 657], [13, 3, 257]]
+    Store = pd.DataFrame(data, columns=["bill_id", "customer_id", "amount"]).astype(
+        {"bill_id": "int64", "customer_id": "int64", "amount": "int64"}
+    )
+    greater_500_df = store[store["amount"] > 500]
+    greater_500_unique_df = greater_500_df[["customer_id"]].nunique()
+    return pd.DataFrame(greater_500_unique_df, columns=["rich_count"])

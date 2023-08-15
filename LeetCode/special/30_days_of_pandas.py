@@ -175,3 +175,13 @@ def order_scores(scores: pd.DataFrame) -> pd.DataFrame:
     scores["rank"] = scores["score"].rank(method="dense", ascending=False)
     res_df = scores.drop("id", axis=1).sort_values(by="score", ascending=False)
     return res_df
+
+
+# Modify Person in place
+def delete_duplicate_emails(person: pd.DataFrame) -> None:
+    data = [[1, "john@example.com"], [2, "bob@example.com"], [3, "john@example.com"]]
+    Person = pd.DataFrame(data, columns=["id", "email"]).astype(
+        {"id": "int64", "email": "object"}
+    )
+    person.sort_values(by="id", inplace=True)
+    person.drop_duplicates(subset="email", inplace=True)

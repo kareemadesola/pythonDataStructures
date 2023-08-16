@@ -1,5 +1,6 @@
 import heapq
 import itertools
+from collections import deque
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
@@ -376,3 +377,23 @@ def partition(head: Optional[ListNode], x: int) -> Optional[ListNode]:
     r.next = None
     l.next = r_dummy.next
     return l_dummy.next
+
+
+def maxSlidingWindow(nums: List[int], k: int) -> List[int]:
+    res = []
+    q = deque()
+
+    for i in range(k):
+        while q and nums[q[-1]] < nums[i]:
+            q.pop()
+        q.append(i)
+    res.append(nums[q[0]])
+
+    for i in range(k, len(nums)):
+        if q[0] == i - k:
+            q.popleft()
+        while q and nums[q[-1]] < nums[i]:
+            q.pop()
+        q.append(i)
+        res.append(nums[q[0]])
+    return res

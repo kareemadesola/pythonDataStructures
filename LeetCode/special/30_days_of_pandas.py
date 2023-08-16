@@ -237,3 +237,22 @@ def food_delivery(delivery: pd.DataFrame) -> pd.DataFrame:
     ]
     percentage = round(immediate_df.size * 100 / delivery.size, 2)
     return pd.DataFrame([percentage], columns=["immediate_percentage"])
+
+
+def count_salary_categories(accounts: pd.DataFrame) -> pd.DataFrame:
+    data = [[3, 108939], [2, 12747], [8, 87709], [6, 91796]]
+    Accounts = pd.DataFrame(data, columns=["account_id", "income"]).astype(
+        {"account_id": "Int64", "income": "Int64"}
+    )
+    return pd.DataFrame(
+        {
+            "category": ["Low Salary", "Average Salary", "High Salary"],
+            "accounts_count": [
+                accounts[accounts.income < 20_000].shape[0],
+                accounts[
+                    (accounts.income >= 20_000) & (accounts.income <= 50_000)
+                ].shape[0],
+                accounts[accounts.income > 50_000].shape[0],
+            ],
+        }
+    )

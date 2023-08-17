@@ -256,3 +256,29 @@ def count_salary_categories(accounts: pd.DataFrame) -> pd.DataFrame:
             ],
         }
     )
+
+
+def total_time(employees: pd.DataFrame) -> pd.DataFrame:
+    data = [
+        ["1", "2020-11-28", "4", "32"],
+        ["1", "2020-11-28", "55", "200"],
+        ["1", "2020-12-3", "1", "42"],
+        ["2", "2020-11-28", "3", "33"],
+        ["2", "2020-12-9", "47", "74"],
+    ]
+    Employees = pd.DataFrame(
+        data, columns=["emp_id", "event_day", "in_time", "out_time"]
+    ).astype(
+        {
+            "emp_id": "Int64",
+            "event_day": "datetime64[ns]",
+            "in_time": "Int64",
+            "out_time": "Int64",
+        }
+    )
+    employees["diff"] = employees["out_time"] - employees["in_time"]
+    res_df: pd.DataFrame = (
+        employees.groupby(["emp_id", "event_day"])["diff"].sum().reset_index()
+    )
+    res_df.rename({"event_day": "day", "diff": "total_time"}, inplace=True)
+    return res_df

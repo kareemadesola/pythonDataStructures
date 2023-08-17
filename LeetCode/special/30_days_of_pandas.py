@@ -320,3 +320,22 @@ def count_unique_subjects(teacher: pd.DataFrame) -> pd.DataFrame:
     )
     grouped_df.rename(columns={"subject_id": "cnt"}, inplace=True)
     return grouped_df
+
+
+def find_classes(courses: pd.DataFrame) -> pd.DataFrame:
+    data = [
+        ["A", "Math"],
+        ["B", "English"],
+        ["C", "Math"],
+        ["D", "Biology"],
+        ["E", "Math"],
+        ["F", "Computer"],
+        ["G", "Math"],
+        ["H", "Math"],
+        ["I", "Math"],
+    ]
+    Courses = pd.DataFrame(data, columns=["student", "class"]).astype(
+        {"student": "object", "class": "object"}
+    )
+    grouped_df: pd.DataFrame = courses.groupby("class")["student"].count().reset_index()
+    return grouped_df[grouped_df["student"] >= 5][["class"]]

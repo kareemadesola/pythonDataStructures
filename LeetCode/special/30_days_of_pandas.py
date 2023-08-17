@@ -339,3 +339,13 @@ def find_classes(courses: pd.DataFrame) -> pd.DataFrame:
     )
     grouped_df: pd.DataFrame = courses.groupby("class")["student"].count().reset_index()
     return grouped_df[grouped_df["student"] >= 5][["class"]]
+
+
+def largest_orders(orders: pd.DataFrame) -> pd.DataFrame:
+    grouped_df: pd.DataFrame = (
+        orders.groupby("customer_number")["order_number"].count().reset_index()
+    )
+    max_orders_df = grouped_df[
+        grouped_df["order_number"] == grouped_df["order_number"].max()
+    ]
+    return max_orders_df[["customer_number"]]

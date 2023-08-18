@@ -414,3 +414,26 @@ def maximalNetworkRank(n: int, roads: List[List[int]]) -> int:
                 curr_rank -= 1
             max_rank = max(max_rank, curr_rank)
     return max_rank
+
+
+def updateMatrix(mat: List[List[int]]) -> List[List[int]]:
+    q = deque()
+    directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    # make cells with 1 -1 and add cell with 0 to q
+    x, y = len(mat), len(mat[0])
+    for r in range(x):
+        for c in range(y):
+            if mat[r][c]:
+                mat[r][c] = -1
+            else:
+                q.append((r, c))
+
+    # start bfs
+    while q:
+        r, c = q.popleft()
+        for i, j in directions:
+            n_r, n_c = r + i, c + j
+            if 0 <= n_r < x and 0 <= n_c < y and mat[n_r][n_c] == -1:
+                mat[n_r][n_c] = mat[r][c] + 1
+                q.append((n_r, n_c))
+    return mat

@@ -1,6 +1,6 @@
 import heapq
 import itertools
-from collections import deque
+from collections import deque, defaultdict
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
@@ -397,3 +397,20 @@ def maxSlidingWindow(nums: List[int], k: int) -> List[int]:
         q.append(i)
         res.append(nums[q[0]])
     return res
+
+
+def maximalNetworkRank(n: int, roads: List[List[int]]) -> int:
+    max_rank = 0
+    adj = defaultdict(set)
+    # create adj matrix
+    for road in roads:
+        adj[road[0]].add(road[1])
+        adj[road[1]].add(road[0])
+
+    for node_1 in range(n):
+        for node_2 in range(node_1 + 1, n):
+            curr_rank = len(adj[node_1]) + len(adj[node_2])
+            if node_2 in adj[node_1]:
+                curr_rank -= 1
+            max_rank = max(max_rank, curr_rank)
+    return max_rank

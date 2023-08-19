@@ -349,3 +349,29 @@ def largest_orders(orders: pd.DataFrame) -> pd.DataFrame:
         grouped_df["order_number"] == grouped_df["order_number"].max()
     ]
     return max_orders_df[["customer_number"]]
+
+
+def categorize_products(activities: pd.DataFrame) -> pd.DataFrame:
+    data = [
+        ["2020-05-30", "Headphone"],
+        ["2020-06-01", "Pencil"],
+        ["2020-06-02", "Mask"],
+        ["2020-05-30", "Basketball"],
+        ["2020-06-01", "Bible"],
+        ["2020-06-02", "Mask"],
+        ["2020-05-30", "T-Shirt"],
+    ]
+    Activities = pd.DataFrame(data, columns=["sell_date", "product"]).astype(
+        {"sell_date": "datetime64[ns]", "product": "object"}
+    )
+
+    return (
+        activities.groupby("sell_date")["product"]
+        .agg(
+            [
+                ("num_sold", "nunique"),
+                ("products", lambda x: ",".join(sorted(x.unique()))),
+            ]
+        )
+        .reset_index()
+    )

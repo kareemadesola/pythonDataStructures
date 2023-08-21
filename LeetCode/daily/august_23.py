@@ -447,3 +447,7 @@ def repeatedSubstringPattern(s: str) -> bool:
             if pattern == s:
                 return True
     return False
+
+
+def repeatedSubstringPatternBetter(s: str) -> bool:
+    return s in (s + s)[1:-1]

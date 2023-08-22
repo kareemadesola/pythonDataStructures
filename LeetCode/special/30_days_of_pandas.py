@@ -452,3 +452,9 @@ def students_and_examinations(
     )
     merged_df = merged_df.fillna(0).sort_values(["student_id", "subject_name"])
     return merged_df[["student_id", "student_name", "subject_name", "attended_exams"]]
+
+
+def find_managers(employee: pd.DataFrame) -> pd.DataFrame:
+    manager_counts = employee.groupby("managerId")["id"].count().reset_index()
+    managers_with_at_least_5 = manager_counts[manager_counts["id"] >= 5]["managerId"]
+    return employee[employee["id"].isin(managers_with_at_least_5)][["name"]]

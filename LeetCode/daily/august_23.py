@@ -477,3 +477,25 @@ def reorganizeString(s: str) -> str:
         if char_to_freq[res[-1]] < 0:
             return ""
     return "".join(res)
+
+
+def reorganizeStringAlt(s: str) -> str:
+    max_heap = [(-freq, char) for char, freq in Counter(s).items()]
+    heapq.heapify(max_heap)
+    prev_freq = 0
+    prev_char = None
+
+    res = []
+    while max_heap:
+        freq, char = heapq.heappop(max_heap)
+        res.append(char)
+        freq += 1
+
+        if prev_freq < 0:
+            heapq.heappush(max_heap, (prev_freq, prev_char))
+
+        prev_char = char
+        prev_freq = freq
+    if len(s) == len(res):
+        return "".join(res)
+    return ""

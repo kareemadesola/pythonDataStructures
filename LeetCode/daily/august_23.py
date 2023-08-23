@@ -1,6 +1,6 @@
 import heapq
 import itertools
-from collections import deque, defaultdict
+from collections import deque, defaultdict, Counter
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
@@ -460,3 +460,20 @@ def convertToTitle(columnNumber: int) -> str:
         res.append(chr(columnNumber % 26 + ord("A")))
         columnNumber //= 26
     return "".join(res[::-1])
+
+
+def reorganizeString(s: str) -> str:
+    char_to_freq = Counter(s)
+    res = []
+    for _ in s:
+        if not res or char_to_freq.most_common(1)[0][0] != res[-1]:
+            res.append(char_to_freq.most_common(1)[0][0])
+        elif len(char_to_freq.most_common(2)) == 2:
+            res.append(char_to_freq.most_common(2)[1][0])
+        else:
+            return ""
+
+        char_to_freq[res[-1]] -= 1
+        if char_to_freq[res[-1]] < 0:
+            return ""
+    return "".join(res)

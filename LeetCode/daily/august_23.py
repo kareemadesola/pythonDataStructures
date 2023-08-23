@@ -451,3 +451,12 @@ def repeatedSubstringPattern(s: str) -> bool:
 
 def repeatedSubstringPatternBetter(s: str) -> bool:
     return s in (s + s)[1:-1]
+
+
+def convertToTitle(columnNumber: int) -> str:
+    res = []
+    while columnNumber:
+        columnNumber -= 1
+        res.append(chr(columnNumber % 26 + ord("A")))
+        columnNumber //= 26
+    return "".join(res[::-1])

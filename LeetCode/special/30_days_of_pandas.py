@@ -219,3 +219,12 @@ def find_managers(employee: pd.DataFrame) -> pd.DataFrame:
     manager_counts = employee.groupby("managerId")["id"].count().reset_index()
     managers_with_at_least_5 = manager_counts[manager_counts["id"] >= 5]["managerId"]
     return employee[employee["id"].isin(managers_with_at_least_5)][["name"]]
+
+
+def sales_person(
+    sales_person: pd.DataFrame, company: pd.DataFrame, orders: pd.DataFrame
+) -> pd.DataFrame:
+    red_id = orders.merge(company[company["name"] == "RED"], on="com_id", how="inner")[
+        "sales_id"
+    ].unique()
+    return sales_person[~sales_person["sales_id"].isin(red_id)][["name"]]

@@ -499,3 +499,14 @@ def reorganizeStringAlt(s: str) -> str:
     if len(s) == len(res):
         return "".join(res)
     return ""
+
+
+def findLongestChain(pairs: List[List[int]]) -> int:
+    pairs.sort(key=lambda x: x[1])
+    tail = pairs[0][1]
+    res = 1
+    for pair in pairs[1:]:
+        if tail < pair[0]:
+            res += 1
+            tail = pair[1]
+    return res

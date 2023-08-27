@@ -510,3 +510,23 @@ def findLongestChain(pairs: List[List[int]]) -> int:
             res += 1
             tail = pair[1]
     return res
+
+
+def canCross(stones: List[int]) -> bool:
+    n = len(stones)
+    dp = [[-1] * n for _ in range(n)]
+    mark = {val: idx for idx, val in enumerate(stones)}
+
+    def dfs(curr_idx: int, prev_steps: int) -> bool:
+        if curr_idx == n - 1:
+            return True
+        if dp[curr_idx][prev_steps] != -1:
+            return dp[curr_idx][prev_steps] == 1
+        res = False
+        for next_step in range(prev_steps - 1, prev_steps + 2):
+            if next_step > 0 and (stones[curr_idx] + next_step) in mark:
+                res = res or dfs(mark[stones[curr_idx] + next_step], next_step)
+        dp[curr_idx][prev_steps] = 1 if res else 0
+        return res
+
+    return dfs(0, 0)

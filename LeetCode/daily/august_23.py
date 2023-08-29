@@ -543,17 +543,15 @@ def canCrossBU(stones: List[int]) -> bool:
 
 class MyStack:
     def __init__(self):
-        self.q_1, self.q_2 = deque(), deque()
+        self.q_1 = deque()
 
     def push(self, x: int) -> None:
-        # stack behaviour
-        while self.q_1:
-            self.q_2.append(self.q_1.popleft())
-
+        # add element
         self.q_1.append(x)
-
-        while self.q_2:
-            self.q_1.append(self.q_2.popleft())
+        n = len(self.q_1)
+        while n > 1:
+            self.q_1.append(self.q_1.popleft())
+            n -= 1
 
     def pop(self) -> int:
         return self.q_1.popleft()

@@ -530,3 +530,36 @@ def canCross(stones: List[int]) -> bool:
         return res
 
     return dfs(0, 0)
+
+
+def canCrossBU(stones: List[int]) -> bool:
+    n = len(stones)
+    dp = [[-1] * n for _ in range(n)]
+    mark = {val: idx for idx, val in enumerate(stones)}
+    dp[0][0] = True
+
+    return dp[0][0] == 1
+
+
+class MyStack:
+    def __init__(self):
+        self.q_1, self.q_2 = deque(), deque()
+
+    def push(self, x: int) -> None:
+        # stack behaviour
+        while self.q_1:
+            self.q_2.append(self.q_1.popleft())
+
+        self.q_1.append(x)
+
+        while self.q_2:
+            self.q_1.append(self.q_2.popleft())
+
+    def pop(self) -> int:
+        return self.q_1.popleft()
+
+    def top(self) -> int:
+        return self.q_1[0]
+
+    def empty(self) -> bool:
+        return not bool(self.q_1)

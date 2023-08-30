@@ -561,3 +561,18 @@ class MyStack:
 
     def empty(self) -> bool:
         return not bool(self.q_1)
+
+def bestClosingTime(customers: str) -> int:
+    curr_penalty = min_penalty = customers.count('Y')
+    earliest_hour = 0
+
+    for idx, val in enumerate(customers):
+        if val == 'Y':
+            curr_penalty -= 1
+        else:
+            curr_penalty += 1
+
+        if curr_penalty < min_penalty:
+            min_penalty = curr_penalty
+            earliest_hour = idx + 1
+    return earliest_hour

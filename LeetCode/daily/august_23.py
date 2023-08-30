@@ -577,3 +577,18 @@ def bestClosingTime(customers: str) -> int:
             min_penalty = curr_penalty
             earliest_hour = idx + 1
     return earliest_hour
+
+
+def minimumReplacement(nums: List[int]) -> int:
+    n = len(nums)
+    res = 0
+    for i in range(n - 2, -1, -1):
+        if nums[i] <= nums[i + 1]:
+            continue
+        if nums[i] % nums[i + 1] == 0:
+            num_op = nums[i] // nums[i + 1]
+        else:
+            num_op = (nums[i] // nums[i + 1]) + 1
+        res += num_op - 1
+        nums[i] //= num_op
+    return res

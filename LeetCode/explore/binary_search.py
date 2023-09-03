@@ -101,3 +101,14 @@ def findMin(nums: List[int]) -> int:
 def searchRange(self, nums: List[int], target: int) -> List[int]:
     l, r = bisect.bisect_left(nums, target), bisect.bisect(nums, target)
     return [l, r - 1] if l != r else [-1, -1]
+
+
+def findClosestElements(arr: List[int], k: int, x: int) -> List[int]:
+    l, r = 0, len(arr) - k
+    while l < r:
+        mid = l + (r - l) // 2
+        if x - arr[mid] > arr[mid + k] - x:
+            l = mid + 1
+        else:
+            r = mid
+    return arr[l : l + k]

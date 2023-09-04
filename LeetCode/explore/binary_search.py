@@ -140,3 +140,14 @@ def isPerfectSquare(num: int) -> bool:
             r = mid
 
     return l * l == num
+
+
+def nextGreatestLetter(letters: List[str], target: str) -> str:
+    l, r = 0, len(letters)
+    while l < r:
+        mid = l + (r - l) // 2
+        if letters[mid] <= target:
+            l = mid + 1
+        else:
+            r = mid
+    return letters[l % len(letters)]

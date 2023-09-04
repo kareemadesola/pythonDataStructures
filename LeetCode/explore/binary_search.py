@@ -112,3 +112,19 @@ def findClosestElements(arr: List[int], k: int, x: int) -> List[int]:
         else:
             r = mid
     return arr[l : l + k]
+
+
+def myPow(x: float, n: int) -> float:
+    neg = n < 0
+    n = abs(n)
+    if n == 0:
+        return 1
+    res = 1
+    while n != 0:
+        if n % 2 == 0:
+            x = x * x
+            n //= 2
+        else:
+            res *= x
+            n -= 1
+    return 1 / res if neg else res

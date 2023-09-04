@@ -128,3 +128,15 @@ def myPow(x: float, n: int) -> float:
             res *= x
             n -= 1
     return 1 / res if neg else res
+
+
+def isPerfectSquare(num: int) -> bool:
+    l, r = 0, num
+    while l < r:
+        mid = l + (r - l) // 2
+        if mid * mid < num:
+            l = mid + 1
+        else:
+            r = mid
+
+    return l * l == num

@@ -1,5 +1,6 @@
 import bisect
 import random
+from collections import Counter
 from typing import List
 
 
@@ -179,3 +180,15 @@ def findMinDuplicates(nums: List[int]) -> int:
 
 def intersection(nums1: List[int], nums2: List[int]) -> List[int]:
     return list(set(nums1).intersection(set(nums2)))
+
+
+def intersect(nums1: List[int], nums2: List[int]) -> List[int]:
+    if len(nums2) > len(nums1):
+        nums1, nums2 = nums2, nums1
+    num_to_count = Counter(nums1)
+    res = []
+    for num in nums2:
+        if num in num_to_count and num_to_count[num] != 0:
+            res.append(num)
+            num_to_count[num] -= 1
+    return res

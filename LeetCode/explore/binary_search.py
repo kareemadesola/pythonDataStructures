@@ -175,3 +175,7 @@ def findMinDuplicates(nums: List[int]) -> int:
         else:
             r -= 1
     return nums[l]
+
+
+def intersection(nums1: List[int], nums2: List[int]) -> List[int]:
+    return list(set(nums1).intersection(set(nums2)))

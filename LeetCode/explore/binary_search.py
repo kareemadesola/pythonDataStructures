@@ -253,3 +253,28 @@ def findMedianSortedArrays(nums1: List[int], nums2: List[int]) -> float:
             r = mid1 - 1
         else:
             l = mid1 + 1
+
+
+def smallestDistancePair(nums: List[int], k: int) -> int:
+    n = len(nums)
+    nums.sort()
+    l, r = 0, nums[-1] - nums[0]
+
+    def count_less_than_or_equal_mid(m: int) -> int:
+        count = j = 0
+        for i in range(n):
+            while j < n and nums[j] - nums[i] <= m:
+                j += 1
+            count += j - i - 1
+        return count
+
+    while l < r:
+        mid = l + (r - l) // 2
+        cnt = count_less_than_or_equal_mid(mid)
+
+        if cnt < k:
+            l = mid + 1
+        else:
+            r = mid
+
+    return l

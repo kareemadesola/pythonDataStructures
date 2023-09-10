@@ -278,3 +278,25 @@ def smallestDistancePair(nums: List[int], k: int) -> int:
             r = mid
 
     return l
+
+
+def splitArray(nums: List[int], k: int) -> int:
+    l, r = max(nums), sum(nums)
+
+    def can_split(largest):
+        sub_array = 0
+        tmp = 0
+        for num in nums:
+            tmp += num
+            if tmp > largest:
+                tmp = num
+                sub_array += 1
+        return sub_array + 1 <= k
+
+    while l < r:
+        mid = l + (r - l) // 2
+        if can_split(mid):
+            r = mid
+        else:
+            l = mid + 1
+    return l

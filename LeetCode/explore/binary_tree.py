@@ -33,3 +33,17 @@ def preorderTraversalIter(root: Optional[TreeNode]) -> List[int]:
             stack.append(node.right)
             stack.append(node.left)
     return res
+
+
+def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    res = []
+
+    def dfs(curr: Optional[TreeNode]):
+        if not curr:
+            return
+        dfs(curr.left)
+        res.append(curr.val)
+        dfs(curr.right)
+
+    dfs(root)
+    return res

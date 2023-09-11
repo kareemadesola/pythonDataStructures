@@ -74,3 +74,15 @@ def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
     res = []
     dfs(root)
     return res
+
+
+def postorderTraversalIter(root: Optional[TreeNode]) -> List[int]:
+    res = []
+    stack = [root]
+    while stack:
+        curr = stack.pop()
+        if curr:
+            res.append(curr.val)
+            stack.append(curr.left)
+            stack.append(curr.right)
+    return res[::-1]

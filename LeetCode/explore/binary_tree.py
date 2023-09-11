@@ -61,3 +61,16 @@ def inorderTraversalIter(root: Optional[TreeNode]) -> List[int]:
         res.append(curr.val)
         curr = curr.right
     return res
+
+
+def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    def dfs(curr: Optional[TreeNode]):
+        if not curr:
+            return
+        dfs(curr.left)
+        dfs(curr.right)
+        res.append(curr.val)
+
+    res = []
+    dfs(root)
+    return res

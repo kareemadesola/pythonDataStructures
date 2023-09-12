@@ -1,3 +1,4 @@
+import collections
 from typing import Optional, List
 
 
@@ -86,3 +87,21 @@ def postorderTraversalIter(root: Optional[TreeNode]) -> List[int]:
             stack.append(curr.left)
             stack.append(curr.right)
     return res[::-1]
+
+
+def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
+    if not root:
+        return []
+    q = collections.deque([root])
+    res = []
+    while q:
+        res.append([])
+        curr_length = len(q)
+        for _ in range(curr_length):
+            curr = q.popleft()
+            res[-1].append(curr.val)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+    return res

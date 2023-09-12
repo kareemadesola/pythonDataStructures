@@ -131,3 +131,23 @@ def maxDepthBU(root: Optional[TreeNode]) -> int:
         return max(left, right) + 1
 
     return dfs(root)
+
+
+def isSymmetricBFS(root: Optional[TreeNode]) -> bool:
+    q = collections.deque([root])
+    while q:
+        tmp = []
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            tmp.append(curr.val if curr else None)
+            if not curr:
+                continue
+            q.append(curr.left)
+
+            q.append(curr.right)
+        tmp_len = len(tmp) // 2
+        if tmp[:tmp_len] != tmp[-1 : -tmp_len - 1 : -1]:
+            return False
+
+    return True

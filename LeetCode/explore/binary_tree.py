@@ -105,3 +105,18 @@ def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
             if curr.right:
                 q.append(curr.right)
     return res
+
+
+def maxDepthTD(root: Optional[TreeNode]) -> int:
+    def dfs(curr: Optional[TreeNode], depth: int):
+        nonlocal res
+        if not curr:
+            return
+        if not curr.left and not curr.right:
+            res = max(res, depth)
+        dfs(curr.left, depth + 1)
+        dfs(curr.right, depth + 1)
+
+    res = 0
+    dfs(root, 1)
+    return res

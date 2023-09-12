@@ -120,3 +120,14 @@ def maxDepthTD(root: Optional[TreeNode]) -> int:
     res = 0
     dfs(root, 1)
     return res
+
+
+def maxDepthBU(root: Optional[TreeNode]) -> int:
+    def dfs(curr: Optional[TreeNode]) -> int:
+        if not curr:
+            return 0
+        left = dfs(curr.left)
+        right = dfs(curr.right)
+        return max(left, right) + 1
+
+    return dfs(root)

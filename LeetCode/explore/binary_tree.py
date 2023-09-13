@@ -166,3 +166,15 @@ def isSymmetricDFS(root: Optional[TreeNode]) -> bool:
         )
 
     return dfs(root.left, root.right)
+
+
+def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
+    def dfs(curr: Optional[TreeNode], remainder: int) -> bool:
+        if not curr:
+            return False
+        remainder -= curr.val
+        if not curr.left and not curr.right:
+            return remainder == curr.val
+        return dfs(curr.left, remainder) or dfs(curr.right, remainder)
+
+    return dfs(root, targetSum)

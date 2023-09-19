@@ -211,3 +211,48 @@ def buildTreePI(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         return root
 
     return dfs(0, len(preorder) - 1)
+
+
+class Node:
+    def __init__(
+        self,
+        val: int = 0,
+        left: "Node" = None,
+        right: "Node" = None,
+        next: "Node" = None,
+    ):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+
+
+# def connect(root: "Optional[Node]") -> "Optional[Node]":
+#     def dfs(node):
+#         if not node:
+#             return
+#         if node.left:
+#             node.next = node.right
+#         return node
+#
+#     return dfs(root)
+
+
+def connect(root: "Optional[Node]") -> "Optional[Node]":
+    if not root:
+        return
+
+    q = collections.deque([root])
+    while q:
+        q_len = len(q)
+        for i in range(q_len):
+            curr = q.popleft()
+            nxt = q[0] if i < q_len - 1 else None
+
+            curr.next = nxt
+
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+    return root

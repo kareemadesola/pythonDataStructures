@@ -256,3 +256,19 @@ def connect(root: "Optional[Node]") -> "Optional[Node]":
             if curr.right:
                 q.append(curr.right)
     return root
+
+
+def connectBetter(root: "Optional[Node]") -> "Optional[Node]":
+    if not root:
+        return
+    curr, nxt = root, root.left
+
+    while curr and nxt:
+        curr.left.next = curr.right
+        if curr.next:
+            curr.right.next = curr.next.left
+        curr = curr.next
+        if not curr:
+            curr = nxt
+            nxt = curr.left
+    return root

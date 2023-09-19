@@ -194,3 +194,20 @@ def buildTree(inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
         return root
 
     return dfs(0, len(inorder) - 1)
+
+
+def buildTreePI(preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    preorder = collections.deque(preorder)
+    val_to_idx = {val: idx for idx, val in enumerate(inorder)}
+
+    def dfs(l, r):
+        if l > r:
+            return
+        root = TreeNode(preorder.popleft())
+        root_idx = val_to_idx[root.val]
+
+        root.left = dfs(l, root_idx - 1)
+        root.right = dfs(root_idx + 1, r)
+        return root
+
+    return dfs(0, len(preorder) - 1)

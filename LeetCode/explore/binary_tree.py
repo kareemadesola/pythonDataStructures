@@ -178,3 +178,19 @@ def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
         return dfs(curr.left, remainder) or dfs(curr.right, remainder)
 
     return dfs(root, targetSum)
+
+
+def buildTree(inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+    val_to_idx = {val: idx for idx, val in enumerate(inorder)}
+
+    def dfs(l: int, r: int):
+        if l > r:
+            return
+        root = TreeNode(postorder.pop())
+        root_idx = val_to_idx[root.val]
+
+        root.right = dfs(root_idx + 1, r)
+        root.left = dfs(l, root_idx - 1)
+        return root
+
+    return dfs(0, len(inorder) - 1)

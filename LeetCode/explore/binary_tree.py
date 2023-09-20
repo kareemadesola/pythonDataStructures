@@ -315,6 +315,22 @@ class Codec:
 
         return " ".join(res)
 
+    def serializeDFS(self, root) -> str:
+        if not root:
+            return ""
+        res = []
+
+        def dfs(curr):
+            if not curr:
+                res.append("n")
+                return
+            res.append(str(curr.val))
+            dfs(curr.left)
+            dfs(curr.right)
+
+        dfs(root)
+        return " ".join(res)
+
     def deserialize(self, data):
         """Decodes your encoded data to tree.
 
@@ -347,3 +363,21 @@ class Codec:
             i += 1
 
         return root
+
+    def deserializeDFS(self, data):
+        values = data.split()
+        i = 0
+
+        def dfs():
+            nonlocal i
+            if values[i] == "n":
+                i += 1
+                return
+
+            curr = TreeNode(int(values[i]))
+            i += 1
+            curr.left = dfs()
+            curr.right = dfs()
+            return curr
+
+        return dfs()

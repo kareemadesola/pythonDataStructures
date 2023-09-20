@@ -272,3 +272,21 @@ def connectBetter(root: "Optional[Node]") -> "Optional[Node]":
             curr = nxt
             nxt = curr.left
     return root
+
+
+def lowestCommonAncestor(root: "TreeNode", p: "TreeNode", q: "TreeNode") -> "TreeNode":
+    def dfs(node: TreeNode) -> Optional[TreeNode]:
+        if not node:
+            return
+        if node == p or node == q:
+            return node
+        left = dfs(node.left)
+        right = dfs(node.right)
+
+        if left and right:
+            return node
+        if left:
+            return left
+        return right
+
+    return dfs(root)

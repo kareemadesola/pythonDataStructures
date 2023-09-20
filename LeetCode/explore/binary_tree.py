@@ -290,3 +290,60 @@ def lowestCommonAncestor(root: "TreeNode", p: "TreeNode", q: "TreeNode") -> "Tre
         return right
 
     return dfs(root)
+
+
+class Codec:
+    def serialize(self, root) -> str:
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+
+        if not root:
+            return ""
+        res = []
+        q = collections.deque([root])
+        while q:
+            curr = q.popleft()
+            if not curr:
+                res.append("n")
+            else:
+                res.append(str(curr.val))
+                q.append(curr.left)
+                q.append(curr.right)
+
+        return " ".join(res)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        if not data:
+            return None
+
+        values = data.split()
+        root = TreeNode(int(values[0]))
+        q = collections.deque([root])
+        i = 1
+
+        while q and i < len(values):
+            parent = q.popleft()
+
+            if values[i] != "n":
+                left = TreeNode(int(values[i]))
+                parent.left = left
+                q.append(left)
+
+            i += 1
+
+            if i < len(values) and values[i] != "n":
+                right = TreeNode(int(values[i]))
+                parent.right = right
+                q.append(right)
+
+            i += 1
+
+        return root

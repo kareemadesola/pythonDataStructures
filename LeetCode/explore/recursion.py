@@ -31,3 +31,15 @@ def swapPairsIter(head: Optional[ListNode]) -> Optional[ListNode]:
         prev = curr
         curr = next_pair
     return dummy.next
+
+
+def swapPairs(head: Optional[ListNode]) -> Optional[ListNode]:
+    def dfs(curr: Optional[ListNode]) -> Optional[ListNode]:
+        if not curr or not curr.next:
+            return curr
+        second = curr.next
+        curr.next = dfs(curr.next.next)
+        second.next = curr
+        return second
+
+    return dfs(head)

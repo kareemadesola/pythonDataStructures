@@ -55,3 +55,13 @@ def reverseListIter(head: Optional[ListNode]) -> Optional[ListNode]:
         prev = curr
         curr = nxt
     return prev
+
+def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
+    def dfs(prev, curr):
+        if not curr:
+            return prev
+        nxt = curr.next
+        curr.next = prev
+        return dfs(curr, nxt)
+
+    return dfs(None, head)

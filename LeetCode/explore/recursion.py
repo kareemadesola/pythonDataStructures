@@ -76,3 +76,14 @@ def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
         return dfs(curr.left) or dfs(curr.right)
 
     return dfs(root)
+
+
+def getRowIter(rowIndex: int) -> List[int]:
+    res = [1]
+    for _ in range(rowIndex):
+        tmp_len = len(res) - 1
+        tmp = [0] * tmp_len
+        for i in range(tmp_len):
+            tmp[i] = res[i] + res[i + 1]
+        res = [1] + tmp + [1]
+    return res

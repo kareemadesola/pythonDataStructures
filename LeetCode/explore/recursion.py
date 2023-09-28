@@ -46,8 +46,6 @@ def swapPairs(head: Optional[ListNode]) -> Optional[ListNode]:
 
 
 def reverseListIter(head: Optional[ListNode]) -> Optional[ListNode]:
-    if not head:
-        return
     prev, curr = None, head
     while curr:
         nxt = curr.next
@@ -55,6 +53,7 @@ def reverseListIter(head: Optional[ListNode]) -> Optional[ListNode]:
         prev = curr
         curr = nxt
     return prev
+
 
 def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
     def dfs(prev, curr):

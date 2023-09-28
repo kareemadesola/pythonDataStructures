@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from LeetCode.explore.binary_tree import TreeNode
 from LeetCode.explore.linked_list import ListNode
 
 
@@ -64,3 +65,14 @@ def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
         return dfs(curr, nxt)
 
     return dfs(None, head)
+
+
+def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    def dfs(curr: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not curr:
+            return
+        if curr and curr.val == val:
+            return curr
+        return dfs(curr.left) or dfs(curr.right)
+
+    return dfs(root)

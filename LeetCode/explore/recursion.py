@@ -87,3 +87,16 @@ def getRowIter(rowIndex: int) -> List[int]:
             tmp[i] = res[i] + res[i + 1]
         res = [1] + tmp + [1]
     return res
+
+
+def getRow(rowIndex: int) -> List[int]:
+    def dfs(r, curr_row):
+        if r == rowIndex:
+            return curr_row
+        new_row = [1]
+        for i in range(1, len(curr_row)):
+            new_row.append(curr_row[i - 1] + curr_row[i])
+        new_row.append(1)
+        return dfs(r + 1, new_row)
+
+    return dfs(0, [1])

@@ -100,3 +100,12 @@ def getRow(rowIndex: int) -> List[int]:
         return dfs(r + 1, new_row)
 
     return dfs(0, [1])
+
+def fib(n: int) -> int:
+    memo = {0:0, 1:1}
+    def dfs(val:int)->int:
+        if val in memo:
+            return memo[val]
+        return dfs(val - 1) + dfs(val - 2)
+
+    return dfs(n)

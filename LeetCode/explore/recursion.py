@@ -139,3 +139,17 @@ def maxDepth(root: Optional[TreeNode]) -> int:
 
     dfs(root, 0)
     return mx
+
+
+def myPow(x: float, n: int) -> float:
+    if n == 0:
+        return 1
+
+    def dfs(val: float, pw: int) -> float:
+        if pw == 1:
+            return val
+        if pw % 2 == 0:
+            return dfs(val * val, pw // 2)
+        return val * dfs(val, pw - 1)
+
+    return dfs(x, n) if n > 0 else 1 / dfs(x, -n)

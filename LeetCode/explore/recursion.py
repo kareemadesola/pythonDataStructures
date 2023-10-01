@@ -155,7 +155,7 @@ def myPow(x: float, n: int) -> float:
     return dfs(x, n) if n > 0 else 1 / dfs(x, -n)
 
 
-def mergeTwoLists(
+def mergeTwoListsIter(
     list1: Optional[ListNode], list2: Optional[ListNode]
 ) -> Optional[ListNode]:
     dummy = curr = ListNode()
@@ -169,3 +169,20 @@ def mergeTwoLists(
         curr = curr.next
     curr.next = list1 if list1 else list2
     return dummy.next
+
+
+def mergeTwoLists(
+    list1: Optional[ListNode], list2: Optional[ListNode]
+) -> Optional[ListNode]:
+    def merge(l1, l2) -> Optional[ListNode]:
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        if l1.val <= l2.val:
+            l1.next = merge(l1.next, l2)
+            return l1
+        l2.next = merge(l1, l2.next)
+        return l2
+
+    return merge(list1, list2)

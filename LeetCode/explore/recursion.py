@@ -124,3 +124,18 @@ def climbStairs(n: int) -> int:
         return memo[val]
 
     return dfs(n)
+
+
+def maxDepth(root: Optional[TreeNode]) -> int:
+    mx = 0
+
+    def dfs(curr: Optional[TreeNode], depth):
+        nonlocal mx
+        if not curr:
+            mx = max(mx, depth)
+        else:
+            dfs(curr.left, depth + 1)
+            dfs(curr.right, depth + 1)
+
+    dfs(root, 0)
+    return mx

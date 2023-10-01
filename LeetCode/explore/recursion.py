@@ -101,11 +101,26 @@ def getRow(rowIndex: int) -> List[int]:
 
     return dfs(0, [1])
 
+
 def fib(n: int) -> int:
-    memo = {0:0, 1:1}
-    def dfs(val:int)->int:
+    memo = {0: 0, 1: 1}
+
+    def dfs(val: int) -> int:
         if val in memo:
             return memo[val]
-        return dfs(val - 1) + dfs(val - 2)
+        memo[val] = dfs(val - 1) + dfs(val - 2)
+        return memo[val]
+
+    return dfs(n)
+
+
+def climbStairs(n: int) -> int:
+    memo = {1: 1, 2: 2}
+
+    def dfs(val: int) -> int:
+        if val in memo:
+            return memo[val]
+        memo[val] = dfs(val - 1) + dfs(val - 2)
+        return memo[val]
 
     return dfs(n)

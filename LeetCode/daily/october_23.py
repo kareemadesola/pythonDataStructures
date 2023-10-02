@@ -22,3 +22,14 @@ def winnerOfGame(colors: str) -> bool:
             local_cnt_b = 0
     global_cnt_b += max(local_cnt_b - 2, 0)
     return global_cnt_a > global_cnt_b
+
+
+def winnerOfGameOptimal(colors: str) -> bool:
+    alice = bob = 0
+    for i in range(1, len(colors) - 1):
+        if colors[i - 1] == colors[i] == colors[i + 1]:
+            if colors[i] == "A":
+                alice += 1
+            else:
+                bob += 1
+    return alice > bob

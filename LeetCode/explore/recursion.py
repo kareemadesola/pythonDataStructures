@@ -195,3 +195,18 @@ def kthGrammar(n: int, k: int) -> int:
     if parent == 1:
         return 1 if k % 2 == 1 else 0
     return 0 if k % 2 == 1 else 1
+
+
+def numTrees(n: int) -> int:
+    num_trees = [1] * (n + 1)
+
+    for nodes in range(2, n + 1):
+        total = 0
+        for root in range(1, nodes + 1):
+            num_left = root - 1
+            num_right = nodes - root
+
+            total += num_trees[num_left] * num_trees[num_right]
+        num_trees[nodes] = total
+
+    return num_trees[n]

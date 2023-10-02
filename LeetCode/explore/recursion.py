@@ -186,3 +186,12 @@ def mergeTwoLists(
         return l2
 
     return merge(list1, list2)
+
+
+def kthGrammar(n: int, k: int) -> int:
+    if n == 1:
+        return 0
+    parent = kthGrammar(n - 1, (k + 1) // 2)
+    if parent == 1:
+        return 1 if k % 2 == 1 else 0
+    return 0 if k % 2 == 1 else 1

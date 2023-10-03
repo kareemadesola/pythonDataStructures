@@ -1,3 +1,8 @@
+from collections import Counter
+from math import comb
+from typing import List
+
+
 def reverseWords(s: str) -> str:
     return " ".join(word[::-1] for word in s.split(" "))
 
@@ -33,3 +38,11 @@ def winnerOfGameOptimal(colors: str) -> bool:
             else:
                 bob += 1
     return alice > bob
+
+
+def numIdenticalPairs(nums: List[int]) -> int:
+    counter = Counter(nums)
+    res = 0
+    for count in counter.values():
+        res += comb(count, 2)
+    return res

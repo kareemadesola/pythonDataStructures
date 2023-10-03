@@ -210,3 +210,23 @@ def numTrees(n: int) -> int:
         num_trees[nodes] = total
 
     return num_trees[n]
+
+
+def generateTrees(n: int) -> List[Optional[TreeNode]]:
+    dp = {}
+
+    def generate(l: int, r: int) -> List[Optional[TreeNode]]:
+        if l > r:
+            return [None]
+        if (l, r) in dp:
+            return dp[(l, r)]
+        res = []
+        for val in range(l, r + 1):
+            for left_tree in generate(l, val - 1):
+                for right_tree in generate(val + 1, r):
+                    root = TreeNode(val, left_tree, right_tree)
+                    res.append(root)
+        dp[(l, r)] = res
+        return res
+
+    return generate(1, n)

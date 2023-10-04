@@ -46,3 +46,18 @@ def numIdenticalPairs(nums: List[int]) -> int:
     for count in counter.values():
         res += comb(count, 2)
     return res
+
+
+class MyHashMap:
+    def __init__(self):
+        self.data = {}
+
+    def put(self, key: int, value: int) -> None:
+        self.data[key] = value
+
+    def get(self, key: int) -> int:
+        return self.data.get(key, -1)
+
+    def remove(self, key: int) -> None:
+        if key in self.data:
+            del self.data[key]

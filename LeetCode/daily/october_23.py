@@ -101,3 +101,13 @@ class MyHashMapBetter:
                 curr.next = curr.next.next
                 return
             curr = curr.next
+
+
+def majorityElement(nums: List[int]) -> List[int]:
+    nums_len = len(nums)
+    elem_to_freq = Counter(nums)
+    res = []
+    for elem in elem_to_freq:
+        if elem_to_freq[elem] > nums_len // 3:
+            res.append(elem)
+    return res

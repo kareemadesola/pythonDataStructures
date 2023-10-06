@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from math import comb
 from typing import List
 
@@ -111,3 +111,20 @@ def majorityElement(nums: List[int]) -> List[int]:
         if elem_to_freq[elem] > nums_len // 3:
             res.append(elem)
     return res
+
+
+def majorityElementConstantSpace(nums: List[int]) -> List[int]:
+    count = defaultdict(int)
+
+    for num in nums:
+        count[num] += 1
+
+        if len(count) < 3:
+            continue
+
+        new_count = defaultdict(int)
+        for k, v in count.items():
+            if count[k] > 1:
+                new_count[k] = v - 1
+    n = len(nums) // 3
+    return [k for k in count if nums.count(k) > n]

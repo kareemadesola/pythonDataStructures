@@ -143,3 +143,14 @@ def integerBreakRecursive(n: int) -> int:
         return memo[val]
 
     return dfs(n)
+
+
+def integerBreak(n: int) -> int:
+    dp = [i for i in range(n + 1)]
+    dp[n] = 0
+
+    for val in range(2, n + 1):
+        for i in range(1, val):
+            res = dp[i] * dp[val - i]
+            dp[val] = max(dp[val], res)
+    return dp[n]

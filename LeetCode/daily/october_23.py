@@ -128,3 +128,18 @@ def majorityElementConstantSpace(nums: List[int]) -> List[int]:
                 new_count[k] = v - 1
     n = len(nums) // 3
     return [k for k in count if nums.count(k) > n]
+
+
+def integerBreakRecursive(n: int) -> int:
+    memo = {1: 1}
+
+    def dfs(val: int) -> int:
+        if val in memo:
+            return memo[val]
+        memo[val] = 0 if val == n else val
+        for i in range(1, val):
+            res = dfs(i) * dfs(val - i)
+            memo[val] = max(memo[val], res)
+        return memo[val]
+
+    return dfs(n)

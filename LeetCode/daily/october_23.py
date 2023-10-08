@@ -154,3 +154,28 @@ def integerBreak(n: int) -> int:
             res = dp[i] * dp[val - i]
             dp[val] = max(dp[val], res)
     return dp[n]
+
+
+def maxDotProduct(nums1: List[int], nums2: List[int]) -> int:
+    memo = {}
+
+    def dfs(i: int, j: int):
+        if (i, j) in memo:
+            return memo[(i, j)]
+        if i == len(nums1) or j == len(nums2):
+            return 0
+
+        res = max(nums1[i] * nums2[j] + dfs(i + 1, j + 1), dfs(i + 1, j), dfs(i, j + 1))
+        memo[(i, j)] = res
+        return memo[(i, j)]
+
+    nums1_min, nums1_max = min(nums1), max(nums1)
+    nums2_min, nums2_max = min(nums2), max(nums2)
+
+    if nums1_max < 0 and nums2_min > 0:
+        return nums1_max * nums2_min
+
+    if nums2_max < 0 and nums1_min > 0:
+        return nums2_max * nums1_min
+
+    return dfs(0, 0)

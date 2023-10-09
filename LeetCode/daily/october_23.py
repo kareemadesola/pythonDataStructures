@@ -223,7 +223,31 @@ def maxDotProductSOBU(nums1: List[int], nums2: List[int]) -> int:
     return prev_dp[0]
 
 
-def searchRange(nums: List[int], target: int) -> List[int]:
+def searchRangeBisect(nums: List[int], target: int) -> List[int]:
     l = bisect.bisect_left(nums, target)
     r = bisect.bisect_right(nums, target)
     return [l, r - 1] if l != r else [-1, -1]
+
+def searchRange(nums: List[int], target: int) -> List[int]:
+    def bisect_left():
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + (r - l)//2
+            if nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid
+        return l
+
+    def bisect_right():
+        l, r = 0, len(nums)
+        while l <= r:
+            mid = l + (r - l)//2
+            if nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid
+        return l
+    left, right = bisect_left(), bisect_right()
+    return [left, right - 1] if left != right else [-1, -1]
+

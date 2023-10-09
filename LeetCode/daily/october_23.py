@@ -1,3 +1,4 @@
+import bisect
 from collections import Counter, defaultdict
 from math import comb
 from typing import List
@@ -220,3 +221,9 @@ def maxDotProductSOBU(nums1: List[int], nums2: List[int]) -> int:
             dp[j] = max(nums1[i] * nums2[j] + prev_dp[j + 1], prev_dp[j], dp[j + 1])
         prev_dp = dp
     return prev_dp[0]
+
+
+def searchRange(nums: List[int], target: int) -> List[int]:
+    l = bisect.bisect_left(nums, target)
+    r = bisect.bisect_right(nums, target)
+    return [l, r - 1] if l != r else [-1, -1]

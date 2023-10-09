@@ -199,3 +199,24 @@ def maxDotProductBU(nums1: List[int], nums2: List[int]) -> int:
                 nums1[i] * nums2[j] + dp[i + 1][j + 1], dp[i + 1][j], dp[i][j + 1]
             )
     return dp[0][0]
+
+
+def maxDotProductSOBU(nums1: List[int], nums2: List[int]) -> int:
+    nums1_min, nums1_max = min(nums1), max(nums1)
+    nums2_min, nums2_max = min(nums2), max(nums2)
+
+    if nums1_max < 0 and nums2_min > 0:
+        return nums1_max * nums2_min
+
+    if nums2_max < 0 and nums1_min > 0:
+        return nums2_max * nums1_min
+
+    m, n = len(nums1), len(nums2)
+    prev_dp = [0] * (n + 1)
+
+    for i in range(m - 1, -1, -1):
+        dp = [0] * (n + 1)
+        for j in range(n - 1, -1, -1):
+            dp[j] = max(nums1[i] * nums2[j] + prev_dp[j + 1], prev_dp[j], dp[j + 1])
+        prev_dp = dp
+    return prev_dp[0]

@@ -228,11 +228,12 @@ def searchRangeBisect(nums: List[int], target: int) -> List[int]:
     r = bisect.bisect_right(nums, target)
     return [l, r - 1] if l != r else [-1, -1]
 
+
 def searchRange(nums: List[int], target: int) -> List[int]:
     def bisect_left():
         l, r = 0, len(nums)
         while l < r:
-            mid = l + (r - l)//2
+            mid = l + (r - l) // 2
             if nums[mid] < target:
                 l = mid + 1
             else:
@@ -242,12 +243,26 @@ def searchRange(nums: List[int], target: int) -> List[int]:
     def bisect_right():
         l, r = 0, len(nums)
         while l <= r:
-            mid = l + (r - l)//2
+            mid = l + (r - l) // 2
             if nums[mid] < target:
                 l = mid + 1
             else:
                 r = mid
         return l
+
     left, right = bisect_left(), bisect_right()
     return [left, right - 1] if left != right else [-1, -1]
 
+
+def minOperations(nums: List[int]) -> int:
+    length = len(nums)
+    nums = sorted(set(nums))
+    res = length
+    r = 0
+
+    for l in range(length):
+        while r < len(nums) and nums[r] < nums[l] + length:
+            r += 1
+        window = r - l
+        res = min(res, length - window)
+    return res

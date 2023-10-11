@@ -1,4 +1,5 @@
 import bisect
+import heapq
 from collections import Counter, defaultdict
 from math import comb
 from typing import List
@@ -277,4 +278,21 @@ def minOperationsBS(nums: List[int]) -> int:
         r = bisect.bisect(nums, nums[l] + n - 1)
         window = r - l
         res = min(res, n - window)
+    return res
+
+
+def fullBloomFlowers(flowers: List[List[int]], people: List[int]) -> List[int]:
+    people = [(p, i) for i, p in enumerate(people)]
+    res = [0] * len(people)
+    flowers.sort()
+    heap = []
+
+    j = 0
+    for p, i in sorted(people):
+        while j < len(flowers) and p >= flowers[j][0]:
+            heapq.heappush(heap, flowers[j][1])
+            j += 1
+        while heap and p > heap[0]:
+            heapq.heappop(heap)
+        res[i] = len(heap)
     return res

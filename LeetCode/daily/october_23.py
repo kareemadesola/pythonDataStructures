@@ -260,9 +260,21 @@ def minOperations(nums: List[int]) -> int:
     res = length
     r = 0
 
-    for l in range(length):
+    for l in range(len(nums)):
         while r < len(nums) and nums[r] < nums[l] + length:
             r += 1
         window = r - l
         res = min(res, length - window)
+    return res
+
+
+def minOperationsBS(nums: List[int]) -> int:
+    n = len(nums)
+    nums = sorted(set(nums))
+    res = n
+
+    for l in range(len(nums)):
+        r = bisect.bisect(nums, nums[l] + n - 1)
+        window = r - l
+        res = min(res, n - window)
     return res

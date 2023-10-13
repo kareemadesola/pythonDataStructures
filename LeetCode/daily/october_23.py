@@ -365,3 +365,18 @@ def minCostClimbingStairsOp(cost: List[int]) -> int:
         prev_prev, prev = prev, dp
 
     return min(prev, prev_prev)
+
+
+def minCostClimbingStairsTD(cost: List[int]) -> int:
+    memo = {0: cost[0], 1: cost[1]}
+    n = len(cost)
+
+    def dfs(i: int) -> int:
+        if i == n:
+            return min(dfs(i - 1), dfs(i - 2))
+        if i in memo:
+            return memo[i]
+        memo[i] = cost[i] + min(dfs(i - 1), dfs(i - 2))
+        return memo[i]
+
+    return dfs(n)

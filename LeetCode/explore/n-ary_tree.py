@@ -96,3 +96,15 @@ def maxDepth(root: Node) -> int:
 
     dfs(root, 1)
     return mx
+
+
+def maxDepthBU(root: Node) -> int:
+    if not root:
+        return 0
+
+    def dfs(curr: Node) -> int:
+        if not curr.children:
+            return 1
+        return max(dfs(child) for child in curr.children) + 1
+
+    return dfs(root)

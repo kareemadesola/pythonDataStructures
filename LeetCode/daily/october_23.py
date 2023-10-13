@@ -354,3 +354,14 @@ def minCostClimbingStairs(cost: List[int]) -> int:
         dp[i] = cost[i] + min(dp[i - 1], dp[i - 2])
 
     return min(dp[n - 1], dp[n - 2])
+
+
+def minCostClimbingStairsOp(cost: List[int]) -> int:
+    n = len(cost)
+    prev_prev, prev = cost[0], cost[1]
+
+    for i in range(2, n):
+        dp = cost[i] + min(prev, prev_prev)
+        prev_prev, prev = prev, dp
+
+    return min(prev, prev_prev)

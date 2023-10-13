@@ -80,3 +80,19 @@ def levelOrder(root: Node) -> List[List[int]]:
                 q.append(child)
         res.append(tmp)
     return res
+
+
+def maxDepth(self, root: Node) -> int:
+    if not root:
+        return 0
+    mx = 0
+
+    def dfs(curr: Node, depth: int):
+        nonlocal mx
+        if not curr.children:
+            mx = max(mx, depth)
+        for child in curr.children:
+            dfs(child, depth + 1)
+
+    dfs(root, 1)
+    return mx

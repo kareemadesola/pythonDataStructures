@@ -36,3 +36,16 @@ def preorder_iter(root: Node) -> List[int]:
             tmp.append(child)
         q.extendleft(tmp[::-1])
     return res
+
+
+def postorder(root: Node) -> List[int]:
+    res = []
+
+    def dfs(curr: Node):
+        if not curr.children:
+            res.append(curr.val)
+        for child in curr.children:
+            dfs(child)
+
+    dfs(root)
+    return res

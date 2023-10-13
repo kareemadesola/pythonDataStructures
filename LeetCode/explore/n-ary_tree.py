@@ -82,7 +82,7 @@ def levelOrder(root: Node) -> List[List[int]]:
     return res
 
 
-def maxDepth(self, root: Node) -> int:
+def maxDepth(root: Node) -> int:
     if not root:
         return 0
     mx = 0

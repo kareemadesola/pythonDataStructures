@@ -1,5 +1,4 @@
 # Definition for a Node.
-from collections import deque
 from typing import List
 
 
@@ -27,14 +26,12 @@ def preorder_iter(root: Node) -> List[int]:
     res = []
     if not root:
         return res
-    q = deque([root])
-    while q:
-        curr = q.popleft()
+    stack = [root]
+    while stack:
+        curr = stack.pop()
         res.append(curr.val)
-        tmp = []
-        for child in curr.children:
-            tmp.append(child)
-        q.extendleft(tmp[::-1])
+        for child in curr.children[::-1]:
+            stack.append(child)
     return res
 
 

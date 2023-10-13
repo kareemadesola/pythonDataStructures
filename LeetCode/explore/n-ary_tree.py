@@ -40,6 +40,8 @@ def preorder_iter(root: Node) -> List[int]:
 
 def postorder(root: Node) -> List[int]:
     res = []
+    if not root:
+        return res
 
     def dfs(curr: Node):
         if not curr.children:
@@ -49,3 +51,17 @@ def postorder(root: Node) -> List[int]:
 
     dfs(root)
     return res
+
+
+def postorderIter(root: Node) -> List[int]:
+    res = []
+    if not root:
+        return res
+
+    q = deque([root])
+    while q:
+        curr = q.popleft()
+        res.append(curr.val)
+        for child in curr.children:
+            q.appendleft(child)
+    return res[::-1]

@@ -1,4 +1,5 @@
 # Definition for a Node.
+from collections import deque
 from typing import List
 
 
@@ -62,3 +63,20 @@ def postorderIter(root: Node) -> List[int]:
         for child in curr.children:
             stack.append(child)
     return res[::-1]
+
+
+def levelOrder(root: Node) -> List[List[int]]:
+    res = []
+    if not root:
+        return res
+    q = deque([root])
+    while q:
+        curr_length = len(q)
+        tmp = []
+        for _ in range(curr_length):
+            curr = q.popleft()
+            tmp.append(curr.val)
+            for child in curr.children:
+                q.append(child)
+        res.append(tmp)
+    return res

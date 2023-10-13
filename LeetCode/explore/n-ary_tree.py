@@ -58,10 +58,10 @@ def postorderIter(root: Node) -> List[int]:
     if not root:
         return res
 
-    q = deque([root])
-    while q:
-        curr = q.popleft()
+    stack = []
+    while stack:
+        curr = stack.pop()
         res.append(curr.val)
         for child in curr.children:
-            q.appendleft(child)
+            stack.append(child)
     return res[::-1]

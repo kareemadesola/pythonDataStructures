@@ -296,3 +296,51 @@ def fullBloomFlowers(flowers: List[List[int]], people: List[int]) -> List[int]:
             heapq.heappop(heap)
         res[i] = len(heap)
     return res
+
+
+class MountainArray:
+    def get(self, index: int) -> int:
+        pass
+
+    def length(self) -> int:
+        pass
+
+
+def findInMountainArray(target: int, mountain_arr: "MountainArray") -> int:
+    # get index of peak
+    def find_peak(l: int, r: int):
+        while l < r:
+            mid = l + (r - l) // 2
+            if mountain_arr.get(mid) < mountain_arr.get(mid + 1):
+                l = mid + 1
+            else:
+                r = mid
+        return l
+
+    def binary_search_left(l: int, r: int):
+        while l <= r:
+            mid = l + (r - l) // 2
+            if mountain_arr.get(mid) == target:
+                return mid
+            if mountain_arr.get(mid) < target:
+                l = mid + 1
+            else:
+                r = mid - 1
+        return -1
+
+    def binary_search_right(l: int, r: int):
+        while l <= r:
+            mid = l + (r - l) // 2
+            if mountain_arr.get(mid) == target:
+                return mid
+            if mountain_arr.get(mid) < target:
+                r = mid - 1
+            else:
+                l = mid + 1
+        return -1
+
+    end = mountain_arr.length() - 1
+    peak = find_peak(0, end)
+
+    l_section = binary_search_left(0, peak)
+    return l_section if l_section != -1 else binary_search_right(peak + 1, end)

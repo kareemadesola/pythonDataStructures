@@ -344,3 +344,13 @@ def findInMountainArray(target: int, mountain_arr: "MountainArray") -> int:
 
     l_section = binary_search_left(0, peak)
     return l_section if l_section != -1 else binary_search_right(peak + 1, end)
+
+
+def minCostClimbingStairs(cost: List[int]) -> int:
+    n = len(cost)
+    dp = [0] * n
+    dp[0], dp[1] = cost[0], cost[1]
+    for i in range(2, n):
+        dp[i] = cost[i] + min(dp[i - 1], dp[i - 2])
+
+    return min(dp[n - 1], dp[n - 2])

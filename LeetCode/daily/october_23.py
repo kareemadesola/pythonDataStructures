@@ -380,3 +380,21 @@ def minCostClimbingStairsTD(cost: List[int]) -> int:
         return memo[i]
 
     return dfs(n)
+
+
+def paintWalls(cost: List[int], time: List[int]) -> int:
+    memo = {}
+
+    def dfs(i: int, remains: int) -> int | float:
+        if remains <= 0:
+            return 0
+        if i == len(cost):
+            return float("inf")
+        if (i, remains) in memo:
+            return memo[(i, remains)]
+        paint = cost[i] + dfs(i + 1, remains - 1 - time[i])
+        skip = dfs(i + 1, remains)
+        memo[(i, remains)] = min(paint, skip)
+        return memo[(i, remains)]
+
+    return dfs(0, len(cost))

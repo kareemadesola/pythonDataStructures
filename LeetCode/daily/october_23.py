@@ -398,3 +398,20 @@ def paintWalls(cost: List[int], time: List[int]) -> int:
         return memo[(i, remains)]
 
     return dfs(0, len(cost))
+
+
+def paintWallsBU(cost: List[int], time: List[int]) -> int:
+    n = len(cost)
+    dp = [[0] * (n + 1) for _ in range(n + 1)]
+
+    # base case
+    # i == n or remains == 0
+    for remains in range(1, n + 1):
+        dp[n][remains] = float("inf")
+
+    for i in range(n - 1, -1, -1):
+        for remains in range(1, n + 1):
+            paint = cost[i] + dp[i + 1][max(0, remains - 1 - time[i])]
+            skip = dp[i + 1][remains]
+            dp[i][remains] = min(paint, skip)
+    return dp[0][n]

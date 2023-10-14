@@ -402,7 +402,7 @@ def paintWalls(cost: List[int], time: List[int]) -> int:
 
 def paintWallsBU(cost: List[int], time: List[int]) -> int:
     n = len(cost)
-    dp = [[0] * (n + 1) for _ in range(n + 1)]
+    dp: List[List[int | float]] = [[0] * (n + 1) for _ in range(n + 1)]
 
     # base case
     # i == n or remains == 0
@@ -415,3 +415,19 @@ def paintWallsBU(cost: List[int], time: List[int]) -> int:
             skip = dp[i + 1][remains]
             dp[i][remains] = min(paint, skip)
     return dp[0][n]
+
+
+def paintWallsSOBU(cost: List[int], time: List[int]) -> int:
+    n = len(cost)
+    # i == n
+    prev_dp: List[int | float] = [float("inf")] * (n + 1)
+    prev_dp[0] = 0
+
+    for i in range(n - 1, -1, -1):
+        dp = [0] * (n + 1)
+        for remains in range(1, n + 1):
+            paint = cost[i] + prev_dp[max(0, remains - 1 - time[i])]
+            skip = prev_dp[remains]
+            dp[remains] = min(paint, skip)
+        prev_dp = dp
+    return prev_dp[n]

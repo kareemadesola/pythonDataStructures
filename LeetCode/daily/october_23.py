@@ -431,3 +431,23 @@ def paintWallsSOBU(cost: List[int], time: List[int]) -> int:
             dp[remains] = min(paint, skip)
         prev_dp = dp
     return prev_dp[n]
+
+
+def numWays(steps: int, arrLen: int) -> int:
+    memo = {}
+    MOD = 10**9 + 7
+
+    def dfs(curr, remain) -> int:
+        if remain == 0:
+            return 1 if curr == 0 else 0
+        if (curr, remain) in memo:
+            return memo[(curr, remain)]
+        res = dfs(curr, remain - 1) % MOD
+        if curr > 0:
+            res += dfs(curr - 1, remain - 1) % MOD
+        if curr < arrLen - 1:
+            res += dfs(curr + 1, remain - 1) % MOD
+        memo[(curr, remain)] = res % MOD
+        return memo[(curr, remain)]
+
+    return dfs(0, steps)

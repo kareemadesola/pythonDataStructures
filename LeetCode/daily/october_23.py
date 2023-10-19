@@ -451,3 +451,20 @@ def numWays(steps: int, arrLen: int) -> int:
         return memo[(curr, remain)]
 
     return dfs(0, steps)
+
+
+def backspaceCompare(self, s: str, t: str) -> bool:
+    stack = []
+    for char in s:
+        if char == "#":
+            stack.pop()
+        else:
+            stack.append(char)
+
+    t_stack = []
+    for char in t:
+        if char == "#":
+            stack.pop()
+        else:
+            stack.append(char)
+    return stack == t_stack

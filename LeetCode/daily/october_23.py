@@ -453,7 +453,7 @@ def numWays(steps: int, arrLen: int) -> int:
     return dfs(0, steps)
 
 
-def backspaceCompare(self, s: str, t: str) -> bool:
+def backspaceCompare(s: str, t: str) -> bool:
     stack = []
     for char in s:
         if char == "#":
@@ -468,3 +468,31 @@ def backspaceCompare(self, s: str, t: str) -> bool:
         else:
             stack.append(char)
     return stack == t_stack
+
+
+def backspaceCompareO1_space(s: str, t: str) -> bool:
+    def next_valid_char(string, idx):
+        backspace = 0
+        while idx >= 0:
+            if string[idx] != "#":
+                if backspace == 0:
+                    break
+                backspace -= 1
+            else:
+                backspace += 1
+            idx -= 1
+        return idx
+
+    s_idx, t_idx = len(s) - 1, len(t) - 1
+    while s_idx >= 0 or t_idx >= 0:
+        s_idx = next_valid_char(s, s_idx)
+        t_idx = next_valid_char(t, t_idx)
+
+        s_char = s[s_idx] if s_idx >= 0 else ""
+        t_char = t[t_idx] if t_idx >= 0 else ""
+
+        if s_char != t_char:
+            return False
+        s_idx -= 1
+        t_idx -= 1
+    return True

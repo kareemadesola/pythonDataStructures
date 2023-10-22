@@ -11,6 +11,13 @@ class TreeNode:
         self.right: Optional[TreeNode] = right
 
 
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next: Optional[ListNode] = next
+
+
 def findTarget(root: Optional[TreeNode], k: int) -> bool:
     def convert_to_list() -> List[int]:
         res = []
@@ -95,3 +102,31 @@ def gcdOfStringsAlt(str1: str, str2: str) -> str:
         if is_valid(i):
             return str1[:i]
     return ""
+
+
+def romanToInt(s: str) -> int:
+    roman_to_int = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1}
+    n = len(s)
+    res = 0
+
+    for i in range(n - 1):
+        if not roman_to_int[s[i]] < roman_to_int[s[i + 1]]:
+            res += roman_to_int[s[i]]
+        else:
+            res -= roman_to_int[s[i]]
+    return res + roman_to_int[s[-1]]
+
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    curr = dummy = ListNode()
+    carry = 0
+
+    while l1 or l2 or carry:
+        l1_val = l1.val if l1 else 0
+        l2_val = l2.val if l2 else 0
+        carry, half_sum = divmod((l1_val + l2_val + carry), 10)
+        curr.next = ListNode(half_sum)
+        curr = curr.next
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
+    return dummy.next

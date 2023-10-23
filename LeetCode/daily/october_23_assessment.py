@@ -130,3 +130,46 @@ def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[Li
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
     return dummy.next
+
+
+def numUniqueEmails(emails: List[str]) -> int:
+    seen = set()
+
+    for email in emails:
+        tmp = []
+        idx_a = email.index("@")
+        for char in email[:idx_a]:
+            if char == "+":
+                break
+            if char == ".":
+                continue
+            tmp.append(char)
+        seen.add("".join(tmp) + email[idx_a:])
+    return len(seen)
+
+
+def numUniqueEmailsAlt(emails: List[str]) -> int:
+    seen = set()
+    for mail in emails:
+        local, domain = mail.split("@")
+        local: str = local.split("+")[0].replace(".", "")
+        seen.add((local, domain))
+    return len(seen)
+
+
+def totalFruit(fruits: List[int]) -> int:
+    l = res = total = 0
+    count = collections.defaultdict(int)
+
+    for r in range(len(fruits)):
+        count[fruits[r]] += 1
+        total += 1
+
+        while len(count) > 2:
+            count[fruits[l]] -= 1
+            if not count[fruits[l]]:
+                del count[fruits[l]]
+            l += 1
+            total -= 1
+        res = max(res, total)
+    return res

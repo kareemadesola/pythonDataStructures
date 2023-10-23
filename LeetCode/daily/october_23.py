@@ -1,5 +1,6 @@
 import bisect
 import heapq
+import math
 from collections import Counter, defaultdict
 from math import comb
 from typing import List
@@ -515,3 +516,10 @@ def constrainedSubsetSum(nums: List[int], k: int) -> int:
             curr_min = min(curr_min, right)
         res = max(res, curr_min * (r - l + 1))
     return res
+
+
+def isPowerOfFour(n: int) -> bool:
+    if n <= 0:
+        return False
+    res = int(math.log10(n) / math.log10(4))
+    return res**4 == n

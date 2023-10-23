@@ -521,5 +521,16 @@ def constrainedSubsetSum(nums: List[int], k: int) -> int:
 def isPowerOfFour(n: int) -> bool:
     if n <= 0:
         return False
-    res = int(math.log10(n) / math.log10(4))
-    return res**4 == n
+    return math.log(n, 4) % 1 == 0
+
+
+def isPowerOfFourRecursive(n: int) -> bool:
+    if n <= 0:
+        return False
+
+    def dfs(x) -> bool:
+        if x == 1:
+            return True
+        return dfs(x // 4) if x % 4 == 0 else False
+
+    return dfs(n)

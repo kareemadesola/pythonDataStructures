@@ -1,4 +1,5 @@
 import collections
+import random
 
 
 class UndergroundSystem:
@@ -24,3 +25,47 @@ class UndergroundSystem:
 # obj.checkIn(id,stationName,t)
 # obj.checkOut(id,stationName,t)
 # param_3 = obj.getAverageTime(startStation,endStation)
+
+"""
+This is Sea's API interface.
+You should not implement it, or speculate about its implementation
+"""
+
+
+class Sea:
+    def hasShips(self, topRight: "Point", bottomLeft: "Point") -> bool:
+        return random.choice([True, False])
+
+
+class Point:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+
+def countShips(sea: "Sea", topRight: "Point", bottomLeft: "Point") -> int:
+    def dfs(t_r: Point, b_l: Point) -> int:
+        # check for overlapping
+        if b_l.x > t_r.x or bottomLeft.y > t_r.y:
+            return 0
+        # check if sea has ships
+        if not sea.hasShips(t_r, b_l):
+            return 0
+        # base case
+        if b_l.x == b_l.y == t_r.x == t_r.y:
+            return 1
+        # divide and conquer
+        res = 0
+
+        m_x, m_y = (b_l.x + t_r.x) // 2, (b_l.y + t_r.y) // 2
+        # top right
+        res += dfs(t_r, Point(m_x + 1, m_y + 1))
+        # bottom right
+        res += dfs(Point(t_r.x, m_y), Point(m_x + 1, b_l.y))
+        # top left
+        res += dfs(Point(m_x, t_r.y), Point(b_l.x, m_y + 1))
+        # bottom left
+        res += dfs(Point(m_x, m_y), b_l)
+        return res
+
+    return dfs(topRight, bottomLeft)

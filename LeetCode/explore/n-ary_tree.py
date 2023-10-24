@@ -1,12 +1,12 @@
 # Definition for a Node.
 from collections import deque
-from typing import List
+from typing import List, Optional
 
 
 class Node:
     def __init__(self, val=None, children=None):
         self.val = val
-        self.children = children
+        self.children: Optional[List[Node]] = children
 
 
 def preorder(root: Node) -> List[int]:

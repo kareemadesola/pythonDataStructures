@@ -1,23 +1,24 @@
-import collections
 import random
 
 
 class UndergroundSystem:
     def __init__(self):
         self.check_in = {}
-        self.distance = collections.defaultdict(list)
+        self.distance = {}
 
     def checkIn(self, id: int, stationName: str, t: int) -> None:
         self.check_in[id] = (stationName, t)
 
     def checkOut(self, id: int, stationName: str, t: int) -> None:
         check_in_station_name, check_in_time = self.check_in.pop(id)
-        self.distance[(check_in_station_name, stationName)].append(t - check_in_time)
+        if (check_in_station_name, stationName) not in self.distance:
+            self.distance[(check_in_station_name, stationName)] = [0, 0]
+        self.distance[(check_in_station_name, stationName)][0] += t - check_in_time
+        self.distance[(check_in_station_name, stationName)][1] += 1
 
     def getAverageTime(self, startStation: str, endStation: str) -> float:
-        return sum(self.distance[(startStation, endStation)]) / len(
-            self.distance[(startStation, endStation)]
-        )
+        total, count = self.distance[(startStation, endStation)]
+        return total / count
 
 
 # Your UndergroundSystem object will be instantiated and called as such:

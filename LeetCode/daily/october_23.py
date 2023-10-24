@@ -1,9 +1,10 @@
 import bisect
+import collections
 import heapq
 import math
 from collections import Counter, defaultdict
 from math import comb
-from typing import List
+from typing import List, Optional
 
 
 def reverseWords(s: str) -> str:
@@ -532,3 +533,30 @@ def isPowerOfFourRecursive(n: int) -> bool:
         return dfs(x // 4) if x % 4 == 0 else False
 
     return dfs(n)
+
+
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
+
+
+def largestValues(root: Optional[TreeNode]) -> List[int]:
+    if not root:
+        return []
+    q = collections.deque([root])
+    res = []
+    while q:
+        row_max = q[0].val
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            row_max = max(row_max, curr.val)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
+        res.append(row_max)
+    return res

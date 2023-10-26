@@ -560,3 +560,12 @@ def largestValues(root: Optional[TreeNode]) -> List[int]:
                 q.append(curr.right)
         res.append(row_max)
     return res
+
+
+def kthGrammar(n: int, k: int) -> int:
+    if n == 1:
+        return 0
+    parent = kthGrammar(n - 1, (k + 1) // 2)
+    if parent:
+        return 1 if k % 2 else 0
+    return 0 if k % 2 else 1

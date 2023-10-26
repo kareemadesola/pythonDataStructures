@@ -582,3 +582,13 @@ def kthGrammarIter(n: int, k: int) -> int:
         else:
             r = mid
     return curr
+
+
+def numFactoredBinaryTrees(arr: List[int]) -> int:
+    dp = {}
+    for val in sorted(arr):
+        dp[val] = (
+            sum(dp[elem] * dp.get(val // elem, 0) for elem in dp if val % elem == 0) + 1
+        )
+    return sum(dp.values()) % (10**9 + 7)
+

@@ -569,3 +569,16 @@ def kthGrammar(n: int, k: int) -> int:
     if parent:
         return 1 if k % 2 else 0
     return 0 if k % 2 else 1
+
+
+def kthGrammarIter(n: int, k: int) -> int:
+    l, r = 1, 2 ** (n - 1)
+    curr = 0
+    while l < r:
+        mid = l + (r - l) // 2
+        if mid < k:
+            curr = 0 if curr else 1
+            l = mid + 1
+        else:
+            r = mid
+    return curr

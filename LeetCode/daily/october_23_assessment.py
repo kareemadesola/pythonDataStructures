@@ -173,3 +173,65 @@ def totalFruit(fruits: List[int]) -> int:
             total -= 1
         res = max(res, total)
     return res
+
+
+def wordPattern(pattern: str, s: str) -> bool:
+    s = s.split(" ")
+    if len(pattern) != len(s):
+        return False
+    char_to_word = {}
+    word_to_char = {}
+
+    for char, word in zip(pattern, s):
+        if char in char_to_word and char_to_word[char] != word:
+            return False
+        if word in word_to_char and word_to_char[word] != char:
+            return False
+        char_to_word[char] = word
+        word_to_char[word] = char
+    return True
+
+
+def updateMatrix(mat: List[List[int]]) -> List[List[int]]:
+    m, n = len(mat), len(mat[0])
+    q = collections.deque([])
+    DIR = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+    for row in range(m):
+        for col in range(n):
+            # marked as unsolved
+            if mat[row][col]:
+                mat[row][col] = -1
+            else:
+                q.append((row, col))
+
+    while q:
+        row, col = q.popleft()
+        for r, c in DIR:
+            n_r, n_c = row + r, col + c
+
+            if n_r < 0 or n_r >= m or n_c < 0 or n_c >= n or mat[n_r][n_c] != -1:
+                continue
+            mat[n_r][n_c] = mat[row][col] + 1
+            q.append((n_r, n_c))
+    return mat
+
+
+def updateMatrixDP(mat: List[List[int]]) -> List[List[int]]:
+    m, n = len(mat), len(mat[0])
+    max_ = 10**4
+    # top left
+    for row in range(m):
+        for col in range(n):
+            if mat[row][col]:
+                top = mat[row - 1][col] if row > 0 else max_
+                left = mat[row][col - 1] if col > 0 else max_
+                mat[row][col] = min(top, left) + 1
+
+    # bottom right
+    for row in range(m - 1, -1, -1):
+        for col in range(n - 1, -1, -1):
+            if mat[row][col]:
+                bottom = mat[row + 1][col] if row < m - 1 else max_
+                right = mat[row][col + 1] if col < n - 1 else max_
+                mat[row][col] = min(mat[row][col], bottom, right) + 1
+    return mat

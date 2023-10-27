@@ -623,3 +623,23 @@ def longestPalindrome(s: str) -> str:
             else (global_start, global_end)
         )
     return s[global_start : global_end + 1]
+
+
+def longestPalindromeAlt(s: str) -> str:
+    res = ""
+    res_len = 0
+
+    def palindrome(l: int, r: int):
+        nonlocal res_len, res
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            if r - l + 1 > res_len:
+                res = s[l : r + 1]
+                res_len = r - l + 1
+            l -= 1
+            r += 1
+
+    for i in range(len(s)):
+        palindrome(i, i)
+        palindrome(i, i + 1)
+
+    return res

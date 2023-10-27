@@ -632,11 +632,11 @@ def longestPalindromeAlt(s: str) -> str:
     def palindrome(l: int, r: int):
         nonlocal res_len, res
         while l >= 0 and r < len(s) and s[l] == s[r]:
-            if r - l + 1 > res_len:
-                res = s[l : r + 1]
-                res_len = r - l + 1
             l -= 1
             r += 1
+        if r - l - 1 > res_len:
+            res = s[l + 1 : r]
+            res_len = r - l - 1
 
     for i in range(len(s)):
         palindrome(i, i)

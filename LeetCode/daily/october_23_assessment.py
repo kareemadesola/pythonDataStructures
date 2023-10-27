@@ -235,3 +235,26 @@ def updateMatrixDP(mat: List[List[int]]) -> List[List[int]]:
                 right = mat[row][col + 1] if col < n - 1 else max_
                 mat[row][col] = min(mat[row][col], bottom, right) + 1
     return mat
+
+
+def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
+    res = 0
+    q = collections.deque([root])
+    while q:
+        curr = q.popleft()
+        if curr.left:
+            if not curr.left.left and not curr.left.right:
+                res += curr.left.val
+            q.append(curr.left)
+        if curr.right:
+            q.append(curr.right)
+    return res
+
+
+def minCostClimbingStairs(cost: List[int]) -> int:
+    prev_prev, prev = cost[0], cost[1]
+
+    for i in range(2, len(cost)):
+        curr = cost[i] + min(prev, prev_prev)
+        prev_prev, prev = prev, curr
+    return min(prev_prev, prev)

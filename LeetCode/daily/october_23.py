@@ -592,3 +592,34 @@ def numFactoredBinaryTrees(arr: List[int]) -> int:
         )
     return sum(dp.values()) % (10**9 + 7)
 
+
+def longestPalindrome(s: str) -> str:
+    s_len = len(s)
+
+    def palindrome_len(start: int, end: int) -> tuple[int, int]:
+        while start >= 0 and end < s_len:
+            if s[start] == s[end]:
+                start -= 1
+                end += 1
+            else:
+                return start + 1, end - 1
+        return start, end
+
+    global_start = 0
+    global_end = 0
+    for i in range(s_len):
+        local_start_1, local_end_1 = palindrome_len(i, i)
+        local_start_2, local_end_2 = palindrome_len(i, i + 1)
+
+        tmp_start, tmp_end = (
+            (local_start_1, local_end_1)
+            if (local_end_1 - local_start_1 > local_end_2 - local_start_2)
+            else (local_start_2, local_end_2)
+        )
+
+        global_start, global_end = (
+            (tmp_start, tmp_end)
+            if (tmp_end - tmp_start) > (global_end - global_start)
+            else (global_start, global_end)
+        )
+    return s[global_start : global_end + 1]

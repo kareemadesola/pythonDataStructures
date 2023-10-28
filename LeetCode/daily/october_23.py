@@ -643,3 +643,34 @@ def longestPalindromeAlt(s: str) -> str:
         palindrome(i, i + 1)
 
     return res
+
+
+def countVowelPermutation(n: int) -> int:
+    dp = [[1, 1, 1, 1, 1] for _ in range(n + 1)]
+    dp[0] = []
+    a, e, i, o, u = 0, 1, 2, 3, 4
+    MOD = 10**9 + 7
+
+    for j in range(2, n + 1):
+        dp[j][a] = (dp[j - 1][e] + dp[j - 1][i] + dp[j - 1][u]) % MOD
+        dp[j][e] = (dp[j - 1][a] + dp[j - 1][i]) % MOD
+        dp[j][i] = (dp[j - 1][e] + dp[j - 1][o]) % MOD
+        dp[j][o] = dp[j - 1][i]
+        dp[j][u] = (dp[j - 1][i] + dp[j - 1][o]) % MOD
+    return sum(dp[n]) % MOD
+
+
+def countVowelPermutationAlt(n: int) -> int:
+    prev_dp = [1, 1, 1, 1, 1]
+    a, e, i, o, u = 0, 1, 2, 3, 4
+    MOD = 10**9 + 7
+
+    for _ in range(2, n + 1):
+        dp = [1] * 5
+        dp[a] = (prev_dp[e] + prev_dp[i] + prev_dp[u]) % MOD
+        dp[e] = (prev_dp[a] + prev_dp[i]) % MOD
+        dp[i] = (prev_dp[e] + prev_dp[o]) % MOD
+        dp[o] = prev_dp[i]
+        dp[u] = (prev_dp[i] + prev_dp[o]) % MOD
+        prev_dp = dp
+    return sum(prev_dp) % MOD

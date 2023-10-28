@@ -92,3 +92,14 @@ def invalidTransactions(transactions: List[str]) -> List[str]:
                 res.append(trans)
                 break
     return res
+
+
+def removeDuplicates(s: str, k: int) -> str:
+    stack = []
+
+    for char in s:
+        stack.append(char)
+        if len(stack) >= k and all(elem == stack[-1] for elem in stack[-k::]):
+            for _ in range(k):
+                stack.pop()
+    return "".join(stack)

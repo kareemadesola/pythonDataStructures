@@ -674,3 +674,10 @@ def countVowelPermutationAlt(n: int) -> int:
         dp[u] = (prev_dp[i] + prev_dp[o]) % MOD
         prev_dp = dp
     return sum(prev_dp) % MOD
+
+
+def poorPigs(buckets: int, minutesToDie: int, minutesToTest: int) -> int:
+    pigs = 0
+    while ((minutesToTest // minutesToDie) + 1) ** pigs < buckets:
+        pigs += 1
+    return pigs

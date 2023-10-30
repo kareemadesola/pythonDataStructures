@@ -1,5 +1,5 @@
 import random
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List, Optional
 
 
@@ -164,3 +164,48 @@ def flatten(head: "Optional[Node]") -> "Optional[Node]":
             curr.next.prev = curr
         curr = curr.next
     return head
+
+
+def numIslands(grid: List[List[str]]) -> int:
+    m, n = len(grid), len(grid[0])
+    count = 0
+    DIR = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+    def bfs(row: int, col: int):
+        q = deque([(row, col)])
+        while q:
+            r, c = q.popleft()
+            for u_r, u_c in DIR:
+                n_r, n_c = r + u_r, c + u_c
+                if 0 <= n_r < m and 0 <= n_c < n and grid[n_r][n_c] == "1":
+                    grid[n_r][n_c] = "#"
+                    q.append((n_r, n_c))
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == "1":
+                grid[i][j] = "#"
+                bfs(i, j)
+                count += 1
+    return count
+
+
+def numIslandsDFS(grid: List[List[str]]) -> int:
+    m, n = len(grid), len(grid[0])
+    count = 0
+    DIR = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+    def dfs(row: int, col: int):
+        for u_r, u_c in DIR:
+            n_r, n_c = row + u_r, col + u_c
+            if 0 <= n_r < m or 0 <= n_c < n or grid[n_r][n_c] == "1":
+                grid[n_r][n_c] = "#"
+                dfs(n_r, n_c)
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == "1":
+                grid[i][j] = "#"
+                dfs(i, j)
+                count += 1
+    return count

@@ -258,3 +258,34 @@ def minCostClimbingStairs(cost: List[int]) -> int:
         curr = cost[i] + min(prev, prev_prev)
         prev_prev, prev = prev, curr
     return min(prev_prev, prev)
+
+
+def reorderLogFiles(logs: List[str]) -> List[str]:
+    def get_key(log: str):
+        _id, rest = log.split(" ", maxsplit=1)
+        return (1,) if rest[0].isdigit() else (0, rest, _id)
+
+    return sorted(logs, key=get_key)
+
+
+def generateParenthesis(n: int) -> List[str]:
+    stack = []
+    res = []
+
+    def backtrack(open_n: int, close_n: int):
+        if open_n == close_n == n:
+            res.append("".join(stack))
+            return
+
+        if open_n < n:
+            stack.append("(")
+            backtrack(open_n + 1, close_n)
+            stack.pop()
+
+        if close_n < open_n:
+            stack.append(")")
+            backtrack(open_n, close_n + 1)
+            stack.pop()
+
+    backtrack(0, 0)
+    return res

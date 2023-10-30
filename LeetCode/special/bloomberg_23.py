@@ -119,3 +119,22 @@ def removeDuplicatesAlt(s: str, k: int) -> str:
     for char, count in stack:
         res.append(char * count)
     return "".join(res)
+
+
+def decodeString(s: str) -> str:
+    stack = []
+    for char in s:
+        if char != "]":
+            stack.append(char)
+        else:
+            tmp = []
+            while stack[-1] != "[":
+                tmp.append(stack.pop())
+            stack.pop()
+            tmp = "".join(tmp[::-1])
+            num = []
+            while stack and stack[-1].isdigit():
+                num.append(stack.pop())
+            num = int("".join(num[::-1]))
+            stack.append(num * tmp)
+    return "".join(stack)

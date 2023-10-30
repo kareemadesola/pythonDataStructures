@@ -1,6 +1,6 @@
 import random
 from collections import defaultdict
-from typing import List
+from typing import List, Optional
 
 
 class UndergroundSystem:
@@ -44,6 +44,15 @@ class Point:
     def __init__(self, x: int, y: int):
         self.x = x
         self.y = y
+
+
+# Definition for a Node.
+class Node:
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
 
 
 def countShips(sea: "Sea", topRight: "Point", bottomLeft: "Point") -> int:
@@ -138,3 +147,20 @@ def decodeString(s: str) -> str:
             num = int("".join(num[::-1]))
             stack.append(num * tmp)
     return "".join(stack)
+
+
+def flatten(head: "Optional[Node]") -> "Optional[Node]":
+    stack: List[Node] = []
+    curr = head
+    while curr:
+        if curr.child:
+            if curr.next:
+                stack.append(curr.next)
+            curr.next = curr.child
+            curr.next.prev = curr
+            curr.child = None
+        if not curr.next and stack:
+            curr.next = stack.pop()
+            curr.next.prev = curr
+        curr = curr.next
+    return head

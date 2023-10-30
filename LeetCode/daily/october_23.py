@@ -681,3 +681,23 @@ def poorPigs(buckets: int, minutesToDie: int, minutesToTest: int) -> int:
     while ((minutesToTest // minutesToDie) + 1) ** pigs < buckets:
         pigs += 1
     return pigs
+
+
+def sortByBits(arr: List[int]) -> List[int]:
+    arr.sort(key=lambda num: (num.bitcount(), num))
+    return arr
+
+
+def sortByBitsAlt(arr: List[int]) -> List[int]:
+    def get_count(num) -> int:
+        weight = 0
+        mask = 1
+        while num:
+            if num & mask:
+                weight += 1
+                num ^= mask
+            mask <<= 1
+        return weight
+
+    arr.sort(key=lambda num: (get_count(num), num))
+    return arr

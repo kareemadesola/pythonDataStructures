@@ -289,3 +289,20 @@ def generateParenthesis(n: int) -> List[str]:
 
     backtrack(0, 0)
     return res
+
+
+def isPowerOfTwo(n: int) -> bool:
+    return n > 0 and math.log2(n) % 1 == 0
+
+
+def findDisappearedNumbers(nums: List[int]) -> List[int]:
+    n = len(nums)
+    nums = set(nums)
+    return [i for i in range(n) if i not in nums]
+
+
+def findDisappearedNumbersAlt(nums: List[int]) -> List[int]:
+    for num in nums:
+        idx = abs(nums[num]) - 1
+        nums[idx] = -abs(nums[idx])
+    return [i + 1 for i in range(len(nums)) if nums[i] > 0]

@@ -707,3 +707,21 @@ def findArray(pref: List[int]) -> List[int]:
     for i in range(len(pref) - 1, 0, -1):
         pref[i] = pref[i] ^ pref[i - 1]
     return pref
+
+
+def findMode(root: Optional[TreeNode]) -> List[int]:
+    def dfs(curr: TreeNode):
+        val_to_cnt[curr.val] += 1
+        if curr.left:
+            dfs(curr.left)
+        if curr.right:
+            dfs(curr.right)
+
+    val_to_cnt = defaultdict(int)
+    dfs(root)
+    mode = max(val_to_cnt.values())
+    res = []
+    for key, val in val_to_cnt.items():
+        if val == mode:
+            res.append(key)
+    return res

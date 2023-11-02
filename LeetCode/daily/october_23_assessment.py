@@ -306,3 +306,29 @@ def findDisappearedNumbersAlt(nums: List[int]) -> List[int]:
         idx = abs(nums[num]) - 1
         nums[idx] = -abs(nums[idx])
     return [i + 1 for i in range(len(nums)) if nums[i] > 0]
+
+
+def maxProfit(prices: List[int]) -> int:
+    n = len(prices)
+    l = res = 0
+    for r in range(1, n):
+        if l > r:
+            l = r
+        res = max(res, prices[r] - prices[l])
+    return res
+
+
+def productExceptSelf(nums: List[int]) -> List[int]:
+    n = len(nums)
+    res = [1] * n
+
+    prefix = 1
+    for i in range(n):
+        res[i] = prefix
+        prefix *= nums[i]
+
+    suffix = 1
+    for i in range(n - 1, -1, -1):
+        res[i] *= suffix
+        suffix *= nums[i]
+    return res

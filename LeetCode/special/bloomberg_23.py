@@ -209,3 +209,52 @@ def numIslandsDFS(grid: List[List[str]]) -> int:
                 dfs(i, j)
                 count += 1
     return count
+
+
+class DNode:
+    def __init__(self, val, prev=None, next=None):
+        self.val: str = val
+        self.prev: Optional[DNode] = prev
+        self.next: Optional[DNode] = next
+
+
+class BrowserHistory:
+    def __init__(self, homepage: str):
+        self.head = self.curr = DNode(homepage)
+
+    def visit(self, url: str) -> None:
+        self.curr.next = DNode(url)
+        self.curr.next.prev = self.curr
+        self.curr = self.curr.next
+
+    def back(self, steps: int) -> str:
+        n = steps
+        while self.curr.prev and n:
+            self.curr = self.curr.prev
+            n -= 1
+        return self.curr.val
+
+    def forward(self, steps: int) -> str:
+        n = steps
+        while self.curr.next and n:
+            self.curr = self.curr.next
+            n -= 1
+        return self.curr.val
+
+
+class BrowserHistoryAlt:
+    def __init__(self, homepage: str):
+        self.data = [homepage]
+        self.currIdx = 0
+
+    def visit(self, url: str) -> None:
+        self.data[self.currIdx + 1 :] = [url]
+        self.currIdx += 1
+
+    def back(self, steps: int) -> str:
+        self.currIdx = max(0, self.currIdx - steps)
+        return self.data[self.currIdx]
+
+    def forward(self, steps: int) -> str:
+        self.currIdx = min(len(self.data) - 1, self.currIdx + steps)
+        return self.data[self.currIdx]

@@ -258,3 +258,47 @@ class BrowserHistoryAlt:
     def forward(self, steps: int) -> str:
         self.currIdx = min(len(self.data) - 1, self.currIdx + steps)
         return self.data[self.currIdx]
+
+
+class LRUNode:
+    def __init__(self, key=-1, val=-1, prev=None, nxt=None):
+        self.key = key
+        self.val = val
+        self.prev: Optional[LRUNode] = prev
+        self.next: Optional[LRUNode] = nxt
+
+
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.head, self.tail = LRUNode(), LRUNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.data = {}
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        if key in self.data:
+            self.remove(self.data[key])
+            self.insert(self.data[key])
+            return self.data[key].val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.data:
+            self.remove(self.data[key])
+        self.data[key] = LRUNode(key, value)
+        self.insert(self.data[key])
+
+        if len(self.data) > self.capacity:
+            lru = self.head.next
+            self.remove(lru)
+            del self.data[lru.key]
+
+    def remove(self, node: LRUNode):
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
+
+    def insert(self, node: LRUNode):
+        prev, nxt = self.tail.prev, self.tail
+        node.prev, node.next = prev, nxt
+        prev.next, nxt.prev = node, node

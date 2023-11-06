@@ -1,3 +1,10 @@
+import heapq
+from collections import defaultdict
+from typing import List, Optional
+
+from LeetCode.daily.october_23 import TreeNode
+
+
 def findMode(root: Optional[TreeNode]) -> List[int]:
     def dfs(curr: TreeNode):
         val_to_cnt[curr.val] += 1
@@ -49,3 +56,14 @@ def getWinnerAlt(arr: List[int], k: int) -> int:
 
         if win_streak == k or curr == max_element:
             return curr
+
+
+class SeatManager:
+    def __init__(self, n: int):
+        self.available = [i for i in range(1, n + 1)]
+
+    def reserve(self) -> int:
+        return heapq.heappop(self.available)
+
+    def unreserve(self, seatNumber: int) -> None:
+        heapq.heappush(self.available, seatNumber)

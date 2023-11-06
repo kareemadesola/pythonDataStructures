@@ -1,5 +1,6 @@
 # Definition for a binary tree node.
 import collections
+import heapq
 import math
 from typing import Optional, List
 
@@ -332,3 +333,37 @@ def productExceptSelf(nums: List[int]) -> List[int]:
         res[i] *= suffix
         suffix *= nums[i]
     return res
+
+
+def checkRecord(s: str) -> bool:
+    absent = 0
+    n = len(s)
+    for i in range(n):
+        if s[i] == "A":
+            absent += 1
+        if absent > 1:
+            return False
+        if i < n - 2 and s[i] == s[i + 1] == s[i + 2] == "L":
+            return False
+    return True
+
+
+def networkDelayTime(times: List[List[int]], n: int, k: int) -> int:
+    adj_list = collections.defaultdict(list)
+    for scr, dest, weight in times:
+        adj_list[scr].append((dest, weight))
+
+    seen = set()
+    min_heap = [(0, k)]
+    res = 0
+    while min_heap:
+        weight, node = heapq.heappop(min_heap)
+        if node in seen:
+            continue
+        seen.add(node)
+        res = weight
+
+        for nei_node, nei_weight in adj_list[node]:
+            if nei_node not in seen:
+                heapq.heappush(min_heap, (weight + nei_weight, nei_node))
+    return res if len(seen) == n else -1

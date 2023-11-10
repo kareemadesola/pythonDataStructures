@@ -2,6 +2,8 @@ import random
 from collections import defaultdict, deque
 from typing import List, Optional
 
+from LeetCode.daily.october_23_assessment import ListNode
+
 
 class UndergroundSystem:
     def __init__(self):
@@ -248,7 +250,7 @@ class BrowserHistoryAlt:
         self.currIdx = 0
 
     def visit(self, url: str) -> None:
-        self.data[self.currIdx + 1 :] = [url]
+        self.data[self.currIdx + 1:] = [url]
         self.currIdx += 1
 
     def back(self, steps: int) -> str:
@@ -302,3 +304,58 @@ class LRUCache:
         prev, nxt = self.tail.prev, self.tail
         node.prev, node.next = prev, nxt
         prev.next, nxt.prev = node, node
+
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def reverse_list(head: ListNode) -> ListNode:
+        prev, curr = None, head
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev, curr = curr, nxt
+        return prev
+
+    l1, l2 = reverse_list(l1), reverse_list(l2)
+
+    carry = 0
+    l3 = curr = ListNode()
+    while l1 or l2 or carry:
+        l1_val = l1.val if l1 else 0
+        l2_val = l2.val if l2 else 0
+        carry, mod = divmod(l1_val + l2_val + carry, 10)
+
+        curr.next = ListNode(mod)
+        curr = curr.next
+
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
+
+    return reverse_list(l3.next)
+
+def addTwoNumbersAlt(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def reverse_list(head: ListNode) -> ListNode:
+        prev, curr = None, head
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev, curr = curr, nxt
+        return prev
+
+    l1, l2 = reverse_list(l1), reverse_list(l2)
+
+    carry = 0
+    res = ListNode()
+    while l1 or l2 or carry:
+        l1_val = l1.val if l1 else 0
+        l2_val = l2.val if l2 else 0
+        carry, mod = divmod(l1_val + l2_val + carry, 10)
+
+        res.val = mod
+        head = ListNode(carry)
+        head.next = res
+        res = head
+
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
+    return res.next
+

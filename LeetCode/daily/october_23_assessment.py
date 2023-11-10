@@ -367,3 +367,26 @@ def networkDelayTime(times: List[List[int]], n: int, k: int) -> int:
             if nei_node not in seen:
                 heapq.heappush(min_heap, (weight + nei_weight, nei_node))
     return res if len(seen) == n else -1
+
+
+def relativeSortArray(arr1: List[int], arr2: List[int]) -> List[int]:
+    elem_to_idx = {elem: idx for idx, elem in enumerate(arr2)}
+    return sorted(arr1, key=lambda x: elem_to_idx.get(x, 1000 + x))
+
+
+def numRollsToTarget(n: int, k: int, target: int) -> int:
+    memo = {}
+    MOD = 10**9 + 7
+
+    def dp(curr_n, val) -> int:
+        if curr_n == n:
+            return 1 if val == target else 0
+        if (curr_n, val) in memo:
+            return memo[(curr_n, val)]
+        res = 0
+        for face in range(1, k + 1):
+            res += dp(curr_n + 1, val + face)
+        memo[(curr_n, val)] = res % MOD
+        return memo[(curr_n, val)]
+
+    return dp(0, 0)

@@ -1,3 +1,4 @@
+import collections
 import heapq
 from collections import defaultdict
 from typing import List, Optional
@@ -67,3 +68,56 @@ class SeatManager:
 
     def unreserve(self, seatNumber: int) -> None:
         heapq.heappush(self.available, seatNumber)
+
+
+def restoreArray(adjacentPairs: List[List[int]]) -> List[int]:
+    adj_list = defaultdict(set)
+
+    for x, y in adjacentPairs:
+        adj_list[x].add(y)
+        adj_list[y].add(x)
+
+    root = None
+    for curr in adj_list:
+        if len(adj_list[curr]) == 1:
+            root = curr
+            break
+
+    res = []
+
+    def dfs(prev: int, curr: int):
+        res.append(curr)
+        for nei in adj_list[curr]:
+            if nei != prev:
+                dfs(curr, nei)
+
+    dfs(None, root)
+    return res
+
+
+def restoreArrayAlt(adjacentPairs: List[List[int]]) -> List[int]:
+    adj_list = defaultdict(list)
+
+    for x, y in adjacentPairs:
+        adj_list[x].append(y)
+        adj_list[y].append(x)
+
+    root = None
+    for curr in adj_list:
+        if len(adj_list[curr]) == 1:
+            root = curr
+            break
+
+    res = [root]
+    curr = root
+    prev = None
+    n = len(adj_list)
+
+    while len(res) < n:
+        for nei in adj_list[curr]:
+            if nei != prev:
+                res.append(nei)
+                prev = curr
+                curr = nei
+                break
+    return res

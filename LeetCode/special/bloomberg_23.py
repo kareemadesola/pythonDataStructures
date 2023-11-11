@@ -1,8 +1,9 @@
+import collections
 import random
 from collections import defaultdict, deque
 from typing import List, Optional
 
-from LeetCode.daily.october_23_assessment import ListNode
+from LeetCode.daily.october_23_assessment import ListNode, TreeNode
 
 
 class UndergroundSystem:
@@ -332,6 +333,7 @@ def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[Li
 
     return reverse_list(l3.next)
 
+
 def addTwoNumbersAlt(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
     def reverse_list(head: ListNode) -> ListNode:
         prev, curr = None, head
@@ -359,3 +361,40 @@ def addTwoNumbersAlt(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional
         l2 = l2.next if l2 else None
     return res.next
 
+
+def verticalTraversal(root: Optional[TreeNode]) -> List[List[int]]:
+    vertical_map = defaultdict(list)
+
+    def dfs(curr: TreeNode, row: int, col: int):
+        vertical_map[col].append((row, curr.val))
+        if curr.left:
+            dfs(curr.left, row + 1, col - 1)
+        if curr.right:
+            dfs(curr.right, row + 1, col + 1)
+
+    dfs(root, 0, 0)
+    res = []
+    for key in sorted(vertical_map.keys()):
+        res.append([val for _, val in sorted(vertical_map[key])])
+    return res
+
+
+def verticalTraversalBFS(root: Optional[TreeNode]) -> List[List[int]]:
+    vertical_map = defaultdict(list)
+
+    q = collections.deque([(root, 0, 0)])
+    curr_row = 0
+    while q:
+        curr_len = len(q)
+        for _ in range(curr_len):
+            curr, curr_row, curr_col = q.popleft()
+            vertical_map[curr_col].append((curr_row, curr.val))
+            if curr.left:
+                q.append((curr.left, curr_row + 1, curr_col - 1))
+            if curr.right:
+                q.append((curr.right, curr_row + 1, curr_col + 1))
+        curr_row += 1
+    res = []
+    for key in sorted(vertical_map.keys()):
+        res.append([val for _, val in sorted(vertical_map[key])])
+    return res

@@ -121,3 +121,31 @@ def restoreArrayAlt(adjacentPairs: List[List[int]]) -> List[int]:
                 curr = nei
                 break
     return res
+
+
+class Graph:
+
+    def __init__(self, n: int, edges: List[List[int]]):
+        self.n = n
+        self.edges = defaultdict(list)
+        for to, fro, weight in edges:
+            self.edges[to].append((fro, weight))
+
+    def addEdge(self, edge: List[int]) -> None:
+        self.edges[edge[0]].append((edge[1], edge[2]))
+
+    def shortestPath(self, node1: int, node2: int) -> int:
+        seen = set()
+        min_heap = [(0, node1)]
+        while min_heap:
+            weight, curr = heapq.heappop(min_heap)
+            if curr in seen:
+                continue
+            seen.add(curr)
+            if curr == node2:
+                return weight
+
+            for nei_node, nei_weight in self.edges[curr]:
+                if nei_node not in seen:
+                    heapq.heappush(min_heap, (weight + nei_weight, nei_node))
+        return -1

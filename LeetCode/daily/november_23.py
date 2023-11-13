@@ -149,3 +149,43 @@ class Graph:
                 if nei_node not in seen:
                     heapq.heappush(min_heap, (weight + nei_weight, nei_node))
         return -1
+
+
+def sortVowels(s: str) -> str:
+    vowels = set('aeiouAEIOU')
+    n = len(s)
+    res = [''] * n
+    tmp = []
+    for i in range(n):
+        if s[i] not in vowels:
+            res[i] = s[i]
+        else:
+            tmp.append(s[i])
+    tmp.sort()
+    for i in range(n - 1, -1, -1):
+        if not res[i]:
+            res[i] = tmp.pop()
+    return ''.join(res)
+
+
+def sortVowelsCountingSort(s: str) -> str:
+    vowels = {'A': 0, 'E': 1, 'I': 2, 'O': 3, 'U': 4, 'a': 5, 'e': 6, 'i': 7, 'o': 8, 'u': 9}
+    idx_to_vowel = {0: 'A', 1: 'E', 2: 'I', 3: 'O', 4: 'U', 5: 'a', 6: 'e', 7: 'i', 8: 'o', 9: 'u'}
+    count = [0] * 10
+    n = len(s)
+    res = [''] * n
+    for idx, val in enumerate(s):
+        if val not in vowels:
+            res[idx] = val
+        else:
+            count[vowels[val]] += 1
+
+    j = 0
+    for i in range(10):
+        while count[i]:
+            if not res[j]:
+                res[j] = idx_to_vowel[i]
+                count[i] -= 1
+            j += 1
+
+    return ''.join(res)

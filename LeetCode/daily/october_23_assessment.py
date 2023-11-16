@@ -219,7 +219,7 @@ def updateMatrix(mat: List[List[int]]) -> List[List[int]]:
 
 def updateMatrixDP(mat: List[List[int]]) -> List[List[int]]:
     m, n = len(mat), len(mat[0])
-    max_ = 10**4
+    max_ = 10 ** 4
     # top left
     for row in range(m):
         for col in range(n):
@@ -376,7 +376,7 @@ def relativeSortArray(arr1: List[int], arr2: List[int]) -> List[int]:
 
 def numRollsToTarget(n: int, k: int, target: int) -> int:
     memo = {}
-    MOD = 10**9 + 7
+    MOD = 10 ** 9 + 7
 
     def dp(curr_n, val) -> int:
         if curr_n == n:
@@ -390,3 +390,23 @@ def numRollsToTarget(n: int, k: int, target: int) -> int:
         return memo[(curr_n, val)]
 
     return dp(0, 0)
+
+
+def restoreString(s: str, indices: List[int]) -> str:
+    # cyclic sort
+    s = list(s)
+    n = len(s)
+    for i in range(n):
+        while indices[i] != i:
+            val = indices[i]
+            indices[i], indices[val] = indices[val], indices[i]
+            s[i], s[val] = s[val], s[i]
+    return ''.join(s)
+
+
+def minTimeToVisitAllPoints(points: List[List[int]]) -> int:
+    n = len(points)
+    res = 0
+    for i in range(1, n):
+        res += max(abs(points[i][0] - points[i - 1][0]), abs(points[i][1] - points[i - 1][1]))
+    return res

@@ -210,3 +210,21 @@ def maximumElementAfterDecrementingAndRearrangingAlt(arr: List[int]) -> int:
     for i in range(2, n + 1):
         res = min(res + count[i], i)
     return res
+
+
+def findDifferentBinaryString(nums: List[str]) -> str:
+    n = len(nums)
+    seen = set(nums)
+    stack = []
+
+    def backtrack(curr: int):
+        if curr == n:
+            string = ''.join(stack)
+            return string if string not in seen else None
+        for char in '01':
+            stack.append(char)
+            res = backtrack(curr + 1)
+            if res: return res
+            stack.pop()
+
+    return backtrack(0)

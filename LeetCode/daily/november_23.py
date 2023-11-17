@@ -239,3 +239,28 @@ def minPairSum(nums: List[int]) -> int:
         l += 1
         r -= 1
     return max(res)
+
+
+class GraphFloyd:
+
+    def __init__(self, n: int, edges: List[List[int]]):
+        self.cost = [[float('inf')] * n for _ in range(n)]
+        for from_, to, edge_cost in edges:
+            self.cost[from_][to] = edge_cost
+        for i in range(n):
+            self.cost[i][i] = 0
+        for mid in range(n):
+            for src in range(n):
+                for dst in range(n):
+                    self.cost[src][dst] = min(self.cost[src][dst], self.cost[src][mid] + self.cost[mid][dst])
+
+    def addEdge(self, edge: List[int]) -> None:
+        to, from_, weight = edge
+        n = len(self.cost)
+        for src in range(n):
+            for dst in range(n):
+                self.cost[src][dst] = min(self.cost[src][dst], self.cost[src][to] + self.cost[to][from_] + weight)
+
+    def shortestPath(self, node1: int, node2: int) -> int:
+        res = self.cost[node1][node2]
+        return res if res != float('inf') else -1

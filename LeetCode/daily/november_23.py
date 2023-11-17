@@ -228,3 +228,14 @@ def findDifferentBinaryString(nums: List[str]) -> str:
             stack.pop()
 
     return backtrack(0)
+
+
+def minPairSum(nums: List[int]) -> int:
+    nums.sort()
+    l, r = 0, len(nums) - 1
+    res = 0
+    while l < r:
+        res = max(res, nums[l] + nums[r])
+        l += 1
+        r -= 1
+    return max(res)

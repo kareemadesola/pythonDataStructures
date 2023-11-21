@@ -139,8 +139,8 @@ class Graph:
         min_heap = [(0, node1)]
         while min_heap:
             weight, curr = heapq.heappop(min_heap)
-            if curr in seen:
-                continue
+            # if curr in seen:
+            #     continue
             seen.add(curr)
             if curr == node2:
                 return weight
@@ -264,3 +264,18 @@ class GraphFloyd:
     def shortestPath(self, node1: int, node2: int) -> int:
         res = self.cost[node1][node2]
         return res if res != float('inf') else -1
+
+
+def countNicePairs(nums: List[int]) -> int:
+    def rev(val: int) -> int:
+        return int(str(val)[::-1])
+
+    for i in range(len(nums)):
+        nums[i] = nums[i] - rev(nums[i])
+    MOD = 10 ** 9 + 7
+    cnt = defaultdict(int)
+    res = 0
+    for num in nums:
+        res = (res + cnt[num]) % MOD
+        cnt[num] += 1
+    return res

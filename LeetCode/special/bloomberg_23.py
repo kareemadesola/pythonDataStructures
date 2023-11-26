@@ -61,7 +61,7 @@ class Node:
 def countShips(sea: "Sea", topRight: "Point", bottomLeft: "Point") -> int:
     def dfs(t_r: Point, b_l: Point) -> int:
         # check for overlapping
-        if b_l.x > t_r.x or bottomLeft.y > t_r.y:
+        if b_l.x > t_r.x or b_l.y > t_r.y:
             return 0
         # check if sea has ships
         if not sea.hasShips(t_r, b_l):

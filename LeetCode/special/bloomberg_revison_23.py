@@ -1,4 +1,6 @@
 import random
+from collections import defaultdict
+from typing import List
 
 
 class UndergroundSystem:
@@ -61,3 +63,23 @@ class Solution:
             return res
 
         return dfs(topRight, bottomLeft)
+
+
+def invalidTransactions(transactions: List[str]) -> List[str]:
+    name_to_info = defaultdict(list)
+    for trans in transactions:
+        name, time, amount, city = trans.split(',')
+        name_to_info[name].append((int(time), int(amount), city))
+
+    res = []
+    for trans in transactions:
+        name, time, amount, city = trans.split(',')
+        time, amount = int(time), int(amount)
+        if amount > 1000:
+            res.append(trans)
+            continue
+        for t, a, c in name_to_info[name]:
+            if abs(t - time) <= 60 and c != city:
+                res.append(trans)
+                break
+    return res

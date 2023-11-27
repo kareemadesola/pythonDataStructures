@@ -83,3 +83,65 @@ def invalidTransactions(transactions: List[str]) -> List[str]:
                 res.append(trans)
                 break
     return res
+
+
+def knightDialer(n: int) -> int:
+    memo = {}
+    MOD = 10 ** 9 + 7
+    jumps = [
+        [4, 6],
+        [6, 8],
+        [7, 9],
+        [4, 8],
+        [0, 3, 9],
+        [],
+        [0, 1, 7],
+        [2, 6],
+        [1, 3],
+        [2, 4],
+    ]
+
+    def dp(remain: int, square: int) -> int:
+        if (remain, square) in memo:
+            return memo[(remain, square)]
+        if remain == 0:
+            return 1
+        ans = 0
+        for next_square in jumps[square]:
+            ans = (ans + dp(remain - 1, next_square)) % MOD
+        memo[(remain, square)] = ans
+        return memo[(remain, square)]
+
+    res = 0
+    for square in range(10):
+        res = (res + dp(n - 1, square)) % MOD
+    return res
+
+
+def knightDialer_BU(n: int) -> int:
+    jumps = [
+        [4, 6],
+        [6, 8],
+        [7, 9],
+        [4, 8],
+        [0, 3, 9],
+        [],
+        [0, 1, 7],
+        [2, 6],
+        [1, 3],
+        [2, 4],
+    ]
+    MOD = 10 ** 9 + 7
+    prev_dp = [1] * 10
+    for remain in range(1, n):
+        dp = [0] * 10
+        for square in range(10):
+            ans = 0
+            for next_square in jumps[square]:
+                ans = (ans + prev_dp[next_square]) % MOD
+            dp[square] = ans
+
+    res = 0
+    for val in prev_dp:
+        res = (res + val) % MOD
+    return res

@@ -279,3 +279,7 @@ def countNicePairs(nums: List[int]) -> int:
         res = (res + cnt[num]) % MOD
         cnt[num] += 1
     return res
+
+
+def hammingWeight(n: int) -> int:
+    return n.bit_count()

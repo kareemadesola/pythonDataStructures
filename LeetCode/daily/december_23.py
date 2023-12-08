@@ -59,3 +59,10 @@ def totalMoneyOpt(n: int) -> int:
     for day in range(rem):
         arith_sum += monday + day
     return arith_sum
+
+
+def largestOddNumber(num: str) -> str:
+    for r in range(len(num) - 1, -1, -1):
+        if int(num[r]) % 2:
+            return num[:r + 1]
+    return ''

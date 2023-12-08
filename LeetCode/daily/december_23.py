@@ -1,4 +1,6 @@
-from typing import List
+from typing import List, Optional
+
+from LeetCode.daily.july_22 import TreeNode
 
 
 def arrayStringsAreEqual(word1: List[str], word2: List[str]) -> bool:
@@ -66,3 +68,16 @@ def largestOddNumber(num: str) -> str:
         if int(num[r]) % 2:
             return num[:r + 1]
     return ''
+
+
+def tree2str(root: Optional[TreeNode]) -> str:
+    def dfs(node: Optional[TreeNode]):
+        if not node:
+            return ''
+        if not node.left and not node.right:
+            return str(node.val)
+        if not node.right:
+            return f"{node.val}({dfs(node.left)})"
+        return f"{node.val}({dfs(node.left)})({dfs(node.right)})"
+
+    return dfs(root)

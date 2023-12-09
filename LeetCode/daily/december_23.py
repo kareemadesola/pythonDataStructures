@@ -81,3 +81,17 @@ def tree2str(root: Optional[TreeNode]) -> str:
         return f"{node.val}({dfs(node.left)})({dfs(node.right)})"
 
     return dfs(root)
+
+
+def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    res = []
+
+    def dfs(node: Optional[TreeNode]):
+        if not node:
+            return
+        dfs(node.left)
+        res.append(node.val)
+        dfs(node.right)
+
+    dfs(root)
+    return res

@@ -109,3 +109,12 @@ def inorderTraversalIter(root: Optional[TreeNode]) -> List[int]:
         res.append(curr.val)
         curr = curr.right
     return res
+
+
+def transpose(matrix: List[List[int]]) -> List[List[int]]:
+    return [list(tup) for tup in zip(*matrix)]
+
+
+def transposeAlt(matrix: List[List[int]]) -> List[List[int]]:
+    m, n = len(matrix), len(matrix[0])
+    return [[matrix[j][i] for j in range(m)] for i in range(n)]

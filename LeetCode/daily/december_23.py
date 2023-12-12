@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
@@ -118,3 +119,46 @@ def transpose(matrix: List[List[int]]) -> List[List[int]]:
 def transposeAlt(matrix: List[List[int]]) -> List[List[int]]:
     m, n = len(matrix), len(matrix[0])
     return [[matrix[j][i] for j in range(m)] for i in range(n)]
+
+
+def findSpecialInteger(arr: List[int]) -> int:
+    cnt = Counter(arr)
+    # return max(cnt, key=lambda x: cnt[x])
+    return max(cnt, key=cnt.get)
+
+
+def findSpecialIntegerAlt(arr: List[int]) -> int:
+    n = len(arr)
+    if n == 1: return arr[0]
+    bar = n // 4
+    cnt = i = 1
+
+    while i < n:
+        while i < n and arr[i] == arr[i - 1]:
+            cnt += 1
+            i += 1
+        if cnt > bar:
+            return arr[i - 1]
+        else:
+            cnt = 1
+
+        i += 1
+
+
+def findSpecialIntegerAlt0(arr: List[int]) -> int:
+    n = len(arr)
+    if n == 1: return arr[0]
+    bar = n // 4
+    cnt = 1
+    i = 0
+
+    while i < n - 1:
+        while i < n - 1 and arr[i] == arr[i + 1]:
+            cnt += 1
+            i += 1
+        if cnt > bar:
+            return arr[i]
+        else:
+            cnt = 1
+
+        i += 1

@@ -162,3 +162,13 @@ def findSpecialIntegerAlt0(arr: List[int]) -> int:
             cnt = 1
 
         i += 1
+
+
+def maxProduct(nums: List[int]) -> int:
+    max_max = min_max = 0
+    for num in nums:
+        if num > max_max:
+            max_max, min_max = num, max_max
+        elif num > min_max:
+            min_max = num
+    return (max_max - 1) * (min_max - 1)

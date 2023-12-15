@@ -190,3 +190,21 @@ def numSpecial(mat: List[List[int]]) -> int:
             if mat[i][j] and ones_row[i] == 1 and ones_col[j] == 1:
                 res += 1
     return res
+
+
+def onesMinusZeros(grid: List[List[int]]) -> List[List[int]]:
+    m, n = len(grid), len(grid[0])
+
+    ones_row = [0] * m
+    ones_col = [0] * n
+
+    for i in range(m):
+        for j in range(n):
+            ones_row[i] += grid[i][j]
+            ones_col[j] += grid[i][j]
+
+    grid = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            grid[i][j] = 2 * ones_row[i] + 2 * ones_col[j] - m - n
+    return grid

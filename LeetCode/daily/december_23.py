@@ -172,3 +172,21 @@ def maxProduct(nums: List[int]) -> int:
         elif num > min_max:
             min_max = num
     return (max_max - 1) * (min_max - 1)
+
+
+def numSpecial(mat: List[List[int]]) -> int:
+    m, n = len(mat), len(mat[0])
+    ones_row = [0] * m
+    ones_col = [0] * n
+
+    for i in range(m):
+        for j in range(n):
+            ones_row[i] += mat[i][j]
+            ones_col[j] += mat[i][j]
+
+    res = 0
+    for i in range(m):
+        for j in range(n):
+            if mat[i][j] and ones_row[i] == 1 and ones_col[j] == 1:
+                res += 1
+    return res

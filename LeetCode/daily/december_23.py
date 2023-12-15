@@ -208,3 +208,15 @@ def onesMinusZeros(grid: List[List[int]]) -> List[List[int]]:
         for j in range(n):
             grid[i][j] = 2 * ones_row[i] + 2 * ones_col[j] - m - n
     return grid
+
+
+def destCity(paths: List[List[str]]) -> str:
+    return ({dst for src, dst in paths} - {src for src, dst in paths}).pop()
+
+
+def destCityAlt(paths: List[List[str]]) -> str:
+    source = {src for src, _ in paths}
+    # for dst in list(zip(*paths))[1]:
+    for path in paths:
+        if path[1] not in source:
+            return path[1]

@@ -233,3 +233,11 @@ def largestGoodInteger(num: str) -> str:
     if is_good:
         return str(res) if res else '000'
     return ''
+
+
+def minTimeToVisitAllPoints(points: List[List[int]]) -> int:
+    n = len(points)
+    res = 0
+    for i in range(n - 1):
+        res += max(abs(points[i + 1][0] - points[i][0]), abs(points[i + 1][1] - points[i][1]))
+    return res

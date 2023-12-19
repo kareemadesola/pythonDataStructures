@@ -220,3 +220,16 @@ def destCityAlt(paths: List[List[str]]) -> str:
     for path in paths:
         if path[1] not in source:
             return path[1]
+
+
+def largestGoodInteger(num: str) -> str:
+    n = len(num)
+    res = 0
+    is_good = False
+    for i in range(n - 2):
+        if num[i] == num[i + 1] == num[i + 2]:
+            is_good = True
+            res = max(res, int(num[i:i + 3]))
+    if is_good:
+        return str(res) if res else '000'
+    return ''

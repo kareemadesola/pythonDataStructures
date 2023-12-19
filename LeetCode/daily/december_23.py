@@ -241,3 +241,27 @@ def minTimeToVisitAllPoints(points: List[List[int]]) -> int:
     for i in range(n - 1):
         res += max(abs(points[i + 1][0] - points[i][0]), abs(points[i + 1][1] - points[i][1]))
     return res
+
+
+def maxProductDifference(nums: List[int]) -> int:
+    nums.sort()
+    return nums[-1] * nums[-2] - nums[0] * nums[1]
+
+
+def maxProductDifferenceAlt(nums: List[int]) -> int:
+    max_ = second_max = 0
+    min_ = second_min = 10 ** 4
+    for num in nums:
+        if num > max_:
+            max_, second_max = num, max_
+        else:
+            second_max = max(second_max, num)
+        # elif num > second_max:
+        #     second_max = num
+        if num < min_:
+            min_, second_min = num, min_
+        else:
+            second_min = min(second_min, num)
+        # elif num < second_min:
+        #     second_min = num
+    return max_ * second_max - min_ * second_min

@@ -1,3 +1,4 @@
+import heapq
 from collections import Counter
 from typing import List, Optional
 
@@ -314,3 +315,26 @@ def imageSmootherAlt(img: List[List[int]]) -> List[List[int]]:
         for c in range(n):
             img[r][c] >>= 8
     return img
+
+
+def buyChoco(prices: List[int], money: int) -> int:
+    prices.sort()
+    sum_two_choco = prices[0] + prices[1]
+    return money - sum_two_choco if sum_two_choco <= money else money
+
+
+def buyChocoAlt(prices: List[int], money: int) -> int:
+    heapq.heapify(prices)
+    res = money - (heapq.heappop(prices) + heapq.heappop(prices))
+    return res if res >= 0 else money
+
+
+def buyChocoOptimal(prices: List[int], money: int) -> int:
+    min_ = second_min = 100
+    for price in prices:
+        if price < min_:
+            min_, second_min = price, min_
+        elif price < second_min:
+            second_min = price
+    res = money - (min_ + second_min)
+    return res if res >= 0 else money

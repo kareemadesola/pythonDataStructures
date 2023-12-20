@@ -265,3 +265,52 @@ def maxProductDifferenceAlt(nums: List[int]) -> int:
         # elif num < second_min:
         #     second_min = num
     return max_ * second_max - min_ * second_min
+
+
+def imageSmoother(img: List[List[int]]) -> List[List[int]]:
+    m, n = len(img), len(img[0])
+
+    def average(r: int, c: int) -> int:
+        exists = []
+        if r - 1 >= 0 and c - 1 >= 0:
+            exists.append(img[r - 1][c - 1])
+        if r - 1 >= 0:
+            exists.append(img[r - 1][c])
+        if r - 1 >= 0 and c + 1 < n:
+            exists.append(img[r - 1][c + 1])
+        if c - 1 >= 0:
+            exists.append(img[r][c - 1])
+        exists.append(img[r][c])
+        if c + 1 < n:
+            exists.append(img[r][c + 1])
+        if r + 1 < m and c - 1 >= 0:
+            exists.append(img[r + 1][c - 1])
+        if r + 1 < m:
+            exists.append(img[r + 1][c])
+        if r + 1 < m and c + 1 < n:
+            exists.append(img[r + 1][c + 1])
+        return sum(exists) // len(exists)
+
+    res = [[0] * n for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            res[i][j] = average(i, j)
+    return res
+
+
+def imageSmootherAlt(img: List[List[int]]) -> List[List[int]]:
+    m, n = len(img), len(img[0])
+    for r in range(m):
+        for c in range(n):
+            total = count = 0
+            for i in range(r - 1, r + 2):
+                for j in range(c - 1, c + 2):
+                    if 0 <= i < m and 0 <= j < n:
+                        total += img[i][j] & 255
+                        count += 1
+            img[r][c] |= (total // count) << 8
+
+    for r in range(m):
+        for c in range(n):
+            img[r][c] >>= 8
+    return img

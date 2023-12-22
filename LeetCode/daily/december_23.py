@@ -400,3 +400,12 @@ class FoodRatingsAlt:
             heapq.heappop(self.cuisine_to_rating_food[cuisine])
             highest_rated = self.cuisine_to_rating_food[cuisine][0]
         return highest_rated.food
+
+
+def maxWidthOfVerticalArea(points: List[List[int]]) -> int:
+    points.sort()
+    max_width = 0
+    for i in range(len(points) - 1):
+        if points[i + 1][0] - points[i][0] > max_width:
+            max_width = points[i + 1][0] - points[i][0]
+    return max_width

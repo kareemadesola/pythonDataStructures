@@ -1,6 +1,8 @@
 import heapq
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import List, Optional
+
+from sortedcontainers import SortedSet
 
 from LeetCode.daily.july_22 import TreeNode
 
@@ -338,3 +340,63 @@ def buyChocoOptimal(prices: List[int], money: int) -> int:
             second_min = price
     res = money - (min_ + second_min)
     return res if res >= 0 else money
+
+
+class FoodRatings:
+
+    def __init__(self, foods: List[str], cuisines: List[str], ratings: List[int]):
+        self.cuisine_to_rating_food = defaultdict(SortedSet)
+        self.food_to_rating = {}
+        self.food_to_cuisine = {}
+
+        for food, cuisine, ratings in zip(foods, cuisines, ratings):
+            self.food_to_rating[food] = ratings
+            self.food_to_cuisine[food] = cuisine
+            self.cuisine_to_rating_food[cuisine].add((-ratings, food))
+
+    def changeRating(self, food: str, newRating: int) -> None:
+        rating = self.food_to_rating[food]
+        cuisine = self.food_to_cuisine[food]
+
+        self.cuisine_to_rating_food[cuisine].remove((-rating, food))
+        self.cuisine_to_rating_food[cuisine].add((-newRating, food))
+        self.food_to_rating[food] = newRating
+
+    def highestRated(self, cuisine: str) -> str:
+        return self.cuisine_to_rating_food[cuisine][0][1]
+
+
+class Food:
+    def __init__(self, rating: int, food: str) -> None:
+        self.rating = rating
+        self.food = food
+
+    def __lt__(self, other: 'Food') -> bool:
+        if self.rating == other.rating:
+            return self.food < other.food
+        return self.rating > other.rating
+
+
+class FoodRatingsAlt:
+
+    def __init__(self, foods: List[str], cuisines: List[str], ratings: List[int]):
+        self.cuisine_to_rating_food = defaultdict(list)
+        self.food_to_rating = {}
+        self.food_to_cuisine = {}
+
+        for food, cuisine, rating in zip(foods, cuisines, ratings):
+            self.food_to_rating[food] = rating
+            self.food_to_cuisine[food] = cuisine
+            heapq.heappush(self.cuisine_to_rating_food[cuisine], Food(rating, food))
+
+    def changeRating(self, food: str, newRating: int) -> None:
+        self.food_to_rating[food] = newRating
+        cuisine = self.food_to_cuisine[food]
+        heapq.heappush(self.cuisine_to_rating_food[cuisine], Food(newRating, food))
+
+    def highestRated(self, cuisine: str) -> str:
+        highest_rated = self.cuisine_to_rating_food[cuisine][0]
+        while highest_rated.rating != self.food_to_rating[highest_rated.food]:
+            heapq.heappop(self.cuisine_to_rating_food[cuisine])
+            highest_rated = self.cuisine_to_rating_food[cuisine][0]
+        return highest_rated.food

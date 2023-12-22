@@ -409,3 +409,34 @@ def maxWidthOfVerticalArea(points: List[List[int]]) -> int:
         if points[i + 1][0] - points[i][0] > max_width:
             max_width = points[i + 1][0] - points[i][0]
     return max_width
+
+
+def maxScore(s: str) -> int:
+    left = 0 if s[0] == '1' else 1
+    right = s.count('1', 1)
+    res = left + right
+
+    for i in range(1, len(s) - 1):
+        if s[i] == '1':
+            right = right - 1
+        else:
+            left = left + 1
+        res = max(res, left + right)
+    return res
+
+
+def maxScoreAlt(s: str) -> int:
+    # zl + or
+    # zl + ot - ol
+    zeros = ones = 0
+    best = - len(s)
+
+    for i in range(len(s) - 1):
+        if s[i] == '1':
+            ones += 1
+        else:
+            zeros += 1
+        best = max(best, zeros - ones)
+    ones += 1 if s[-1] == '1' else 0
+
+    return best + ones

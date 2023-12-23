@@ -440,3 +440,17 @@ def maxScoreAlt(s: str) -> int:
     ones += 1 if s[-1] == '1' else 0
 
     return best + ones
+
+
+def isPathCrossing(path: str) -> bool:
+    seen = {(0, 0)}
+    char_to_dir = {'N': (0, 1), 'E': (1, 0), 'S': (0, -1), 'W': (-1, 0)}
+    curr_x, curr_y = 0, 0
+    for char in path:
+        x, y = char_to_dir[char]
+        curr_x += x
+        curr_y += y
+        if (curr_x, curr_y) in seen:
+            return True
+        seen.add((curr_x, curr_y))
+    return False

@@ -454,3 +454,13 @@ def isPathCrossing(path: str) -> bool:
             return True
         seen.add((curr_x, curr_y))
     return False
+
+
+def minOperations(s: str) -> int:
+    res = 0
+    for i in range(len(s)):
+        if i % 2 == 0:
+            res += 1 if s[i] == '1' else 0
+        else:
+            res += 1 if s[i] == '0' else 0
+    return min(res, len(s) - res)

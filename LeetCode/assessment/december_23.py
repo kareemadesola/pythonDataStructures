@@ -40,3 +40,11 @@ def twoCitySchedCost(costs: List[List[int]]) -> int:
     for i in range(n // 2, n):
         res += costs[i][1]
     return res
+
+
+def canWinNim(n: int) -> bool:
+    return n % 4 != 0
+
+
+def hammingDistance(x: int, y: int) -> int:
+    return (x ^ y).bit_count()

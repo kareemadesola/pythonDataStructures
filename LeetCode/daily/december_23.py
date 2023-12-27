@@ -464,3 +464,18 @@ def minOperations(s: str) -> int:
         else:
             res += 1 if s[i] == '0' else 0
     return min(res, len(s) - res)
+
+
+def minCost(colors: str, neededTime: List[int]) -> int:
+    n = len(colors)
+    l = res = 0
+    for r in range(1, n):
+        if colors[l] == colors[r]:
+            if neededTime[l] < neededTime[r]:
+                res += neededTime[l]
+                l = r
+            else:
+                res += neededTime[r]
+        else:
+            l = r
+    return res

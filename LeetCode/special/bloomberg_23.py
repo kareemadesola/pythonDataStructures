@@ -3,7 +3,7 @@ import random
 from collections import defaultdict, deque
 from typing import List, Optional
 
-from LeetCode.daily.october_23_assessment import ListNode, TreeNode
+from LeetCode.assessment.october_23_assessment import ListNode, TreeNode
 
 
 class UndergroundSystem:

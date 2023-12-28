@@ -479,3 +479,28 @@ def minCost(colors: str, neededTime: List[int]) -> int:
         else:
             l = r
     return res
+
+
+def getLengthOfOptimalCompression(s: str, k: int) -> int:
+    memo = {}
+    n = len(s)
+
+    def count(i: int, k: int, prev: str, prev_count: int) -> int:
+        if (i, k, prev, prev_count) in memo:
+            return memo[(i, k, prev, prev_count)]
+        if k < 0:
+            return float('inf')
+        if i == n:
+            return 0
+        if s[i] == prev:
+            inc = 1 if prev_count in (1, 9, 99) else 0
+            res = inc + count(i + 1, k, prev, prev_count + 1)
+        else:
+            res = min(
+                count(i + 1, k - 1, prev, prev_count),  # delete
+                1 + count(i + 1, k, s[i], 1)  # don't delete
+            )
+        memo[(i, k, prev, prev_count)] = res
+        return res
+
+    return count(0, k, '', 0)

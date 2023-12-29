@@ -255,11 +255,11 @@ class GraphFloyd:
                     self.cost[src][dst] = min(self.cost[src][dst], self.cost[src][mid] + self.cost[mid][dst])
 
     def addEdge(self, edge: List[int]) -> None:
-        to, from_, weight = edge
+        from_, to, weight = edge
         n = len(self.cost)
         for src in range(n):
             for dst in range(n):
-                self.cost[src][dst] = min(self.cost[src][dst], self.cost[src][to] + self.cost[to][from_] + weight)
+                self.cost[src][dst] = min(self.cost[src][dst], self.cost[src][from_] + self.cost[to][dst] + weight)
 
     def shortestPath(self, node1: int, node2: int) -> int:
         res = self.cost[node1][node2]

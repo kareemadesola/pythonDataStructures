@@ -513,3 +513,27 @@ def makeEqual(words: List[str]) -> bool:
         if val % n:
             return False
     return True
+
+
+def minDifficulty(self, jobDifficulty: List[int], d: int) -> int:
+    n = len(jobDifficulty)
+    if d > n:
+        return -1
+    memo = {}
+
+    def dfs(i: int, remain_day: int, curr_max: int) -> int:
+        if remain_day == 0:
+            return 0 if i == n else float('inf')
+        if i == n:
+            return float('inf')
+        if (i, remain_day, curr_max) in memo:
+            return memo[(i, remain_day, curr_max)]
+        curr_max = max(curr_max, jobDifficulty[i])
+        res = min(
+            dfs(i + 1, remain_day, curr_max),  # continue
+            curr_max + dfs(i + 1, remain_day - 1, -1)  # end
+        )
+        memo[(i, remain_day, curr_max)] = res
+        return res
+
+    return dfs(0, d, -1)

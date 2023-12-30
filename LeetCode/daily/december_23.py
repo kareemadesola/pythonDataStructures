@@ -504,3 +504,12 @@ def getLengthOfOptimalCompression(s: str, k: int) -> int:
         return res
 
     return count(0, k, '', 0)
+
+
+def makeEqual(words: List[str]) -> bool:
+    cnt = Counter(''.join(words))
+    n = len(words)
+    for val in cnt.values():
+        if val % n:
+            return False
+    return True

@@ -537,3 +537,43 @@ def minDifficulty(self, jobDifficulty: List[int], d: int) -> int:
         return res
 
     return dfs(0, d, -1)
+
+
+def maxLengthBetweenEqualCharacters(s: str) -> int:
+    char_to_idx = defaultdict(list)
+    for idx, char in enumerate(s):
+        if len(char_to_idx[char]) == 2:
+            char_to_idx[char][1] = idx
+        else:
+            char_to_idx[char].append(idx)
+
+    global_max = -1
+    for lst in char_to_idx.values():
+        if len(lst) == 2:
+            global_max = max(global_max, lst[1] - lst[0] - 1)
+    return global_max
+
+
+def maxLengthBetweenEqualCharactersAlt(s: str) -> int:
+    char_to_idx = defaultdict(lambda: [-1, -1])
+    global_max = -1
+
+    for idx, char in enumerate(s):
+        if char_to_idx[char][0] != -1:
+            char_to_idx[char][1] = idx
+            global_max = max(global_max, char_to_idx[char][1] - char_to_idx[char][0] - 1)
+        else:
+            char_to_idx[char][0] = idx
+    return global_max
+
+
+def maxLengthBetweenEqualCharactersOpt(s: str) -> int:
+    char_to_idx = {}
+    global_max = -1
+
+    for idx, char in enumerate(s):
+        if char in char_to_idx:
+            global_max = max(global_max, idx - char_to_idx[char] - 1)
+        else:
+            char_to_idx[char] = idx
+    return global_max

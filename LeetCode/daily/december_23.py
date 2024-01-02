@@ -577,3 +577,13 @@ def maxLengthBetweenEqualCharactersOpt(s: str) -> int:
         else:
             char_to_idx[char] = idx
     return global_max
+
+
+def findContentChildren(g: List[int], s: List[int]) -> int:
+    g.sort()
+    s.sort()
+    content_children = 0
+    for cookie in s:
+        if content_children < len(g) and g[content_children] <= cookie:
+            content_children += 1
+    return content_children

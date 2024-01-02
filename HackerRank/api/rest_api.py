@@ -45,3 +45,14 @@ def number_of_goals_scored_by_winner(competition: str, year: int) -> int:
         return total
 
     return goals("team1", "team1goals") + goals("team2", "team2goals")
+
+
+def movie_substr_asc(substr: str) -> List[str]:
+    url = f"{movies_end_point}?Title={substr}"
+    pages = requests.get(url).json()["total_pages"]
+    res = []
+    for page in range(1, pages + 1):
+        movies = requests.get(f"{url}&page={page}").json()["data"]
+        for movie in movies:
+            res.append(movie["Title"])
+    return sorted(res)

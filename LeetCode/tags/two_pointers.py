@@ -40,3 +40,33 @@ def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
     while n >= 0:
         nums1[n] = nums2[n]
         n -= 1
+
+
+def numberOfBeams(bank: List[str]) -> int:
+    total_devices = []
+    for row in bank:
+        devices = 0
+        for cell in row:
+            if cell == '1':
+                devices += 1
+        if devices != 0:
+            total_devices.append(devices)
+    print(total_devices)
+
+    n = len(total_devices)
+    if n <= 1:
+        return 0
+    beams = 0
+    for r in range(n - 1):
+        beams += total_devices[r] * total_devices[r + 1]
+    return beams
+
+
+def numberOfBeamsAlt(bank: List[str]) -> int:
+    prev = beams = 0
+    for row in bank:
+        curr = row.count('1')
+        if curr:
+            beams += prev * curr
+            prev = curr
+    return beams

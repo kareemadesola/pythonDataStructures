@@ -1,4 +1,5 @@
 from collections import defaultdict, Counter
+from math import ceil
 from typing import List
 
 
@@ -41,4 +42,43 @@ def findMatrixAlt(nums: List[int]) -> List[List[int]]:
             res.append([])
         res[row].append(n)
         cnt[n] += 1
+    return res
+
+
+def minOperations(nums: List[int]) -> int:
+    cnt = Counter(nums)
+    res = 0
+    for item, count in cnt.items():
+        if count == 1:
+            return -1
+        res += ceil(count / 3)
+    return res
+
+
+def minOperationsAlt(nums: List[int]) -> int:
+    nums.sort()
+
+    cache = {}
+
+    def dfs(n):
+        if n < 0:
+            return float('inf')
+        if n in (2, 3):
+            return 1
+        if n in cache:
+            return cache[n]
+
+        res = min(dfs(n - 2), dfs(n - 3))
+        if res == -1:
+            return -1
+        cache[n] = res + 1
+        return res + 1
+
+    count = Counter(nums)
+    res = 0
+    for n, c in count.items():
+        op = dfs(c)
+        if op == float("inf"):
+            return -1
+        res += op
     return res

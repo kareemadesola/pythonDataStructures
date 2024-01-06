@@ -1,3 +1,5 @@
+import bisect
+import heapq
 from bisect import bisect_left
 from collections import defaultdict, Counter
 from math import ceil
@@ -104,3 +106,43 @@ def lengthOfLISAlt(nums: List[int]) -> int:
         else:
             LIS[i] = num
     return len(LIS)
+
+
+def jobScheduling(startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+    interval = sorted(zip(startTime, endTime, profit))
+    memo = {}
+
+    def dp(i: int) -> int:
+        if i == len(interval):
+            return 0
+        if i in memo: return memo[i]
+        j = bisect.bisect(interval, (interval[i][1],))
+        # max (don't include, include)
+        memo[i] = max(dp(i + 1), interval[i][2] + dp(j))
+        return memo[i]
+
+    return dp(0)
+
+
+def jobSchedulingBU(startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+    n = len(startTime)
+    jobs = sorted(zip(startTime, endTime, profit))
+    dp = [0] * (n + 1)
+    for i in range(n - 1, -1, -1):
+        j = bisect.bisect(jobs, (jobs[i][1],))
+        dp[i] = max(dp[i + 1], jobs[i][2] + dp[j])
+    return dp[0]
+
+
+def jobSchedulingPQ(startTime: List[int], endTime: List[int], profit: List[int]) -> int:
+    jobs = sorted(zip(startTime, endTime, profit))
+    pq = []
+    max_profit = 0
+    for start, end, profit in jobs:
+        while pq and start >= pq[0][0]:
+            max_profit = max(max_profit, heapq.heappop(pq)[1])
+        heapq.heappush(pq, (end, max_profit + profit))
+
+    while pq:
+        max_profit = max(max_profit, heapq.heappop(pq)[1])
+    return max_profit

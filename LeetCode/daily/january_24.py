@@ -1,3 +1,4 @@
+from bisect import bisect_left
 from collections import defaultdict, Counter
 from math import ceil
 from typing import List
@@ -82,3 +83,24 @@ def minOperationsAlt(nums: List[int]) -> int:
             return -1
         res += op
     return res
+
+
+def lengthOfLIS(nums: List[int]) -> int:
+    LIS = [1] * len(nums)
+    n = len(nums)
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            if nums[j] > nums[i]:
+                LIS[i] = max(LIS[i], 1 + LIS[j])
+    return max(LIS)
+
+
+def lengthOfLISAlt(nums: List[int]) -> int:
+    LIS = [nums[0]]
+    for num in nums:
+        i = bisect_left(LIS, num)
+        if i == len(LIS):
+            LIS.append(num)
+        else:
+            LIS[i] = num
+    return len(LIS)

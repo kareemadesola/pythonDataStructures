@@ -67,6 +67,29 @@ class UnionFindRank:
     def is_connected(self, x: int, y: int) -> bool:
         return self.find(x) == self.find(y)
 
+
+class UnionFindPathCompression:
+    def __init__(self, size: int):
+        self.root = [i for i in range(size)]
+        self.size = size
+
+    def find(self, x: int) -> int:
+        if x == self.root[x]:
+            return x
+        self.root[x] = self.find(self.root[x])
+        return self.root[x]
+
+    def union(self, x: int, y: int):
+        x_root = self.find(x)
+        y_root = self.find(y)
+
+        if x_root != y_root:
+            self.root[y_root] = x_root
+
+    def is_connected(self, x: int, y: int) -> bool:
+        return self.find(x) == self.find(y)
+
+
 if __name__ == '__main__':
     # uf = UnionFindQuickFind(10)
     # uf = UnionFindQuickUnion(10)

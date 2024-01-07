@@ -146,3 +146,19 @@ def jobSchedulingPQ(startTime: List[int], endTime: List[int], profit: List[int])
     while pq:
         max_profit = max(max_profit, heapq.heappop(pq)[1])
     return max_profit
+
+
+def numberOfArithmeticSlices(nums: List[int]) -> int:
+    n = len(nums)
+    dp = [defaultdict(int) for _ in range(n)]
+    res = 0
+
+    for i in range(n):
+        for j in range(i):
+            cnt = 0
+            diff = nums[i] - nums[j]
+            if diff in dp[j]:
+                cnt = dp[j][diff]
+            dp[i][diff] += cnt + 1
+            res += cnt
+    return res

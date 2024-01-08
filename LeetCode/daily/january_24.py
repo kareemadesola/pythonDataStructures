@@ -3,7 +3,9 @@ import heapq
 from bisect import bisect_left
 from collections import defaultdict, Counter
 from math import ceil
-from typing import List
+from typing import List, Optional
+
+from LeetCode.tree_visualizer import TreeNode
 
 
 def findContentChildren(g: List[int], s: List[int]) -> int:
@@ -161,4 +163,52 @@ def numberOfArithmeticSlices(nums: List[int]) -> int:
                 cnt = dp[j][diff]
             dp[i][diff] += cnt + 1
             res += cnt
+    return res
+
+
+def rangeSumBST(root: Optional[TreeNode], low: int, high: int) -> int:
+    res = 0
+
+    def dfs(node: TreeNode):
+        nonlocal res
+        if not node:
+            return
+        if low <= node.val <= high:
+            res += node.val
+        dfs(node.left)
+        dfs(node.right)
+
+    dfs(root)
+    return res
+
+
+def rangeSumBSTAlt(root: Optional[TreeNode], low: int, high: int) -> int:
+    def dfs(node: TreeNode) -> int:
+        if not node:
+            return 0
+        if low <= node.val <= high:
+            return dfs(node.left) + node.val + dfs(node.right)
+        elif node.val > high:
+            return dfs(node.left)
+        else:
+            return dfs(node.right)
+
+    return dfs(root)
+
+
+def rangeSumBSTOP(root: Optional[TreeNode], low: int, high: int) -> int:
+    res = 0
+
+    def dfs(node: TreeNode):
+        nonlocal res
+        if not node:
+            return
+        if low <= node.val <= high:
+            res += node.val
+        if low < node.val:
+            dfs(node.left)
+        if node.val < high:
+            dfs(node.right)
+
+    dfs(root)
     return res

@@ -5,7 +5,7 @@ def findCircleNum(isConnected: List[List[int]]) -> int:
     n = len(isConnected)
     uf = UnionFind(n)
     for node_x in range(n):
-        for node_y in range(n):
+        for node_y in range(node_x + 1, n):
             if isConnected[node_x][node_y]:
                 uf.union(node_x, node_y)
 

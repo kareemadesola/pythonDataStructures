@@ -12,6 +12,17 @@ def findCircleNum(isConnected: List[List[int]]) -> int:
     return uf.count
 
 
+def validTree(n: int, edges: List[List[int]]) -> bool:
+    if n - len(edges) != 1:
+        return False
+    uf = UnionFind(n)
+    for node_x, node_y in edges:
+        uf.union(node_x, node_y)
+    return uf.count == 1
+
+
+
+
 class UnionFind:
     def __init__(self, size):
         self.root = [i for i in range(size)]

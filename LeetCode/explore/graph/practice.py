@@ -28,6 +28,15 @@ def countComponents(n: int, edges: List[List[int]]) -> int:
     return uf.count
 
 
+def earliestAcq(logs: List[List[int]], n: int) -> int:
+    logs.sort()
+    uf = UnionFind(n)
+    for timestamp, node_x, node_y in logs:
+        uf.union(node_x, node_y)
+        if uf.count == 1:
+            return timestamp
+    return -1
+
 
 class UnionFind:
     def __init__(self, size):

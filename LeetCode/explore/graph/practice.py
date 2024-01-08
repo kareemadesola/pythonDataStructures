@@ -21,6 +21,12 @@ def validTree(n: int, edges: List[List[int]]) -> bool:
     return uf.count == 1
 
 
+def countComponents(n: int, edges: List[List[int]]) -> int:
+    uf = UnionFind(n)
+    for node_x, node_y in edges:
+        uf.union(node_x, node_y)
+    return uf.count
+
 
 
 class UnionFind:
@@ -41,7 +47,7 @@ class UnionFind:
         if root_x == root_y:
             return
 
-        if self.rank[root_x] > self.rank[root_x]:
+        if self.rank[root_x] > self.rank[root_y]:
             self.root[root_y] = root_x
         elif self.rank[root_x] < self.rank[root_y]:
             self.root[root_x] = root_y

@@ -1,7 +1,7 @@
 from typing import List, Optional
 
-from LeetCode.explore.binary_tree import TreeNode
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
+from LeetCode.explore.tree.binary_tree import TreeNode
 
 
 def reverseString(s: List[str]) -> None:

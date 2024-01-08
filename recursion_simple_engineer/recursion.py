@@ -8,7 +8,7 @@ Smallest unit of work to contribute
 """
 from typing import List
 
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
 
 
 def reverse_string(val: str):

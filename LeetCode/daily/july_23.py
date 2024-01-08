@@ -4,7 +4,7 @@ from math import ceil
 from typing import List, Optional, Dict
 
 from LeetCode.Biweekly.contest_82 import TreeNode
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
 
 
 def distributeCookies(cookies: List[int], k: int) -> int:

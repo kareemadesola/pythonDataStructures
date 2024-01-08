@@ -22,7 +22,7 @@ def maximum_sum(nums: List[int]) -> int:
             digit_sum += mod
         return digit_sum
 
-    # populate hash_map with key value pairs
+    # populate hash_table with key value pairs
     for num in nums:
         get_sum = get_sum_digits(num)
         if get_sum in hash_map:

@@ -4,7 +4,7 @@ from collections import defaultdict
 from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
 
 
 def sortArray(nums: List[int]) -> List[int]:

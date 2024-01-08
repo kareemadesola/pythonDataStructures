@@ -4,7 +4,7 @@ import math
 from typing import List, Optional
 
 from LeetCode.daily.july_22 import TreeNode
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
 
 
 def twoSum(nums: List[int], target: int) -> List[int]:

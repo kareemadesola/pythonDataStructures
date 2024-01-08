@@ -355,7 +355,7 @@ def is_toeplitz_matrix(matrix: List[List[int]]) -> bool:
     m, n = len(matrix), len(matrix[0])
     hash_map = collections.defaultdict(list)
 
-    # fill the hash_map with elements of the same diagonal
+    # fill the hash_table with elements of the same diagonal
     for i in range(m):
         for j in range(n):
             # two elements are on the same diagonal

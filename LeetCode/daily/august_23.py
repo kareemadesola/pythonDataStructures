@@ -4,7 +4,7 @@ from collections import deque, defaultdict, Counter
 from typing import List, Optional
 
 from LeetCode.Biweekly.contest_82 import TreeNode
-from LeetCode.explore.linked_list import ListNode
+from LeetCode.explore.linked_list.linked_list import ListNode
 
 
 def combine(n: int, k: int) -> List[List[int]]:

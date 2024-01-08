@@ -263,7 +263,7 @@ def length_of_longest_substring_set(s: str) -> int:
 
 
 # time O(s)
-# space O(min(hash_map, s)
+# space O(min(hash_table, s)
 def length_of_longest_substring_hash_map(s: str) -> int:
     hash_map = {}
     l, res = 0, 0

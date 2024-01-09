@@ -1,3 +1,4 @@
+from collections import defaultdict
 from typing import List
 
 
@@ -36,6 +37,27 @@ def earliestAcq(logs: List[List[int]], n: int) -> int:
         if uf.count == 1:
             return timestamp
     return -1
+
+
+def smallestStringWithSwaps(s: str, pairs: List[List[int]]) -> str:
+    n = len(s)
+    uf = UnionFind(n)
+    for node_x, node_y in pairs:
+        uf.union(node_x, node_y)
+    root_to_components = defaultdict(list)
+
+    for vertex in range(n):
+        root = uf.find(vertex)
+        root_to_components[root].append(vertex)
+
+    res = [''] * n
+    for indices in root_to_components.values():
+        characters = [s[index] for index in indices]
+        characters.sort()
+
+        for i, index in enumerate(indices):
+            res[index] = characters[i]
+    return ''.join(res)
 
 
 class UnionFind:

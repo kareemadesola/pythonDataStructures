@@ -212,3 +212,41 @@ def rangeSumBSTOP(root: Optional[TreeNode], low: int, high: int) -> int:
 
     dfs(root)
     return res
+
+
+def leafSimilar(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+    root1_list = []
+    root2_list = []
+
+    def closure(lst: List[int], root: Optional[TreeNode]) -> List[int]:
+        res = lst
+
+        def dfs(node: Optional[TreeNode]):
+            if not node:
+                return
+            if not node.left and not node.right:
+                res.append(node.val)
+            dfs(node.left)
+            dfs(node.right)
+
+        dfs(root)
+        return res
+
+    return closure(root1_list, root1) == closure(root2_list, root2)
+
+
+def leafSimilarAlt(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+    root1_list = []
+    root2_list = []
+
+    def dfs(node: Optional[TreeNode], leaf_list: List[int]):
+        if not node:
+            return
+        if not node.left and not node.right:
+            leaf_list.append(node.val)
+        dfs(node.left, leaf_list)
+        dfs(node.right, leaf_list)
+
+    dfs(root1, root1_list)
+    dfs(root2, root2_list)
+    return root1_list == root2_list

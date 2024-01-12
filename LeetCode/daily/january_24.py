@@ -277,3 +277,33 @@ def halvesAreAlikeAlt(s: str) -> bool:
         return res
 
     return count_vowels(0, n // 2) == count_vowels(n // 2, n)
+
+
+def maxAncestorDiff(root: Optional[TreeNode]) -> int:
+    res = 0
+
+    def dfs(node: Optional[TreeNode], max_m: int, min_m: int):
+        nonlocal res
+        if not node:
+            return
+        new_max = max(max_m, node.val)
+        new_min = min(min_m, node.val)
+        res = max(res, new_max - new_min)
+        dfs(node.left, new_max, new_min)
+        dfs(node.right, new_max, new_min)
+
+    dfs(root, root.val, root.val)
+    return res
+
+
+def maxAncestorDiffAlt(root: Optional[TreeNode]) -> int:
+    def dfs(node: Optional[TreeNode], max_m: int, min_m: int) -> int:
+        if not node:
+            return max_m - min_m
+        new_max = max(max_m, node.val)
+        new_min = min(min_m, node.val)
+        left = dfs(node.left, new_max, new_min)
+        right = dfs(node.right, new_max, new_min)
+        return max(left, right)
+
+    return dfs(root, root.val, root.val)

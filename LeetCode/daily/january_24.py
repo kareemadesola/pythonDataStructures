@@ -250,3 +250,30 @@ def leafSimilarAlt(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool
     dfs(root1, root1_list)
     dfs(root2, root2_list)
     return root1_list == root2_list
+
+
+def halvesAreAlike(s: str) -> bool:
+    n = len(s)
+    vowels = ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+    res = 0
+    for char in s[:n // 2]:
+        if char in vowels:
+            res += 1
+    for char in s[n // 2:]:
+        if char in vowels:
+            res -= 1
+    return not res
+
+
+def halvesAreAlikeAlt(s: str) -> bool:
+    n = len(s)
+    vowels = ('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+
+    def count_vowels(start: int, end: int):
+        res = 0
+        for i in range(start, end):
+            if s[i] in vowels:
+                res += 1
+        return res
+
+    return count_vowels(0, n // 2) == count_vowels(n // 2, n)

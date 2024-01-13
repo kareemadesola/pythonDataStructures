@@ -1,4 +1,5 @@
 import bisect
+import collections
 import heapq
 from bisect import bisect_left
 from collections import defaultdict, Counter
@@ -307,3 +308,60 @@ def maxAncestorDiffAlt(root: Optional[TreeNode]) -> int:
         return max(left, right)
 
     return dfs(root, root.val, root.val)
+
+
+def amountOfTime(root: Optional[TreeNode], start: int) -> int:
+    adj_list = defaultdict(list)
+
+    def tree_to_graph(node: Optional[TreeNode], parent: int):
+        if not node:
+            return
+        if parent != 0:
+            adj_list[node.val].append(parent)
+        if node.left:
+            adj_list[node.val].append(node.left.val)
+        if node.right:
+            adj_list[node.val].append(node.right.val)
+        tree_to_graph(node.left, node.val)
+        tree_to_graph(node.right, node.val)
+
+    tree_to_graph(root, 0)
+    q = collections.deque([start])
+    seen = {start}
+    res = 0
+    while q:
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            for nei in adj_list[curr]:
+                if nei not in seen:
+                    seen.add(nei)
+                    q.append(nei)
+        res += 1
+    return res - 1
+
+
+def amountOfTimeAlt(root: Optional[TreeNode], start: int) -> int:
+    max_distance = 0
+
+    def dfs(node: Optional[TreeNode]) -> int:
+        nonlocal max_distance
+        depth = 0
+        if not node:
+            return depth
+        left = dfs(node.left)
+        right = dfs(node.right)
+
+        if node.val == start:
+            max_distance = max(left, right)
+            depth = -1
+        elif left >= 0 and right >= 0:
+            depth = max(left, right) + 1
+        else:
+            distance = abs(left) + abs(right)
+            max_distance = max(max_distance, distance)
+            depth = min(left, right) - 1
+        return depth
+
+    dfs(root)
+    return max_distance

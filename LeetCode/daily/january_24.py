@@ -386,3 +386,10 @@ def minSteps(self, s: str, t: str) -> int:
         if val > 0:
             res += val
     return res
+
+
+def closeStrings(word1: str, word2: str) -> bool:
+    word1_cnt = Counter(word1)
+    word2_cnt = Counter(word2)
+    return word1_cnt.keys() == word2_cnt.keys() and sorted(word1_cnt.values()) == sorted(
+        word2_cnt.values())

@@ -365,3 +365,24 @@ def amountOfTimeAlt(root: Optional[TreeNode], start: int) -> int:
 
     dfs(root)
     return max_distance
+
+
+def minSteps(self, s: str, t: str) -> int:
+    s_cnt = Counter(s)
+    res = 0
+    for char in t:
+        if s_cnt[char] > 0:
+            s_cnt[char] -= 1
+        else:
+            res += 1
+    return res
+
+
+def minSteps(self, s: str, t: str) -> int:
+    t_cnt = Counter(t)
+    t_cnt.subtract(s)
+    res = 0
+    for _, val in t_cnt.items():
+        if val > 0:
+            res += val
+    return res

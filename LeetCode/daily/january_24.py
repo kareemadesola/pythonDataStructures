@@ -393,3 +393,35 @@ def closeStrings(word1: str, word2: str) -> bool:
     word2_cnt = Counter(word2)
     return word1_cnt.keys() == word2_cnt.keys() and sorted(word1_cnt.values()) == sorted(
         word2_cnt.values())
+
+
+def findWinners(matches: List[List[int]]) -> List[List[int]]:
+    winner_set = set()
+    loser_dict = defaultdict(int)
+    for winner, loser in matches:
+        winner_set.add(winner)
+        loser_dict[loser] += 1
+
+    res = [[], []]
+    for winner in winner_set:
+        if winner not in loser_dict:
+            res[0].append(winner)
+
+    res[0] = sorted(res[0])
+    res[1] = sorted({loser for loser in loser_dict if loser_dict[loser] == 1})
+    return res
+
+
+def findWinnersAlt(matches: List[List[int]]) -> List[List[int]]:
+    losses_cnt = {}
+    for winner, loser in matches:
+        losses_cnt.setdefault(winner, 0)
+        losses_cnt[loser] = losses_cnt.get(loser, 0) + 1
+    zero_losses = []
+    one_loss = []
+    for player, count in losses_cnt.items():
+        if count == 0:
+            zero_losses.append(player)
+        elif count == 1:
+            one_loss.append(player)
+    return [sorted(zero_losses), sorted(one_loss)]

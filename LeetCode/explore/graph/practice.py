@@ -125,3 +125,44 @@ def calcEquation(equations: List[List[str]], values: List[float], queries: List[
             else:
                 res.append(dividend_weight / divisor_weight)
     return res
+
+
+def minCostToSupplyWater(n: int, wells: List[int], pipes: List[List[int]]) -> int:
+    root = [i for i in range(n + 1)]
+    rank = [1] * (n + 1)
+
+    def find(x: int):
+        if x == root[x]:
+            return x
+        root[x] = find(root[x])
+        return root[x]
+
+    def union(x: int, y: int) -> bool:
+        root_x = find(x)
+        root_y = find(y)
+
+        if root_x == root_y:
+            return False
+        if rank[root_x] > rank[root_y]:
+            root[root_y] = root_x
+        elif rank[root_x] < rank[root_y]:
+            root[root_x] = root_y
+        else:
+            root[root_y] = root_x
+            rank[root_x] += 1
+        return True
+
+    ordered_edges = []
+    for index, weight in enumerate(wells):
+        ordered_edges.append((weight, 0, index + 1))
+
+    for house_1, house_2, weight in pipes:
+        ordered_edges.append((weight, house_1, house_2))
+
+    ordered_edges.sort(key=lambda x: x[0])
+
+    total_cost = 0
+    for cost, house_1, house_2 in ordered_edges:
+        if union(house_1, house_2):
+            total_cost += cost
+    return total_cost

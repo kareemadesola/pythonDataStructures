@@ -168,3 +168,23 @@ def minCostToSupplyWater(n: int, wells: List[int], pipes: List[List[int]]) -> in
     return total_cost
 
 
+def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    adj_list = defaultdict(list)
+    for src, dst in edges:
+        adj_list[src].append(dst)
+        adj_list[dst].append(src)
+
+    visited = set()
+
+    def dfs(node: int) -> bool:
+        if node == destination:
+            return True
+        if node in visited:
+            return False
+        visited.add(node)
+        for nei in adj_list[node]:
+            if dfs(nei):
+                return True
+        return False
+
+    return dfs(source)

@@ -1,4 +1,4 @@
-from collections import defaultdict, Counter
+from collections import defaultdict
 from typing import List
 
 
@@ -168,6 +168,3 @@ def minCostToSupplyWater(n: int, wells: List[int], pipes: List[List[int]]) -> in
     return total_cost
 
 
-def uniqueOccurrences(arr: List[int]) -> bool:
-    cnt = Counter(arr)
-    return len(cnt.values()) == len(set(cnt.values()))

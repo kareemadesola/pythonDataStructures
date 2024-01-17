@@ -455,3 +455,8 @@ class RandomizedSet:
 
     def getRandom(self) -> int:
         return random.choice(self.array)
+
+
+def uniqueOccurrences(arr: List[int]) -> bool:
+    cnt = Counter(arr)
+    return len(cnt.values()) == len(set(cnt.values()))

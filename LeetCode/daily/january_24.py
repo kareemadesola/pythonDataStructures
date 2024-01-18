@@ -460,3 +460,22 @@ class RandomizedSet:
 def uniqueOccurrences(arr: List[int]) -> bool:
     cnt = Counter(arr)
     return len(cnt.values()) == len(set(cnt.values()))
+
+
+def climbStairs(n: int) -> int:
+    if n == 1:
+        return 1
+    dp = [0] * (n + 1)
+    dp[1], dp[2] = 1, 2
+    for i in range(3, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+
+def climbStairsAlt(n: int) -> int:
+    if n == 1:
+        return 1
+    first, second = 1, 2
+    for i in range(3, n + 1):
+        first, second = second, first + second
+    return second

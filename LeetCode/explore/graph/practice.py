@@ -174,35 +174,54 @@ def validPath(n: int, edges: List[List[int]], source: int, destination: int) -> 
         adj_list[src].append(dst)
         adj_list[dst].append(src)
 
-    visited = set()
-
     def dfs(node: int) -> bool:
         if node == destination:
             return True
-        if node in visited:
-            return False
-        visited.add(node)
+
         for nei in adj_list[node]:
+            if nei in visited:
+                continue
+            visited.add(nei)
             if dfs(nei):
                 return True
         return False
 
+    visited = {source}
     return dfs(source)
 
 
-def allPathsSourceTarget(graph: List[List[int]]) -> List[List[int]]:
-    target = len(graph) - 1
+if __name__ == '__main__':
+    n, source, destination = 10, 5, 9
+    edges = [[4, 3], [1, 4], [4, 8], [1, 7], [6, 4], [4, 2], [7, 4], [4, 0], [0, 9], [5, 4]]
+    validPath(n, edges, source, destination)
 
-    def backtrack(curr: int):
-        if curr == target:
-            res.append(path[:])
-            return
-        for nei in graph[curr]:
-            path.append(nei)
-            backtrack(nei)
-            path.pop()
+# def allPathsSourceTarget(graph: List[List[int]]) -> List[List[int]]:
+#     target = len(graph) - 1
+#
+#     def backtrack(curr: int):
+#         if curr == target:
+#             res.append(path[:])
+#             return
+#         for nei in graph[curr]:
+#             path.append(nei)
+#             backtrack(nei)
+#             path.pop()
+#
+#     res = []
+#     path = [0]
+#     backtrack(0)
+#     return res
 
-    res = []
-    path = [0]
-    backtrack(0)
-    return res
+
+# Definition for a Node.
+# class Node:
+#     def __init__(self, val=0, neighbors=None):
+#         self.val = val
+#         self.neighbors = neighbors if neighbors else []
+#
+#
+# def cloneGraph(node: Optional['Node']) -> Optional['Node']:
+#     def clone(curr: Optional['Node']) -> Optional['Node']:
+#         pass
+#
+#     return clone(node)

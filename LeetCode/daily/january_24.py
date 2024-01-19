@@ -479,3 +479,44 @@ def climbStairsAlt(n: int) -> int:
     for i in range(3, n + 1):
         first, second = second, first + second
     return second
+
+
+def minFallingPathSum(matrix: List[List[int]]) -> int:
+    N = len(matrix)
+    memo = {}
+
+    def dp(r: int, c: int) -> int:
+        if r == N: return 0
+        if c < 0 or c == N: return float('inf')
+        if (r, c) in memo: return memo[(r, c)]
+        res = matrix[r][c] + min(dp(r + 1, c - 1), dp(r + 1, c), dp(r + 1, c + 1))
+        memo[(r, c)] = res
+        return res
+
+    return min(dp(0, col) for col in range(N))
+
+
+def minFallingPathSumBU(matrix: List[List[int]]) -> int:
+    n = len(matrix)
+    dp = [num for num in matrix[-1]]
+    for r in range(n - 2, -1, -1):
+        new_dp = [0] * n
+        for c in range(n):
+            left = dp[c - 1] if c > 0 else float('inf')
+            mid = dp[c]
+            right = dp[c + 1] if c < n - 1 else float('inf')
+            new_dp[c] = matrix[r][c] + min(left, mid, right)
+        dp = new_dp
+
+    return min(dp)
+
+
+def minFallingPathSumOpt(matrix: List[List[int]]) -> int:
+    N = len(matrix)
+    for r in range(1, N):
+        for c in range(N):
+            left = matrix[r - 1][c - 1] if c > 0 else float('inf')
+            mid = matrix[r - 1][c]
+            right = matrix[r - 1][c + 1] if c < N - 1 else float('inf')
+            matrix[r][c] += min(left, mid, right)
+    return min(matrix[-1])

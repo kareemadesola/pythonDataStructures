@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import List
+from typing import List, Optional
 
 
 def findCircleNum(isConnected: List[List[int]]) -> int:
@@ -190,38 +190,41 @@ def validPath(n: int, edges: List[List[int]], source: int, destination: int) -> 
     return dfs(source)
 
 
-if __name__ == '__main__':
-    n, source, destination = 10, 5, 9
-    edges = [[4, 3], [1, 4], [4, 8], [1, 7], [6, 4], [4, 2], [7, 4], [4, 0], [0, 9], [5, 4]]
-    validPath(n, edges, source, destination)
+def allPathsSourceTarget(graph: List[List[int]]) -> List[List[int]]:
+    target = len(graph) - 1
 
-# def allPathsSourceTarget(graph: List[List[int]]) -> List[List[int]]:
-#     target = len(graph) - 1
-#
-#     def backtrack(curr: int):
-#         if curr == target:
-#             res.append(path[:])
-#             return
-#         for nei in graph[curr]:
-#             path.append(nei)
-#             backtrack(nei)
-#             path.pop()
-#
-#     res = []
-#     path = [0]
-#     backtrack(0)
-#     return res
+    def backtrack(curr: int):
+        if curr == target:
+            res.append(path[:])
+            return
+        for nei in graph[curr]:
+            path.append(nei)
+            backtrack(nei)
+            path.pop()
+
+    res = []
+    path = [0]
+    backtrack(0)
+    return res
 
 
 # Definition for a Node.
-# class Node:
-#     def __init__(self, val=0, neighbors=None):
-#         self.val = val
-#         self.neighbors = neighbors if neighbors else []
-#
-#
-# def cloneGraph(node: Optional['Node']) -> Optional['Node']:
-#     def clone(curr: Optional['Node']) -> Optional['Node']:
-#         pass
-#
-#     return clone(node)
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors else []
+
+
+def cloneGraph(node: Optional['Node']) -> Optional['Node']:
+    def clone(curr: Optional['Node']) -> Optional['Node']:
+        if curr in old_to_new:
+            return old_to_new[curr]
+        copy = Node(curr.val)
+        old_to_new[curr] = copy
+        for nei in curr.neighbors:
+            copy.neighbors.append(clone(nei))
+
+        return copy
+
+    old_to_new = {}
+    return clone(node) if node else None

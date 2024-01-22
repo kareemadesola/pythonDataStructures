@@ -546,3 +546,28 @@ def findErrorNumsAlt(nums: List[int]) -> List[int]:
         if nums[i - 1] > 0 and i != res[0]:
             res[1] = i
             return res
+
+
+def robAlt(nums: List[int]) -> int:
+    n = len(nums)
+    nxt = nxt_nxt = 0
+
+    for i in range(n - 1, -1, -1):
+        tmp = max(nums[i] + nxt_nxt, nxt)
+        nxt, nxt_nxt = tmp, nxt
+    return nxt
+
+
+def rob(nums: List[int]) -> int:
+    memo = {}
+    n = len(nums)
+
+    def dp(i: int) -> int:
+        if i >= n:
+            return 0
+        if i in memo:
+            return memo[i]
+        memo[i] = max(nums[i] + dp(i + 2), dp(i + 1))
+        return memo[i]
+
+    return dp(0)

@@ -520,3 +520,29 @@ def minFallingPathSumOpt(matrix: List[List[int]]) -> int:
             right = matrix[r - 1][c + 1] if c < N - 1 else float('inf')
             matrix[r][c] += min(left, mid, right)
     return min(matrix[-1])
+
+
+def findErrorNums(nums: List[int]) -> List[int]:
+    cnt = Counter(nums)
+    res = [-1, -1]
+    n = len(nums)
+    for i in range(1, n + 1):
+        if cnt[i] == 0:
+            res[1] = i
+        elif cnt[i] == 2:
+            res[0] = i
+    return res
+
+
+def findErrorNumsAlt(nums: List[int]) -> List[int]:
+    res = [-1, -1]
+    for n in nums:
+        n = abs(n)
+        nums[n - 1] = -nums[n - 1]
+        if nums[n - 1] > 0:
+            res[0] = n
+    n = len(nums)
+    for i in range(1, n + 1):
+        if nums[i - 1] > 0 and i != res[0]:
+            res[1] = i
+            return res

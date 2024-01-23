@@ -571,3 +571,29 @@ def rob(nums: List[int]) -> int:
         return memo[i]
 
     return dp(0)
+
+
+def maxLength(arr: List[str]) -> int:
+    char_set = set()
+
+    def overlap(c_set, s):
+        c = Counter(c_set) + Counter(s)
+        return max(c.values()) > 1
+
+    # def overlap(c_set, s):
+    #     return len(c_set) + len(s) != len(set(c_set).union(s))
+
+    def backtrack(i: int) -> int:
+        if i == len(arr):
+            return len(char_set)
+        res = 0
+
+        if not overlap(char_set, arr[i]):
+            for c in arr[i]:
+                char_set.add(c)
+            res = backtrack(i + 1)
+            for c in arr[i]:
+                char_set.remove(c)
+        return max(res, backtrack(i + 1))
+
+    return backtrack(0)

@@ -597,3 +597,29 @@ def maxLength(arr: List[str]) -> int:
         return max(res, backtrack(i + 1))
 
     return backtrack(0)
+
+
+def pseudoPalindromicPaths(root: Optional[TreeNode]) -> int:
+    cnt = defaultdict(int)
+    odd = 0
+
+    def dfs(curr: Optional[TreeNode]):
+        nonlocal odd, res
+        if not curr:
+            return
+
+        cnt[curr.val] += 1
+        odd_change = 1 if cnt[curr.val] % 2 == 1 else -1
+        odd += odd_change
+
+        if not curr.left and not curr.right:
+            res += 1 if odd <= 1 else 0
+        else:
+            dfs(curr.left)
+            dfs(curr.right)
+        odd -= odd_change
+        cnt[curr.val] -= 1
+
+    res = 0
+    dfs(root)
+    return res

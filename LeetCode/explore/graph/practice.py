@@ -228,3 +228,31 @@ def cloneGraph(node: Optional['Node']) -> Optional['Node']:
 
     old_to_new = {}
     return clone(node) if node else None
+
+
+def findItinerary(tickets: List[List[str]]) -> List[str]:
+    tickets.sort()
+    n = len(tickets)
+    adj_list = defaultdict(list)
+    for src, dst in tickets:
+        adj_list[src].append(dst)
+
+    def backtrack(curr: str):
+        if len(res) == n + 1:
+            return True
+        if curr not in adj_list:
+            return False
+
+        tmp = list(adj_list[curr])
+        for i, v in enumerate(tmp):
+            adj_list[curr].pop(i)
+            res.append(v)
+
+            if backtrack(v): return True
+
+            adj_list[curr].insert(i, v)
+            res.pop()
+
+    res = ["JFK"]
+    backtrack("JFK")
+    return res

@@ -653,3 +653,77 @@ def longestCommonSubsequenceOpt(text1: str, text2: str) -> int:
                 dp[j] = max(dp[j + 1], prev_dp[j])
         prev_dp = dp
     return prev_dp[0]
+
+
+def findPaths(m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
+    memo = {}
+    MOD = 10 ** 9 + 7
+
+    def dfs(r: int, c: int, moves: int):
+        if (r, c, moves) in memo:
+            return memo[(r, c, moves)]
+        if r < 0 or r == m or c < 0 or c == n:
+            return 1
+        if moves == 0:
+            return 0
+        res = (dfs(r - 1, c, moves - 1) + dfs(r + 1, c, moves - 1) + dfs(r, c - 1, moves - 1) + dfs(r, c + 1,
+                                                                                                    moves - 1)) % MOD
+        memo[(r, c, moves)] = res
+        return res
+
+    return dfs(startRow, startColumn, maxMove)
+
+
+def findPathsAlt(m: int, n: int, N: int, x: int, y: int) -> int:
+    M = 1000000000 + 7
+    dp = [[0 for _ in range(n)] for _ in range(m)]
+    dp[x][y] = 1
+    count = 0
+
+    for moves in range(1, N + 1):
+        temp = [[0 for _ in range(n)] for _ in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if i == m - 1:
+                    count = (count + dp[i][j]) % M
+                if j == n - 1:
+                    count = (count + dp[i][j]) % M
+                if i == 0:
+                    count = (count + dp[i][j]) % M
+                if j == 0:
+                    count = (count + dp[i][j]) % M
+
+                temp[i][j] = (
+                                     ((dp[i - 1][j] if i > 0 else 0) + (dp[i + 1][j] if i < m - 1 else 0)) % M +
+                                     ((dp[i][j - 1] if j > 0 else 0) + (dp[i][j + 1] if j < n - 1 else 0)) % M
+                             ) % M
+        dp = temp
+
+    return count
+
+
+def findPathsNC(m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
+    MOD = 10 ** 9 + 7
+    prev_dp = [[0] * n for _ in range(m)]
+    for _ in range(1, maxMove + 1):
+        dp = [[0] * n for _ in range(m)]
+        for r in range(m):
+            for c in range(n):
+                if r - 1 < 0:
+                    dp[r][c] = (dp[r][c] + 1) % MOD
+                else:
+                    dp[r][c] = (dp[r][c] + prev_dp[r - 1][c]) % MOD
+                if r + 1 == m:
+                    dp[r][c] = (dp[r][c] + 1) % MOD
+                else:
+                    dp[r][c] = (dp[r][c] + prev_dp[r + 1][c]) % MOD
+                if c - 1 < 0:
+                    dp[r][c] = (dp[r][c] + 1) % MOD
+                else:
+                    dp[r][c] = (dp[r][c] + prev_dp[r][c - 1]) % MOD
+                if c + 1 == n:
+                    dp[r][c] = (dp[r][c] + 1) % MOD
+                else:
+                    dp[r][c] = (dp[r][c] + prev_dp[r][c + 1]) % MOD
+        prev_dp = dp
+    return prev_dp[startRow][startColumn]

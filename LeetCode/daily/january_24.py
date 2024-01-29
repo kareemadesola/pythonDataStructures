@@ -768,3 +768,62 @@ def numSubmatrixSumTarget(matrix: List[List[int]], target: int) -> int:
                 res += cnt[diff]
                 cnt[curr_sum] += 1
     return res
+
+
+class MyQueue:
+
+    def __init__(self):
+        self.data = []
+
+    def push(self, x: int) -> None:
+        self.data.append(x)
+
+    def pop(self) -> int:
+        tmp = []
+        n = len(self.data)
+        for _ in range(n - 1):
+            tmp.append(self.data.pop())
+        res = self.data.pop()
+        for _ in range(n - 1):
+            self.data.append(tmp.pop())
+        return res
+
+    def peek(self) -> int:
+        tmp = []
+        n = len(self.data)
+        for _ in range(n - 1):
+            tmp.append(self.data.pop())
+        res = self.data[-1]
+        for _ in range(n - 1):
+            self.data.append(tmp.pop())
+        return res
+
+    def empty(self) -> bool:
+        return not self.data
+
+
+class MyQueue2:
+
+    def __init__(self):
+        self.s1 = []
+        self.s2 = []
+
+    def push(self, x: int) -> None:
+        self.s1.append(x)
+
+    def pop(self) -> int:
+        if not self.s2:
+            self.move_s1_to_s2()
+        return self.s2.pop()
+
+    def peek(self) -> int:
+        if not self.s2:
+            self.move_s1_to_s2()
+        return self.s2[-1]
+
+    def empty(self) -> bool:
+        return not (self.s1 or self.s2)
+
+    def move_s1_to_s2(self):
+        for _ in range(len(self.s1)):
+            self.s2.append(self.s1.pop())

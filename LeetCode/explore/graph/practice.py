@@ -256,3 +256,30 @@ def findItinerary(tickets: List[List[str]]) -> List[str]:
     res = ["JFK"]
     backtrack("JFK")
     return res
+
+
+def leadsToDestination(n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    adj_list = defaultdict(list)
+    for src, dst in edges:
+        adj_list[src].append(dst)
+
+    GRAY, BLACK = 1, 2
+    states = [None] * n
+
+    def dfs(curr: int) -> bool:
+        if states[curr]:
+            return states[curr] == BLACK
+
+        if not adj_list[curr]:
+            return curr == destination
+
+        states[curr] = GRAY
+
+        for nei in adj_list[curr]:
+            if not dfs(nei):
+                return False
+
+        states[curr] = BLACK
+        return True
+
+    return dfs(source)

@@ -1,6 +1,7 @@
 import bisect
 import collections
 import heapq
+import math
 import random
 from bisect import bisect_left
 from collections import defaultdict, Counter
@@ -827,3 +828,22 @@ class MyQueue2:
     def move_s1_to_s2(self):
         for _ in range(len(self.s1)):
             self.s2.append(self.s1.pop())
+
+
+def evalRPN(tokens: List[str]) -> int:
+    stack = []
+    for t in tokens:
+        if t in "+-*/":
+            second = stack.pop()
+            first = stack.pop()
+            if t == "+":
+                stack.append(first + second)
+            elif t == "-":
+                stack.append(first - second)
+            elif t == "*":
+                stack.append(first * second)
+            elif t == "/":
+                stack.append(math.trunc(first / second))
+        else:
+            stack.append(int(t))
+    return stack[-1]

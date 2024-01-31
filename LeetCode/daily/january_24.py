@@ -867,12 +867,12 @@ def dailyTemperaturesAlt(temperatures: List[int]) -> List[int]:
     res = [0] * n
     for curr_day in range(n - 1, -1, -1):
         curr_tmp = temperatures[curr_day]
-        if curr_tmp > hottest:
+        if curr_tmp >= hottest:
             hottest = curr_tmp
             continue
 
         days = 1
-        while curr_tmp > temperatures[curr_day + days]:
+        while curr_tmp >= temperatures[curr_day + days]:
             days += res[curr_day + days]
         res[curr_day] = days
     return res

@@ -847,3 +847,15 @@ def evalRPN(tokens: List[str]) -> int:
         else:
             stack.append(int(t))
     return stack[-1]
+
+
+def dailyTemperatures(temperatures: List[int]) -> List[int]:
+    stack = []
+    res = [0] * len(temperatures)
+
+    for i, t in enumerate(temperatures):
+        while stack and t > temperatures[stack[-1]]:
+            stack_idx = stack.pop()
+            res[stack_idx] = (i - stack_idx)
+        stack.append(i)
+    return res

@@ -19,3 +19,11 @@ def isAnagram(s: str, t: str) -> bool:
     for val in s_cnt.values():
         if val: return False
     return True
+
+
+def twoSum(nums: List[int], target: int) -> List[int]:
+    seen = {}
+    for idx, val in enumerate(nums):
+        if target - val in seen:
+            return [seen[target - val], idx]
+        seen[val] = idx

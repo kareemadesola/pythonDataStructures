@@ -1,3 +1,5 @@
+from typing import List
+
 import requests
 
 match_end_point = "https://jsonmock.hackerrank.com/api/football_matches"

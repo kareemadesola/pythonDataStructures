@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import List
 
 
@@ -27,3 +27,10 @@ def twoSum(nums: List[int], target: int) -> List[int]:
         if target - val in seen:
             return [seen[target - val], idx]
         seen[val] = idx
+
+
+def groupAnagrams(strs: List[str]) -> List[List[str]]:
+    res = defaultdict(list)
+    for val in strs:
+        res[tuple(sorted(val))].append(val)
+    return res.values()

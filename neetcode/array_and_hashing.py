@@ -1,3 +1,4 @@
+import heapq
 from collections import Counter, defaultdict
 from typing import List
 
@@ -34,3 +35,14 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     for val in strs:
         res[tuple(sorted(val))].append(val)
     return res.values()
+
+
+def topKFrequent(nums: List[int], k: int) -> List[int]:
+    cnt = Counter(nums)
+    heap = [(-val, key) for key, val in cnt.items()]
+    heapq.heapify(heap)
+
+    res = []
+    for _ in range(k):
+        res.append(heapq.heappop(heap)[1])
+    return res

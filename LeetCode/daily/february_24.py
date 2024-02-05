@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List
 
 
@@ -27,3 +28,22 @@ def maxSumAfterPartitioning(arr, k):
             dp[start % K] = max(dp[start % K], dp[(i + 1) % K] + currMax * (i - start + 1))
 
     return dp[0]
+
+
+def firstUniqChar(s: str) -> int:
+    seen = {}
+    for idx, char in enumerate(s):
+        if char in seen:
+            seen[char] = float('inf')
+        else:
+            seen[char] = idx
+    res = min(seen.values())
+    return res if res != float('inf') else -1
+
+
+def firstUniqCharAlt(s: str) -> int:
+    cnt = Counter(s)
+    for idx, val in enumerate(s):
+        if cnt[val] == 1:
+            return idx
+    return -1

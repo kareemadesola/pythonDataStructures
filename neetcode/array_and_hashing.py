@@ -62,3 +62,20 @@ def productExceptSelf(nums: List[int]) -> List[int]:
         res[i] *= suffix
         suffix *= nums[i]
     return res
+
+
+def isValidSudoku(board: List[List[str]]) -> bool:
+    row_dict, col_dict, grid_dict = defaultdict(list), defaultdict(list), defaultdict(list)
+
+    for r in range(9):
+        for c in range(9):
+            val = board[r][c]
+            if val == ".":
+                continue
+            grid_r, grid_c = r // 3, c // 3
+            if val in row_dict[r] or val in col_dict[c] or val in grid_dict[(grid_r, grid_c)]:
+                return False
+            row_dict[r].append(val)
+            col_dict[c].append(val)
+            grid_dict[(grid_r, grid_c)].append(val)
+    return True

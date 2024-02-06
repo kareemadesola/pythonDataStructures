@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from typing import List
 
 
@@ -47,3 +47,10 @@ def firstUniqCharAlt(s: str) -> int:
         if cnt[val] == 1:
             return idx
     return -1
+
+
+def groupAnagrams(strs: List[str]) -> List[List[str]]:
+    res = defaultdict(list)
+    for val in strs:
+        res[tuple(sorted(val))].append(val)
+    return res.values()

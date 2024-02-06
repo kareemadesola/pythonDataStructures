@@ -79,3 +79,30 @@ def isValidSudoku(board: List[List[str]]) -> bool:
             col_dict[c].append(val)
             grid_dict[(grid_r, grid_c)].append(val)
     return True
+
+
+def longestConsecutive(nums: List[int]) -> int:
+    nums = sorted(set(nums))
+    n = len(nums)
+    res = 1 if nums else 0
+    tmp = 1
+    for i in range(n - 1):
+        if nums[i] + 1 == nums[i + 1]:
+            tmp += 1
+        else:
+            tmp = 1
+        res = max(res, tmp)
+    return res
+
+
+def longestConsecutiveAlt(nums: List[int]) -> int:
+    nums = set(nums)
+    longest = 0
+    for val in nums:
+        if val - 1 in nums:
+            continue
+        length = 1
+        while val + length in nums:
+            length += 1
+        longest = max(longest, length)
+    return longest

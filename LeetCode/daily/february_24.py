@@ -54,3 +54,15 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     for val in strs:
         res[tuple(sorted(val))].append(val)
     return res.values()
+
+
+def numSquares(n: int) -> int:
+    dp = [n] * (n + 1)
+    dp[0] = 0
+    for remain in range(1, n + 1):
+        for s in range(1, remain + 1):
+            square = s * s
+            if remain - square < 0:
+                break
+            dp[remain] = min(dp[remain], 1 + dp[remain - square])
+    return dp[n]

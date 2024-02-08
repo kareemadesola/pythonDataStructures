@@ -56,6 +56,18 @@ def groupAnagrams(strs: List[str]) -> List[List[str]]:
     return res.values()
 
 
+def frequencySort(s: str) -> str:
+    cnt = Counter(s)
+    cnt_to_char = defaultdict(list)
+    for char, count in cnt.items():
+        cnt_to_char[count].append(char)
+    res = []
+    for count in range(len(s), -1, -1):
+        for char in cnt_to_char[count]:
+            res.append(char * count)
+    return ''.join(res)
+
+
 def numSquares(n: int) -> int:
     dp = [n] * (n + 1)
     dp[0] = 0

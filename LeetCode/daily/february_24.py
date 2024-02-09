@@ -78,3 +78,61 @@ def numSquares(n: int) -> int:
                 break
             dp[remain] = min(dp[remain], 1 + dp[remain - square])
     return dp[n]
+
+
+def largestDivisibleSubset(nums: List[int]) -> List[int]:
+    nums.sort()
+    n = len(nums)
+    memo = {}
+
+    def dp(i: int, prev: int):
+        if i == n:
+            return []
+        if (i, prev) in memo:
+            return memo[(i, prev)]
+        res = dp(i + 1, prev)
+        if nums[i] % prev == 0:
+            tmp = [nums[i]] + dp(i + 1, nums[i])
+            res = tmp if len(tmp) > len(res) else res
+        memo[(i, prev)] = res
+        return res
+
+    return dp(0, 1)
+
+
+def largestDivisibleSubsetAlt(nums: List[int]) -> List[int]:
+    nums.sort()
+    memo = {}
+    n = len(nums)
+
+    def dp(i: int) -> List[int]:
+        if i == n:
+            return []
+        if i in memo:
+            return memo[i]
+        res = [nums[i]]
+        for j in range(i + 1, n):
+            if nums[j] % nums[i] == 0:
+                tmp = [nums[i]] + dp(j)
+                res = tmp if len(tmp) > len(res) else res
+        memo[i] = res
+        return res
+
+    ans = []
+    for i in range(n):
+        temp = dp(i)
+        ans = temp if len(temp) > len(ans) else ans
+    return ans
+
+
+def largestDivisibleSubsetOpt(nums: List[int]) -> List[int]:
+    nums.sort()
+    n = len(nums)
+    dp = [[val] for val in nums]
+    res = []
+    for i in range(n - 1, -1, -1):
+        for j in range(i + 1, n):
+            if nums[j] % nums[i] == 0 and len(dp[j]) >= len(dp[i]):
+                dp[i] = [nums[i]] + dp[j]
+        res = dp[i] if len(dp[i]) > len(res) else res
+    return res

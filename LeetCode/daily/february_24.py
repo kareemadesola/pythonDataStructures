@@ -136,3 +136,19 @@ def largestDivisibleSubsetOpt(nums: List[int]) -> List[int]:
                 dp[i] = [nums[i]] + dp[j]
         res = dp[i] if len(dp[i]) > len(res) else res
     return res
+
+
+def countSubstrings(s: str) -> int:
+    def is_palindrome(l: int, r: int):
+        ans = 0
+        while l >= 0 and r < n and s[l] == s[r]:
+            ans += 1
+            l -= 1
+            r += 1
+        return ans
+
+    n = len(s)
+    res = 0
+    for i in range(n):
+        res += is_palindrome(i, i) + is_palindrome(i, i + 1)
+    return res

@@ -152,3 +152,45 @@ def countSubstrings(s: str) -> int:
     for i in range(n):
         res += is_palindrome(i, i) + is_palindrome(i, i + 1)
     return res
+
+
+def cherryPickup(grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    memo = {}
+    d = (-1, 0, 1)
+
+    def dfs(r: int, c1: int, c2: int) -> int:
+        if (r, c1, c2) in memo:
+            return memo[(r, c1, c2)]
+        if c1 == c2 or min(c1, c2) < 0 or max(c1, c2) == n or r == m:
+            return 0
+        res = 0
+        for c1_d in d:
+            for c2_d in d:
+                res = max(res, dfs(r + 1, c1 + c1_d, c2 + c2_d))
+        res += grid[r][c1] + grid[r][c2]
+        memo[(r, c1, c2)] = res
+        return res
+
+    return dfs(0, 0, n - 1)
+
+
+def cherryPickupAlt(grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    prev = [[0] * n for _ in range(n)]
+    d = (-1, 0, 1)
+
+    for r in range(m - 1, -1, -1):
+        curr = [[0] * n for _ in range(n)]
+        for c1 in range(n - 1):
+            for c2 in range(c1 + 1, n):
+                res = 0
+                for c1_d in d:
+                    for c2_d in d:
+                        n_c1, n_c2 = c1 + c1_d, c2 + c2_d
+                        if n_c1 < 0 or n_c2 == n:
+                            continue
+                        res = max(res, grid[r][c1] + grid[r][c2] + prev[n_c1][n_c2])
+                curr[c1][c2] = res
+        prev = curr
+    return prev[0][n - 1]

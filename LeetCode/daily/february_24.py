@@ -194,3 +194,20 @@ def cherryPickupAlt(grid: List[List[int]]) -> int:
                 curr[c1][c2] = res
         prev = curr
     return prev[0][n - 1]
+
+
+def majorityElement(nums: List[int]) -> int:
+    cnt = Counter(nums)
+    n = len(nums)
+    for val, count in cnt.items():
+        if count > n // 2:
+            return val
+
+
+def majorityElementAlt(nums: List[int]) -> int:
+    res = count = 0
+    for val in nums:
+        if count == 0:
+            res = val
+        count += (1 if res == val else -1)
+    return res

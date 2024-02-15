@@ -226,3 +226,19 @@ def rearrangeArray(nums: List[int]) -> List[int]:
             res[n_idx] = val
             n_idx += 2
     return res
+
+
+def firstPalindrome(words: List[str]) -> str:
+    def is_palindrome(word: str) -> bool:
+        l, r = 0, len(word) - 1
+        while l < r:
+            if word[l] != word[r]:
+                return False
+            l += 1
+            r -= 1
+        return True
+
+    for string in words:
+        if is_palindrome(string):
+            return string
+    return ""

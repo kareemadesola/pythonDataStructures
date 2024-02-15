@@ -25,7 +25,9 @@ def maxSumAfterPartitioning(arr, k):
 
         for i in range(start, end):
             currMax = max(currMax, arr[i])
-            dp[start % K] = max(dp[start % K], dp[(i + 1) % K] + currMax * (i - start + 1))
+            dp[start % K] = max(
+                dp[start % K], dp[(i + 1) % K] + currMax * (i - start + 1)
+            )
 
     return dp[0]
 
@@ -34,11 +36,11 @@ def firstUniqChar(s: str) -> int:
     seen = {}
     for idx, char in enumerate(s):
         if char in seen:
-            seen[char] = float('inf')
+            seen[char] = float("inf")
         else:
             seen[char] = idx
     res = min(seen.values())
-    return res if res != float('inf') else -1
+    return res if res != float("inf") else -1
 
 
 def firstUniqCharAlt(s: str) -> int:
@@ -65,7 +67,7 @@ def frequencySort(s: str) -> str:
     for count in range(len(s), -1, -1):
         for char in cnt_to_char[count]:
             res.append(char * count)
-    return ''.join(res)
+    return "".join(res)
 
 
 def numSquares(n: int) -> int:
@@ -209,5 +211,18 @@ def majorityElementAlt(nums: List[int]) -> int:
     for val in nums:
         if count == 0:
             res = val
-        count += (1 if res == val else -1)
+        count += 1 if res == val else -1
+    return res
+
+
+def rearrangeArray(nums: List[int]) -> List[int]:
+    p_idx, n_idx = 0, 1
+    res = [0] * len(nums)
+    for val in nums:
+        if val > 0:
+            res[p_idx] = val
+            p_idx += 2
+        else:
+            res[n_idx] = val
+            n_idx += 2
     return res

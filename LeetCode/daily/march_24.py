@@ -30,3 +30,8 @@ def getCommonAlt(nums1: List[int], nums2: List[int]) -> int:
         else:
             nums2_ptr += 1
     return -1
+
+
+def customSortString(order: str, s: str) -> str:
+    char_to_idx = {val: idx for idx, val in enumerate(order)}
+    return "".join(sorted(s, key=lambda x: char_to_idx[x] if x in char_to_idx else 201))

@@ -1,4 +1,6 @@
-from typing import List
+from typing import List, Optional
+
+from LeetCode.assessment.october_23_assessment import ListNode
 
 
 def isPalindrome(s: str) -> bool:
@@ -96,3 +98,36 @@ def fourSum(nums: List[int], target: int) -> List[List[int]]:
 
     k_sum(0, target, 4)
     return res
+
+
+def removeZeroSumSublists(head: Optional[ListNode]) -> Optional[ListNode]:
+    dummy = start = ListNode(next=head)
+    while start:
+        prefix_sum = 0
+        end = start.next
+        while end:
+            prefix_sum += end.val
+            if prefix_sum == 0:
+                start.next = end.next
+            end = end.next
+        start = start.next
+    return dummy.next
+
+
+def removeZeroSumSublistsAlt(head: Optional[ListNode]) -> Optional[ListNode]:
+    dummy = curr = ListNode(next=head)
+    prefix_sum = 0
+    prefix_sum_to_node = {}
+
+    while curr:
+        prefix_sum += curr.val
+        prefix_sum_to_node[prefix_sum] = curr
+        curr = curr.next
+
+    curr = dummy
+    prefix_sum = 0
+    while curr:
+        prefix_sum += curr.val
+        curr.next = prefix_sum_to_node[prefix_sum].next
+        curr = curr.next
+    return dummy.next

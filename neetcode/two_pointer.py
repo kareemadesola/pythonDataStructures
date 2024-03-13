@@ -131,3 +131,25 @@ def removeZeroSumSublistsAlt(head: Optional[ListNode]) -> Optional[ListNode]:
         curr.next = prefix_sum_to_node[prefix_sum].next
         curr = curr.next
     return dummy.next
+
+
+def pivotInteger(n: int) -> int:
+    def sum_n(first: int, last: int) -> int:
+        n = last - first + 1
+        return (n * (first + last)) // 2
+
+    l, r = 1, n
+    while l < r:
+        mid = l + (r - l) // 2
+        l_sum = sum_n(1, mid)
+        r_sum = sum_n(mid, n)
+
+        if l_sum < r_sum:
+            l = mid + 1
+        else:
+            r = mid
+    return l if sum_n(1, l) == sum_n(l, n) else -1
+
+
+if __name__ == "__main__":
+    pivotInteger(8)

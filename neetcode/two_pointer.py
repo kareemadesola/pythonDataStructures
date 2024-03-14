@@ -108,3 +108,39 @@ def maxArea(height: List[int]) -> int:
         else:
             r -= 1
     return res
+
+
+def trap(height: List[int]) -> int:
+    n = len(height)
+    max_left, max_right = [0] * n, [0] * n
+
+    max_ = height[0]
+    for i in range(1, n):
+        max_left[i] = max_
+        max_ = max(max_, height[i])
+
+    max_ = height[-1]
+    for i in range(n - 2, -1, -1):
+        max_right[i] = max_
+        max_ = max(max_, height[i])
+
+    res = 0
+    for i in range(n):
+        res += max(min(max_left[i], max_right[i]) - height[i], 0)
+    return res
+
+
+def trap_alt(height: List[int]) -> int:
+    l, r = 0, len(height) - 1
+    max_left, max_right = height[l], height[r]
+    res = 0
+    while l < r:
+        if max_left < max_right:
+            l += 1
+            max_left = max(max_left, height[l])
+            res += max_left - height[l]
+        else:
+            r -= 1
+            max_right = max(max_right, height[r])
+            res += max_right - height[r]
+    return res

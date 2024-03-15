@@ -1,5 +1,7 @@
 from collections import Counter
-from typing import List
+from typing import List, Optional
+
+from LeetCode.assessment.october_23_assessment import ListNode
 
 
 def maxFrequencyElements(nums: List[int]) -> int:
@@ -86,3 +88,19 @@ def pivotInteger(n: int) -> int:
         else:
             r = mid
     return l if sum_n(1, l) == sum_n(l, n) else -1
+
+
+def numSubarraysWithSum(nums: List[int], goal: int) -> int:
+    def num_subarray_less_equal(target: int) -> int:
+        if target < 0:
+            return 0
+        res = curr_sum = l = 0
+        for r in range(len(nums)):
+            curr_sum += nums[r]
+            while curr_sum > target:
+                curr_sum -= nums[l]
+                l += 1
+            res += r - l + 1
+        return res
+
+    return num_subarray_less_equal(goal) - num_subarray_less_equal(goal - 1)

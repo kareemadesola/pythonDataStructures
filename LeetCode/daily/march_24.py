@@ -106,6 +106,18 @@ def numSubarraysWithSum(nums: List[int], goal: int) -> int:
     return num_subarray_less_equal(goal) - num_subarray_less_equal(goal - 1)
 
 
+def numSubarraysWithSumAlt(nums: List[int], goal: int) -> int:
+    # prefix sum
+    freq = {0: 1}
+    res = total = 0
+    for val in nums:
+        total += val
+        if total - goal in freq:
+            res += freq[total - goal]
+        freq[total] = freq.get(total, 0) + 1
+    return res
+
+
 def productExceptSelf(nums: List[int]) -> List[int]:
     n = len(nums)
     res = [1] * n

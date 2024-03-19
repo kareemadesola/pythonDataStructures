@@ -1,4 +1,5 @@
-from collections import Counter
+import heapq
+from collections import Counter, deque
 from typing import List, Optional
 
 from LeetCode.assessment.october_23_assessment import ListNode
@@ -149,3 +150,19 @@ def findMaxLength(nums: List[int]) -> int:
         else:
             res = max(res, r - diff_to_idx[diff])
     return res
+
+
+def leastInterval(tasks: List[str], n: int) -> int:
+    count = Counter(tasks)
+    max_heap = [-cnt for cnt in count.values()]
+
+    time, q = 0, deque()
+    while q or max_heap:
+        time += 1
+        if max_heap:
+            cnt = 1 + heapq.heappop(max_heap)
+            if cnt:
+                q.append((cnt, time + n))
+        if q and q[0][1] == time:
+            heapq.heappush(max_heap, q.popleft()[0])
+    return time

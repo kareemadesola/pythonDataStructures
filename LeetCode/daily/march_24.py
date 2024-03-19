@@ -133,3 +133,19 @@ def productExceptSelf(nums: List[int]) -> List[int]:
         suffix *= nums[i]
 
     return res
+
+
+def findMaxLength(nums: List[int]) -> int:
+    diff_to_idx = {0: -1}
+    res = ones = zeros = 0
+    for r, val in enumerate(nums):
+        if val == 0:
+            zeros += 1
+        else:
+            ones += 1
+        diff = ones - zeros
+        if diff not in diff_to_idx:
+            diff_to_idx[diff] = r
+        else:
+            res = max(res, r - diff_to_idx[diff])
+    return res

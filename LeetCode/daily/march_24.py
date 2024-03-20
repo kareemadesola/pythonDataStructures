@@ -166,3 +166,22 @@ def leastInterval(tasks: List[str], n: int) -> int:
         if q and q[0][1] == time:
             heapq.heappush(max_heap, q.popleft()[0])
     return time
+
+
+def mergeInBetween(list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode:
+    curr_l1 = dummy = ListNode(next=list1)
+    for _ in range(a):
+        curr_l1 = curr_l1.next
+
+    remove = curr_l1.next
+    curr_l1.next = list2
+
+    for _ in range(b - a):
+        remove = remove.next
+    attach_end = remove.next
+    remove.next = None
+    while curr_l1.next:
+        curr_l1 = curr_l1.next
+    curr_l1.next = attach_end
+
+    return dummy.next

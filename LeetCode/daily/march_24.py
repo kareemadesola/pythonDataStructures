@@ -185,3 +185,24 @@ def mergeInBetween(list1: ListNode, a: int, b: int, list2: ListNode) -> ListNode
     curr_l1.next = attach_end
 
     return dummy.next
+
+
+def firstMissingPositive(nums: List[int]) -> int:
+    n = len(nums)
+    # set all values <= 0 with n + 1
+    for i in range(n):
+        if nums[i] <= 0:
+            nums[i] = n + 1
+    # mark negative
+    for val in nums:
+        val = abs(val)
+        if val > n:
+            continue
+        if nums[val - 1] > 0:
+            nums[val - 1] = -nums[val - 1]
+
+    # check if not negative
+    for i in range(1, n + 1):
+        if nums[i - 1] > 0:
+            return i
+    return n + 1

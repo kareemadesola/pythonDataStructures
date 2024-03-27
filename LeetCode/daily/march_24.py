@@ -206,3 +206,16 @@ def firstMissingPositive(nums: List[int]) -> int:
         if nums[i - 1] > 0:
             return i
     return n + 1
+
+
+def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
+    res = l = 0
+    n = len(nums)
+    prod = 1
+    for r in range(n):
+        prod *= nums[r]
+        while l <= r and prod >= k:
+            prod //= nums[l]
+            l += 1
+        res += (r - l + 1)
+    return res

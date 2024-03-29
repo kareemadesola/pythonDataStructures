@@ -219,3 +219,18 @@ def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
             l += 1
         res += (r - l + 1)
     return res
+
+
+def countSubarrays(nums: List[int], k: int) -> int:
+    max_ = max(nums)
+    l = res = max_cnt = 0
+    for r in range(len(nums)):
+        if nums[r] == max_:
+            max_cnt += 1
+        while max_cnt > k or (max_cnt == k and nums[l] != max_):
+            if nums[l] == max_:
+                max_cnt -= 1
+            l += 1
+        if max_cnt == k:
+            res += l + 1
+    return res

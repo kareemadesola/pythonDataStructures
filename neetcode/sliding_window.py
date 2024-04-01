@@ -44,3 +44,31 @@ def lengthOfLongestSubstringAlt(s: str) -> int:
         char_to_idx[val] = r
         res = max(res, r - l + 1)
     return res
+
+
+def characterReplacement(s: str, k: int) -> int:
+    char_to_cnt = {}
+
+    l = res = 0
+    for r, char in enumerate(s):
+        char_to_cnt[char] = char_to_cnt.get(char, 0) + 1
+        while r - l + 1 - max(char_to_cnt.values()) > k:
+            char_to_cnt[s[l]] -= 1
+            l += 1
+        res = max(res, r - l + 1)
+    return res
+
+
+def characterReplacementAlt(s: str, k: int) -> int:
+    char_to_cnt = {}
+
+    l = res = max_f = 0
+    for r, char in enumerate(s):
+        char_to_cnt[char] = char_to_cnt.get(char, 0) + 1
+        max_f = max(max_f, char_to_cnt[char])
+
+        while r - l + 1 - max_f > k:
+            char_to_cnt[s[l]] -= 1
+            l += 1
+        res = max(res, r - l + 1)
+    return res

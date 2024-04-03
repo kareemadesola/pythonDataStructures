@@ -32,7 +32,8 @@ def isIsomorphic(s: str, t: str) -> bool:
 def exist(board: List[List[str]], word: str) -> bool:
     m, n = len(board), len(board[0])
     path = set()
-    def backtrack(r:int, c:int, curr:int)->bool:
+
+    def backtrack(r: int, c: int, curr: int) -> bool:
         if curr == len(word):
             return True
         if not 0 <= r < m or not 0 <= c < n \
@@ -40,9 +41,9 @@ def exist(board: List[List[str]], word: str) -> bool:
             return False
         path.add((r, c))
         res = backtrack(r + 1, c, curr + 1) \
-              or backtrack(r - 1, c, curr + 1) \
-              or backtrack(r, c + 1, curr + 1) \
-              or backtrack(r, c - 1, curr + 1)
+            or backtrack(r - 1, c, curr + 1) \
+            or backtrack(r, c + 1, curr + 1) \
+            or backtrack(r, c - 1, curr + 1)
         path.remove((r, c))
         return res
 

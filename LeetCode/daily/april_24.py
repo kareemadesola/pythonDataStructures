@@ -52,3 +52,14 @@ def exist(board: List[List[str]], word: str) -> bool:
             if board[i][j] == word[0] and backtrack(i, j, 0):
                 return True
     return False
+
+
+def maxDepth(s: str) -> int:
+    res = tmp = 0
+    for char in s:
+        if char == '(':
+            tmp += 1
+            res = max(res, tmp)
+        elif char == ')':
+            tmp -= 1
+    return res

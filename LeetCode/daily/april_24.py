@@ -63,3 +63,14 @@ def maxDepth(s: str) -> int:
         elif char == ')':
             tmp -= 1
     return res
+
+
+def makeGood(s: str) -> str:
+    n = len(s)
+    stack = [s[0]]
+    for i in range(1, n):
+        if stack and stack[-1].lower() == s[i].lower() and stack[-1] != s[i]:
+            stack.pop()
+        else:
+            stack.append(s[i])
+    return ''.join(stack)

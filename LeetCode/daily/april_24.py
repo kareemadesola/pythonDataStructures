@@ -93,3 +93,27 @@ def checkValidString(s: str) -> bool:
         if left_min < 0:  # (*)(
             left_min = 0
     return left_min == 0
+
+
+def minRemoveToMakeValid(s: str) -> str:
+    s_list = []
+    diff = 0
+    for char in s:
+        if char == '(':
+            s_list.append(char)
+            diff += 1
+        elif char == ')':
+            if diff - 1 >= 0:
+                s_list.append(char)
+                diff -= 1
+        else:
+            s_list.append(char)
+    res = []
+    for char in s_list[::-1]:
+        if char == '(' and diff:
+            diff -= 1
+        else:
+            res.append(char)
+    return ''.join(res[::-1])
+
+

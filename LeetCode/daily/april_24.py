@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List
 
 
@@ -115,6 +116,17 @@ def minRemoveToMakeValid(s: str) -> str:
         else:
             res.append(char)
     return ''.join(res[::-1])
+
+
+def countStudents(students: List[int], sandwiches: List[int]) -> int:
+    cnt = Counter(students)
+    res = len(students)
+    for sand in sandwiches:
+        if not cnt[sand]:
+            return res
+        cnt[sand] -= 1
+        res -= 1
+    return 0
 
 
 def timeRequiredToBuy(tickets: List[int], k: int) -> int:

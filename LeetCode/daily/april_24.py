@@ -117,3 +117,9 @@ def minRemoveToMakeValid(s: str) -> str:
     return ''.join(res[::-1])
 
 
+def timeRequiredToBuy(tickets: List[int], k: int) -> int:
+    res, n = 0, len(tickets)
+    for i in range(n):
+        res += min(tickets[i], tickets[k]) if i <= k \
+            else min(tickets[i], tickets[k] - 1)
+    return res

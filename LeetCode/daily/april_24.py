@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, deque
 from typing import List
 
 
@@ -134,4 +134,16 @@ def timeRequiredToBuy(tickets: List[int], k: int) -> int:
     for i in range(n):
         res += min(tickets[i], tickets[k]) if i <= k \
             else min(tickets[i], tickets[k] - 1)
+    return res
+
+
+def deckRevealedIncreasing(deck: List[int]) -> List[int]:
+    deck.sort()
+    n = len(deck)
+    q = deque(range(n))
+    res = [0] * n
+    for val in deck:
+        res[q.popleft()] = val
+        if q:
+            q.append(q.popleft())
     return res

@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, deque
 from typing import List
 
 
@@ -128,3 +128,21 @@ def minWindow(s: str, t: str) -> str:
                 have -= 1
             l += 1
     return s[res[0]: res[1] + 1] if res[1] != m else ''
+
+
+def maxSlidingWindow(nums: List[int], k: int) -> List[int]:
+    q = deque()
+    res = []
+    l = 0
+    for r in range(len(nums)):
+        while q and nums[r] > nums[q[-1]]:
+            q.pop()
+        q.append(r)
+
+        if l > q[0]:
+            q.popleft()
+
+        if r + 1 >= k:
+            res.append(q[0])
+            l += 1
+    return res

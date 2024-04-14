@@ -1,5 +1,7 @@
 from collections import Counter, deque
-from typing import List
+from typing import List, Optional
+
+from LeetCode.tree_visualizer import TreeNode
 
 
 def lengthOfLastWord(s: str) -> int:
@@ -161,4 +163,19 @@ def trap(height: List[int]) -> int:
             r_max = max(r_max, height[r])
             res += r_max - height[r]
             r -= 1
+    return res
+
+
+def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
+    res = 0
+
+    def dfs(curr: Optional[TreeNode]):
+        nonlocal res
+        if not curr:
+            return
+        if curr.left and not curr.left.left and not curr.left.right:
+            res += curr.left.val
+        dfs(curr.left)
+        dfs(curr.right)
+    dfs(root)
     return res

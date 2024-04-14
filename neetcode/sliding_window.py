@@ -1,3 +1,4 @@
+from collections import Counter
 from typing import List
 
 
@@ -105,3 +106,25 @@ def checkInclusion(s1: str, s2: str) -> bool:
             matches -= 1
         l += 1
     return matches == 26
+
+
+def minWindow(s: str, t: str) -> str:
+    m, n = len(s), len(t)
+    if m < n:
+        return ''
+    cnt_s, cnt_t = {}, Counter(t)
+    have, need = 0, len(cnt_t)
+    l = 0
+    res = (0, m)
+    for r in range(m):
+        cnt_s[s[r]] = cnt_s.get(s[r], 0) + 1
+        if s[r] in cnt_t and cnt_s[s[r]] == cnt_t[s[r]]:
+            have += 1
+
+        while have == need:
+            res = (l, r) if r - l < res[1] - res[0] else res
+            cnt_s[s[l]] -= 1
+            if s[l] in cnt_t and cnt_s[s[l]] < cnt_t[s[l]]:
+                have -= 1
+            l += 1
+    return s[res[0]: res[1] + 1] if res[1] != m else ''

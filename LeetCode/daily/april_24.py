@@ -179,3 +179,15 @@ def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
         dfs(curr.right)
     dfs(root)
     return res
+
+
+def sumNumbers(root: Optional[TreeNode]) -> int:
+    def dfs(curr: Optional[TreeNode], num) -> int:
+        if not curr:
+            return 0
+        num = num * 10 + curr.val
+        if not curr.left and not curr.right:
+            return num
+        return dfs(curr.left, num) + dfs(curr.right, num)
+    return dfs(root, 0)
+

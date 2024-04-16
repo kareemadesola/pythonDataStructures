@@ -191,3 +191,24 @@ def sumNumbers(root: Optional[TreeNode]) -> int:
         return dfs(curr.left, num) + dfs(curr.right, num)
     return dfs(root, 0)
 
+
+def addOneRow(root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
+    if depth == 1:
+        return TreeNode(val, root)
+    q, curr_depth, depth = deque([root]), 1, depth - 1
+
+    while q:
+        if curr_depth > depth:
+            break
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            if not curr:
+                continue
+            if curr_depth == depth:
+                curr.left = TreeNode(val, curr.left)
+                curr.right = TreeNode(val, right=curr.right)
+            q.append(curr.left)
+            q.append(curr.right)
+        curr_depth += 1
+    return root

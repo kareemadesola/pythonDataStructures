@@ -33,3 +33,21 @@ class MinStack:
 
     def getMin(self) -> int:
         return self.data[-1][1]
+
+
+def evalRPN(tokens: List[str]) -> int:
+    stack = []
+    for char in tokens:
+        if char in '+-*/':
+            b, a = stack.pop(), stack.pop()
+            if char == '+':
+                stack.append(a + b)
+            elif char == '-':
+                stack.append(a - b)
+            elif char == '*':
+                stack.append(a * b)
+            else:
+                stack.append(trunc(a / b))
+        else:
+            stack.append(int(char))
+    return stack[0]

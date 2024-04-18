@@ -212,3 +212,23 @@ def addOneRow(root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNo
             q.append(curr.right)
         curr_depth += 1
     return root
+
+
+def islandPerimeter(grid: List[List[int]]) -> int:
+    cnt = 0
+    m, n = len(grid), len(grid[0])
+
+    def count_water(i: int, j: int) -> int:
+        ans = 0
+        if grid[i][j] == 0:
+            return ans
+        ans += 1 if i == 0 or grid[i - 1][j] == 0 else 0
+        ans += 1 if i + 1 == m or grid[i + 1][j] == 0 else 0
+        ans += 1 if j == 0 or grid[i][j - 1] == 0 else 0
+        ans += 1 if j + 1 == n or grid[i][j + 1] == 0 else 0
+        return ans
+
+    for r in range(m):
+        for c in range(n):
+            cnt += count_water(r, c)
+    return cnt

@@ -232,3 +232,23 @@ def islandPerimeter(grid: List[List[int]]) -> int:
         for c in range(n):
             cnt += count_water(r, c)
     return cnt
+
+
+def numIslands(grid: List[List[str]]) -> int:
+    m, n = len(grid), len(grid[0])
+    visited = set()
+
+    def dfs(r: int, c: int)->bool:
+        if not 0 <= r < m or not 0 <= c < n or (r, c) in visited or grid[r][c] == '0':
+            return False
+        dfs(r + 1, c)
+        dfs(r - 1, c)
+        dfs(r, c + 1)
+        dfs(r, c - 1)
+        return True
+    res = 0
+    for i in range(m):
+        for j in range(n):
+            if dfs(i, j):
+                res += 1
+    return res

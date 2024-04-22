@@ -252,3 +252,31 @@ def numIslands(grid: List[List[str]]) -> int:
             if dfs(i, j):
                 res += 1
     return res
+
+
+def openLock(deadends: List[str], target: str) -> int:
+    deadends = set(deadends)
+    res = 0
+    q = deque(['0000'])
+
+    def children(string: str) -> List[str]:
+        ans = []
+        for i in range(4):
+            val = str((int(string[i]) + 1) % 10)
+            ans.append(string[:i] + val + string[i+1:])
+            val = str((int(string[i]) - 1) % 10)
+            ans.append(string[:i] + val + string[i+1:])
+        return ans
+    while q:
+        q_len = len(q)
+        for _ in range(q_len):
+            curr = q.popleft()
+            if curr in deadends:
+                continue
+            deadends.add(curr)
+            if curr == target:
+                return res
+            for child in children(curr):
+                q.append(child)
+        res += 1
+    return -1

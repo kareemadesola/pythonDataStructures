@@ -1,4 +1,4 @@
-from collections import Counter, deque
+from collections import Counter, deque, defaultdict
 from typing import List, Optional
 
 from LeetCode.tree_visualizer import TreeNode
@@ -280,3 +280,59 @@ def openLock(deadends: List[str], target: str) -> int:
                 q.append(child)
         res += 1
     return -1
+
+
+def validPath(n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    adj_list = defaultdict(list)
+    for src, dst in edges:
+        adj_list[src].append(dst)
+        adj_list[dst].append(src)
+    visited = set()
+
+    def dfs(curr: int) -> bool:
+        if curr == destination:
+            return True
+        if curr in visited:
+            return False
+        visited.add(curr)
+        for nei in adj_list[curr]:
+            if dfs(nei):
+                return True
+        return False
+    return dfs(source)
+
+
+def validPathAlt(n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+    uf = UnionFind(n)
+    for src, dst in edges:
+        uf.union(src, dst)
+    return uf.is_connected(source, destination)
+
+
+class UnionFind:
+    def __init__(self, n):
+        self.root = [i for i in range(n)]
+        self.rank = [1] * n
+
+    def find(self, x: int) -> int:
+        if x == self.root[x]:
+            return x
+        self.root[x] = self.find(self.root[x])
+        return self.root[x]
+
+    def union(self, x: int, y: int):
+        root_x = self.find(x)
+        root_y = self.find(y)
+        if root_x == root_y:
+            return
+
+        if self.rank[root_x] < self.rank[root_y]:
+            self.root[root_x] = root_y
+        elif self.rank[root_x] > self.rank[root_y]:
+            self.root[root_y] = root_x
+        else:
+            self.root[root_y] = root_x
+            self.rank[root_x] += 1
+
+    def is_connected(self, x: int, y: int):
+        return self.find(x) == self.find(y)

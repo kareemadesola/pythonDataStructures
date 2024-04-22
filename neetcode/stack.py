@@ -86,3 +86,14 @@ def dailyTemperatures(temperatures: List[int]) -> List[int]:
         stack.append(i)
     return res
 
+
+def carFleet(target: int, position: List[int], speed: List[int]) -> int:
+    time = []
+    pst_speed = [(p, s) for p, s in zip(position, speed)]
+    pst_speed.sort(reverse=True)
+    for p, s in pst_speed:
+        time.append((target - p) / s)
+        if len(time) >= 2 and time[-1] <= time[-2]:
+            time.pop()
+    return len(time)
+

@@ -97,3 +97,21 @@ def carFleet(target: int, position: List[int], speed: List[int]) -> int:
             time.pop()
     return len(time)
 
+
+def largestRectangleArea(heights: List[int]) -> int:
+    n = len(heights)
+    stack = []
+    max_area = 0
+
+    for idx, hei in enumerate(heights):
+        start = idx
+        while stack and hei < stack[-1][1]:
+            index, height = stack.pop()
+            max_area = max(max_area, height * (idx - index))
+            start = index
+        stack.append((start, hei))
+
+    for idx, hei in stack:
+        max_area = max(max_area, hei * (n - idx))
+
+    return max_area

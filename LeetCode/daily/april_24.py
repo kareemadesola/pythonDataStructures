@@ -336,3 +336,32 @@ class UnionFind:
 
     def is_connected(self, x: int, y: int):
         return self.find(x) == self.find(y)
+
+
+def findMinHeightTrees(n: int, edges: List[List[int]]) -> List[int]:
+    if n == 1:
+        return [0]
+
+    adj_list = defaultdict(list)
+    for src, dst in edges:
+        adj_list[src].append(dst)
+        adj_list[dst].append(src)
+
+    leaves = deque()
+    edges_cnt = {}
+    for node, nei in adj_list.items():
+        if len(nei) == 1:
+            leaves.append(node)
+        edges_cnt[node] = len(nei)
+
+    while leaves:
+        if n <= 2:
+            return leaves
+        for _ in range(len(leaves)):
+            curr = leaves.popleft()
+            n -= 1
+            for nei in adj_list[curr]:
+                edges_cnt[nei] -= 1
+                if edges_cnt[nei] == 1:
+                    leaves.append(nei)
+

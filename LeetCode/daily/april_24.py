@@ -385,3 +385,16 @@ def longestIdealString(s: str, k: int) -> int:
         dp[curr] = longest
         res = max(res, dp[curr])
     return res
+
+
+def minFallingPathSum(grid: List[List[int]]) -> int:
+    n = len(grid)
+    prev_dp = grid[0]
+    for r in range(1, n):
+        dp = [float('inf')] * n
+        for c in range(n):
+            for prev_c in range(n):
+                if prev_c != c:
+                    dp[c] = min(dp[c], grid[r][c] + prev_dp[prev_c])
+        prev_dp = dp
+    return min(prev_dp)

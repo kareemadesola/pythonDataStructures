@@ -371,3 +371,17 @@ def tribonacci(n: int) -> int:
     for _ in range(n - 2):
         a, b, c = b, c, a + b + c
     return c
+
+
+def longestIdealString(s: str, k: int) -> int:
+    dp = [0] * 26
+    res = 0
+    for char in s:
+        curr = ord(char) - ord('a')
+        longest = 1
+        for prev in range(26):
+            if abs(curr - prev) <= k:
+                longest = max(longest, 1 + dp[prev])
+        dp[curr] = longest
+        res = max(res, dp[curr])
+    return res
